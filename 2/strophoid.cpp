@@ -12,18 +12,70 @@ namespace strophoid {
 	}
 
 	void Strophoid::setA(long double A) {
-		if (A == 0) A = f::getNum<long double>("Enter A: ");
+		if (A == 0) A = this->getNum("Enter A: ");
 		this->A = A; 
 	}
 
+	int Strophoid::print(int code) {
+		if (code <= 0 || code > 7) return WRONG_PARAMS;
+		long double res = 0.0;
+
+		switch (code) {
+		case 1:
+			res = this->getA();
+			break;
+
+		case 2:
+			res = this->getY();
+			break;
+
+		case 3:
+			res = this->getRadius();
+			break;
+
+		case 4:
+			res = this->getRadiusOfCurvature();
+			break;
+
+		case 5:
+			res = this->getLoopArea();
+			break;
+
+		case 6:
+			res = this->getLoopVolume();
+			break;
+
+		case 7:
+			res = this->getMiddleBranchesArea();
+			break;
+		}
+
+		std::cout << res << std::endl;
+		return SUCCESS;
+	}
+
+	long double Strophoid::getNum(const char* msg) {
+		if (msg != NULL) std::cout << msg;
+
+		long double res;
+		std::cin >> res;
+
+		if (msg != NULL) std::cout << std::endl;
+		return res;
+	}
+
+	long double Strophoid::getA() {
+		return this->A;
+	}
+
 	long double Strophoid::getY() {
-		long double X = f::getNum<long double>("Enter X: ");
+		long double X = this->getNum("Enter X: ");
 
 		return abs(X) * sqrt( abs( (this->A + X) / (this->A - X) ) );
 	}
 
 	long double Strophoid::getRadius() {
-		long double angle = f::getNum<long double>("Enter angle in degrees: ");
+		long double angle = this->getNum("Enter angle in degrees: ");
 		
 		if (angle >= 0) angle -= 360 * floor(angle / 360);
 		else angle += 360 * floor(abs(angle) / 360);
@@ -50,7 +102,7 @@ namespace strophoid {
 		return M_PI * pow(this->A, 3) * (2 * log(2) - 4 / 3);
 	}
 
-	long double Strophoid::getMiddleBranchesVolume() {
+	long double Strophoid::getMiddleBranchesArea() {
 		return pow(this->A, 2) * ( 2 + 0.5 * M_PI);
 	}
 }

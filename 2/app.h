@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <crtdbg.h>
 #include <cmath>
+#include <string>
 
 #include "strophoid.h"
 #include "funcs.h"
