@@ -26,11 +26,19 @@ namespace strophoid {
 			break;
 
 		case 2:
+#ifdef TEST
+			res = this->getY(0.0);
+#else
 			res = this->getY();
+#endif
 			break;
 
 		case 3:
+#ifdef TEST
+			res = this->getRadius(0.0);
+#else
 			res = this->getRadius();
+#endif // TEST
 			break;
 
 		case 4:
@@ -68,15 +76,22 @@ namespace strophoid {
 		return this->A;
 	}
 
+#ifdef TEST
+	long double Strophoid::getY(long double X) {
+#else
 	long double Strophoid::getY() {
 		long double X = this->getNum("Enter X: ");
-
+#endif // TEST
 		return abs(X) * sqrt( abs( (this->A + X) / (this->A - X) ) );
 	}
 
-	long double Strophoid::getRadius() {
-		long double angle = this->getNum("Enter angle in degrees: ");
-		
+
+#ifdef TEST
+		long double Strophoid::getRadius(long double angle) {
+#else
+		long double Strophoid::getRadius() {
+			long double angle = this->getNum("Enter angle in degrees: ");
+#endif // TEST
 		if (angle >= 0) angle -= 360 * floor(angle / 360);
 		else angle += 360 * floor(abs(angle) / 360);
 
