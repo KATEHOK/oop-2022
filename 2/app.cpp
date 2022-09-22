@@ -20,7 +20,7 @@ int main() {
 
 		for (int i = 0; i < 8; i++) std::cout << " " << i << ") " << vars[i] << std::endl;
 		std::cout << " 8) Stop the program" << std::endl;
-		int code = f::getNum("Choose point: ");
+		code = f::getNum("Choose point: ");
 
 		if (code == 0) line.setA();
 		else code = line.print(code);

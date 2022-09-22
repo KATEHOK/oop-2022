@@ -2,7 +2,7 @@
 #define APP
 #define _CRTDBG_MAP_ALLOC
 #define _USE_MATH_DEFINES
-#define TEST
+//#define TEST
 
 #include <iostream>
 #include <stdlib.h>
