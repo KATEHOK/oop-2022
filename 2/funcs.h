@@ -12,5 +12,4 @@ namespace f {
 		if (msg != NULL) std::cout << std::endl;
 		return res;
 	}
-
 }
