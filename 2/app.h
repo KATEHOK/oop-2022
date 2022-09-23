@@ -2,7 +2,6 @@
 #define APP
 #define _CRTDBG_MAP_ALLOC
 #define _USE_MATH_DEFINES
-//#define TEST
 
 #include <iostream>
 #include <stdlib.h>
@@ -20,3 +19,15 @@ enum STATUS_CODE {
 	WRONG_PARAMS,
 	NOT_FOUND
 };
+
+/*
+
+1. ћетоды класса не должны взаимодействовать с пользователем (убрать ввод/вывод) // DONE
+
+2. ћетоды, не измен€ющие состо€ние объекта должны иметь приписку const // DONE
+
+3. ѕараметры функции должны быть const // DONE
+
+4. —делать нормальные тесты
+
+*/
