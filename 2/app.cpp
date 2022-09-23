@@ -70,5 +70,9 @@ int main() {
 		std::cout << std::endl;
 	}
 
+#ifdef TEST_MEMORY_LEACKS_DETECTOR
+	char* qwerty = new char;
+#endif
+
 	return SUCCESS;
 }

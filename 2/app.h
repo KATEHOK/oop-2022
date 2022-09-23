@@ -9,6 +9,7 @@
 #ifndef CLASS_ONLY
 
 #define _CRTDBG_MAP_ALLOC
+//#define TEST_MEMORY_LEACKS_DETECTOR
 
 #include <iostream>
 #include <stdlib.h>
@@ -36,6 +37,6 @@ enum STATUS_CODE {
 
 3. Параметры функции должны быть const // DONE
 
-4. Сделать нормальные тесты
+4. Сделать "нормальные" тесты // DONE
 
 */
