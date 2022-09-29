@@ -25,6 +25,9 @@ namespace UnitTest2
 
 			Strophoid line1(10.0);
 			Assert::IsTrue(line1.getA() == 10.0, L"10.0");
+
+			Strophoid line2(999.0);
+			Assert::IsTrue(isDoubleEqual(line2.getA(), 999.0), L"999.0");
 		}
 		TEST_METHOD(TestGetY)
 		{
@@ -158,21 +161,33 @@ namespace UnitTest2
 		{
 			Strophoid line(10.0);
 			Assert::IsTrue(isDoubleEqual(line.getRadiusOfCurvature(), 14.1421), L"10");
+
+			Strophoid line1(1.0);
+			Assert::IsTrue(isDoubleEqual(line1.getRadiusOfCurvature(), 1.41421), L"1");
 		}
 		TEST_METHOD(TestGetLoopArea)
 		{
 			Strophoid line(10.0);
 			Assert::IsTrue(isDoubleEqual(line.getLoopArea(), 42.9204), L"10");
+
+			Strophoid line1(1.0);
+			Assert::IsTrue(isDoubleEqual(line1.getLoopArea(), 0.429204), L"1");
 		}
 		TEST_METHOD(TestGetLoopVolume)
 		{
 			Strophoid line(10.0);
 			Assert::IsTrue(isDoubleEqual(line.getLoopVolume(), 1213.58), L"10");
+
+			Strophoid line1(1.0);
+			Assert::IsTrue(isDoubleEqual(line1.getLoopVolume(), 1.21358), L"1");
 		}
 		TEST_METHOD(TestGetMiddleBranchesArea)
 		{
 			Strophoid line(10.0);
 			Assert::IsTrue(isDoubleEqual(line.getMiddleBranchesArea(), 357.08), L"10");
+
+			Strophoid line1(1.0);
+			Assert::IsTrue(isDoubleEqual(line1.getMiddleBranchesArea(), 3.5708), L"1");
 		}
 	};
 }
