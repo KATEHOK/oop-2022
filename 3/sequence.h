@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #define SEQUENCE_H
 
@@ -9,18 +9,24 @@
 #ifndef APP
 
 #include <iostream>
+#include <limits>
 
 enum status {
 	SUCCESS = 0,
 	FAIL,
 	OVERSIZE,
 	MEMORY_ERROR,
+	NOT_FOUND,
+	WRONG_PARAMS,
 };
 
 #endif
 
 namespace sequence {
 
+	/*
+	* INT_MAX - служебное значение
+	*/
 	class Sequence {
 
 	public:
@@ -31,9 +37,15 @@ namespace sequence {
 
 		int getSize() const;
 		int getMaxSize() const;
+		/*
+		* В случае переполнения вернет INT_MAX
+		*/
 		int getElement(const int id) const;
 		Sequence* makeClone() const;
 
+		/*
+		* Not a number character is required after the last num
+		*/
 		void input();
 		void output() const;
 

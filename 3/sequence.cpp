@@ -1,46 +1,61 @@
-#ifndef SEQUENCE_H
+﻿#ifndef SEQUENCE_H
 #include "sequence.h"
 #endif
 
 namespace sequence {
 
 	Sequence::Sequence() {} // done
-	Sequence::Sequence(const int item) { this->insert(item); }
-	// done
+	Sequence::Sequence(const int item) { this->insert(item); } // done
 	Sequence::Sequence(const int size, const int* pData) {
-		for (int i = 0; i < size; i++) this->insert(pData[i]);
+		//std::cout << "start" << std::endl << std::endl;
+		for (int i = 0; i < size; i++) {
+			std::cout << this->insert(pData[i]) << " ";
+			std::cout << this->getElement(i) << std::endl;
+		}
+		//std::cout << "stop" << std::endl << std::endl;
 	}
 	// done
 
-	int Sequence::getSize() const { return this->size; }
-	int Sequence::getMaxSize() const { return this->maxSize; }
-	int Sequence::getElement(const int id) const { return this->pNums[id]; }
+	int Sequence::getSize() const { return this->size; } // done
+	int Sequence::getMaxSize() const { return this->maxSize; } // done
+	int Sequence::getElement(const int id) const {
+		if (id >= 0 && id < this->getSize()) return this->pNums[id];
+		return INT_MAX;
+	}
+	// done
 	Sequence* Sequence::makeClone() const {
 		Sequence* pResult = NULL;
-
 		try { pResult = new Sequence(this->getSize(), this->pNums); }
 		catch (...) { return NULL; }
-
 		return pResult;
 	}
+	// done
+
 
 	void Sequence::input() {
 		int value;
 
-		while (this->getSize() < this->getMaxSize()) { // � ���� ��� ������ �����
+		while (this->getSize() < this->getMaxSize()) { 
 			std::cin >> value;
-			this->insert(value);
+			if (std::cin.fail()) {// если ошибка ввода
+				std::cin.clear(); // возвращаем "нормальный" режим работы
+				break;
+			}
+			if (this->insert(value) != 0) break; // ловим переполнение
 		}
+		// очищаем буфер ввода
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	}
+	// done nice
 	void Sequence::output() const {
 		std::cout << "{";
 		for (int i = 0; i < this->getSize(); i++) {
 			std::cout << this->getElement(i);
-			if (i < this->getSize()) std::cout << ", ";
+			if (i < this->getSize() - 1) std::cout << ", ";
 		}
 		std::cout << "}";
 	}
-	// done
+	// done nice
 	
 	Sequence* Sequence::plus(const Sequence* pOther) const {
 		if (pOther == NULL) return NULL;

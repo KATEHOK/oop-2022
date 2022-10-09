@@ -1,8 +1,9 @@
-#pragma once
+﻿#pragma once
 
 #define APP
 
 #include <iostream>
+#include <limits>
 
 #include "sequence.h"
 
@@ -11,4 +12,6 @@ enum status {
 	FAIL,
 	OVERSIZE,
 	MEMORY_ERROR,
+	NOT_FOUND,
+	WRONG_PARAMS,
 };
