@@ -9,8 +9,10 @@ namespace sequence {
 	Sequence::Sequence(const int size, const int* pData) {
 		//std::cout << "start" << std::endl << std::endl;
 		for (int i = 0; i < size; i++) {
-			std::cout << this->insert(pData[i]) << " ";
-			std::cout << this->getElement(i) << std::endl;
+			/*std::cout << this->insert(pData[i]) << " ";
+			std::cout << this->getElement(i) << std::endl;*/
+			this->insert(pData[i]);
+			this->getElement(i);
 		}
 		//std::cout << "stop" << std::endl << std::endl;
 	}
@@ -83,25 +85,31 @@ namespace sequence {
 		int startId = 0;
 
 		for (int counter = 1; counter < this->getSize(); counter++) {
-			if ((this->getElement(counter) <= last && order == 0 || 
-				this->getElement(counter) >= last && order != 0) &&
-				counter - startId <= 2) {
+			// { 777, 777, 0, 56, 45, 78, 120, 45, -989, 0, 1, 986, -89, 
+			// -4562, -98651, 45, 45, 89, 456, 1236, 7889, 10000, 78953, 0 };
 
+			if (this->getElement(counter) <= last && order == 0 || 
+				this->getElement(counter) >= last && order != 0) {
+				// прерывание монотонности из 1 или 2 элементов (продолжаем)
+				if (counter - startId <= 2) {
+					last = this->getElement(counter);
+					startId = counter;
+					continue;
+				}
+				break; // прерывание монотонности НЕ меньше, чем из трех элементов (завершаем)
+			}
+			// монотонность короче 3 элементов
+			if (counter - startId < 2) {
 				last = this->getElement(counter);
-				startId = counter;
 				continue;
 			}
-
+			// найдена монотонность из 3 элементов
 			if (counter - startId == 2) {
 				pResult->insert(this->getElement(startId));
 				pResult->insert(this->getElement(startId + 1));
-				pResult->insert(this->getElement(startId + 2));
-				continue;
 			}
-
-			if (this->getElement(counter) <= last && order == 0 ||
-				this->getElement(counter) >= last && order != 0) break;
-
+			// продолжение монотонности длинее 2 элементов
+			last = this->getElement(counter);
 			pResult->insert(this->getElement(counter));
 		}
 
