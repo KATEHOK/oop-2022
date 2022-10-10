@@ -33,7 +33,6 @@ namespace sequence {
 	}
 	// done
 
-
 	void Sequence::input() {
 		int value;
 
@@ -127,29 +126,24 @@ namespace sequence {
 
 	int Sequence::getGroupsCount() const {
 		int* pCash;
+		if (this->getSize() == 0) return 0;
 
-		try { pCash = new int [this->getSize() * 2]; }
+		try { pCash = new int[this->getSize() * 2]; }
 		catch (...) { return -MEMORY_ERROR; }
 
 		int i, j, k;
 		for (i = 1; i < this->getSize() * 2; i += 2) pCash[i] = 0;
 
-		if (this->getSize() > 0) {
-			pCash[0] = this->getElement(0);
-			pCash[1] = 1;
-		}
+		pCash[0] = this->getElement(0);
+		pCash[1] = 1;
 
 		for (i = 1; i < this->getSize(); i++) {
-			k = 0;
-
-			for (j = 0; k < i; j += 2) {
+			for (j = 0; j < this->getSize() * 2; j += 2) {
 				if (pCash[j + 1] == 0 || this->getElement(i) == pCash[j]) {
 					pCash[j] = this->getElement(i);
 					pCash[j + 1]++;
 					break;
 				}
-
-				k += pCash[j + 1];
 			}
 		}
 

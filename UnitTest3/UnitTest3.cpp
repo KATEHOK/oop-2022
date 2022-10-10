@@ -244,5 +244,42 @@ namespace UnitTest3
 				}
 			}
 		}
+
+		TEST_METHOD(GetGroupsCount)
+		{
+			Sequence a;
+			Assert::IsTrue(a.getGroupsCount() == 0, L"a");
+
+			Sequence b(789);
+			Assert::IsTrue(b.getGroupsCount() == 1, L"b");
+
+			int data[6] = { 213, 213, 213, 0, 8, 213 };
+			Sequence c(3, data);
+			Assert::IsTrue(c.getGroupsCount() == 1, L"c");
+
+			Sequence d(4, &(data[2]));
+			Assert::IsTrue(d.getGroupsCount() == 3, L"d");
+		}
+
+		TEST_METHOD(GetSameCount)
+		{
+			Sequence a;
+			Assert::IsTrue(a.getSameCount(78) == 0, L"a(78)");
+
+			Sequence b(789);
+			Assert::IsTrue(b.getSameCount(789) == 1, L"b(789)");
+			Assert::IsTrue(b.getSameCount(78) == 0, L"b(78)");
+
+			int data[6] = { 213, 213, 213, 0, 8, 213 };
+			Sequence c(3, data);
+			Assert::IsTrue(c.getSameCount(213) == 3, L"c(213)");
+			Assert::IsTrue(c.getSameCount(-89) == 0, L"c(-89)");
+
+			Sequence d(4, &(data[2]));
+			Assert::IsTrue(d.getSameCount(213) == 2, L"d(213)");
+			Assert::IsTrue(d.getSameCount(0) == 1, L"d(0)");
+			Assert::IsTrue(d.getSameCount(8) == 1, L"d(8)");
+			Assert::IsTrue(d.getSameCount(789) == 0, L"d(789)");
+		}
 	};
 }

@@ -29,10 +29,9 @@ int main() {
 	std::cout << std::endl << a.getSize();
 	*/
 
-
-	const int count = 100;
+	/*const int count = 100;
 	int data[count] = { 777, 777, 0, 56, 45, 78, 120, 45, -989, 0, 1, 986,
-						-89, -4562, -98651, 45, 45, 89, 456, 1236, 7889, 10000, 78953, 0 };
+						-89, -4562, -98651, 45, 45, 89, 456, 1236, 7889, 10000, 78953, 0 };*/
 
 	/*Sequence bbb(3, data);
 	Sequence* pBBB = bbb.findMonotonicity(0);
@@ -55,6 +54,16 @@ int main() {
 	//Assert::IsTrue(pC->getSize() == 3, L"c(0) (size)");
 	//Assert::IsTrue(ppC->getSize() == 3, L"c(1) (size)");
 	//Assert::IsTrue(pC->getElement(0) == 45, L"c(0) (pC[0])");
+
+	/*int* pCash = new int[2 * 2];
+	for (int i = 1; i < 2 * 2; i += 2) pCash[i] = 0;
+	for (int i = 0; i < 4; i++) std::cout << pCash[i] << std::endl;
+	std::cout << std::endl;*/
+
+	/*int data[6] = { 213, 213, 213, 0, 8, 213 };
+	Sequence d(4, &(data[2]));
+	std::cout << d.getGroupsCount() << ' ' << 3 << std::endl << std::endl;
+	d.output();*/
 
 	return SUCCESS;
 }
