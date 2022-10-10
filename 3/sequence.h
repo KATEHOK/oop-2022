@@ -41,6 +41,9 @@ namespace sequence {
 		* В случае переполнения вернет INT_MAX
 		*/
 		int getElement(const int id) const;
+		/*
+		* Клонирует экземпляр
+		*/
 		Sequence* makeClone() const;
 
 		/*
@@ -51,12 +54,21 @@ namespace sequence {
 
 		Sequence* plus(const Sequence* pOther) const;
 
+		/*
+		* Ищет монотонную подпоследовательность
+		*/
 		Sequence* findMonotonicity(const int order) const;
 
 		int insert(const int value);
 
+		/*
+		* Считает количество групп
+		*/
 		int getGroupsCount() const;
 
+		/*
+		* Считает количество двойников для данного элемента
+		*/
 		int getSameCount(const int value) const;
 
 	private:

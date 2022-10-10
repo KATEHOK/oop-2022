@@ -6,8 +6,6 @@ using namespace sequence;
 
 int main() {
 
-
-
 	/*
 	const int count = 120;
 	int data[count];
@@ -39,21 +37,12 @@ int main() {
 	std::cout << pBBB->getSize() << ' ' << 0 << std::endl;
 	std::cout << ppBBB->getSize() << ' ' << 0 << std::endl << std::endl;
 	ppBBB->output();*/
-	//Assert::IsTrue(pBBB->getSize() == 0, L"bbb(0) (size)");
-	//Assert::IsTrue(ppBBB->getSize() == 0, L"bbb(1) (size)");
-	//Assert::IsTrue(pBBB->getElement(0) == INT_MAX, L"bbb(0) (pBBB[0])");
-	//Assert::IsTrue(pBBB->getElement(1) == INT_MAX, L"bbb(0) (pBBB[1])");
-	//Assert::IsTrue(ppBBB->getElement(0) == INT_MAX, L"bbb(1) (ppBBB[0])");
-	//Assert::IsTrue(ppBBB->getElement(1) == INT_MAX, L"bbb(1) (ppBBB[1])");
 
 	/*Sequence c(24, data);
 	Sequence* pC = c.findMonotonicity(0);
 	Sequence* ppC = c.findMonotonicity(1);
 	std::cout << ppC->getSize() << ' ' << 3 << std::endl << std::endl;
 	ppC->output();*/
-	//Assert::IsTrue(pC->getSize() == 3, L"c(0) (size)");
-	//Assert::IsTrue(ppC->getSize() == 3, L"c(1) (size)");
-	//Assert::IsTrue(pC->getElement(0) == 45, L"c(0) (pC[0])");
 
 	/*int* pCash = new int[2 * 2];
 	for (int i = 1; i < 2 * 2; i += 2) pCash[i] = 0;
