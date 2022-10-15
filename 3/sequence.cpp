@@ -12,7 +12,7 @@ namespace sequence {
 			/*std::cout << this->insert(pData[i]) << " ";
 			std::cout << this->getElement(i) << std::endl;*/
 			this->insert(pData[i]);
-			this->getElement(i);
+			//this->getElement(i);
 		}
 		//std::cout << "stop" << std::endl << std::endl;
 	}
@@ -38,7 +38,7 @@ namespace sequence {
 
 		while (this->getSize() < this->getMaxSize()) { 
 			std::cin >> value;
-			if (std::cin.fail()) {// если ошибка ввода
+			if (!std::cin.good()) {// если ошибка ввода
 				std::cin.clear(); // возвращаем "нормальный" режим работы
 				break;
 			}
@@ -118,6 +118,7 @@ namespace sequence {
 
 	int Sequence::insert(const int value) {
 		if (this->getSize() == this->getMaxSize()) return OVERSIZE;
+		if (value == INT_MAX) return WRONG_PARAMS;
 		this->pNums[this->getSize()] = value;
 		this->size++;
 		return SUCCESS;

@@ -6,6 +6,7 @@
 #include <limits>
 
 #include "sequence.h"
+#include "dialog.h"
 
 enum status {
 	SUCCESS = 0,
