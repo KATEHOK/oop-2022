@@ -43,9 +43,12 @@ int main() {
 			std::cout << std::endl << "Wrong value! Choose point: ";
 		std::cout << std::endl;
 		
-		status = operations[choice](&seq);
+		try { status = operations[choice](&seq); }
+		catch (std::exception& err) {
+			std::cout << "Exception: " << err.what() << std::endl;
+			status = FAIL;
+		}
 	}
 
-	std::cout << "Code: " << status << std::endl;
 	return SUCCESS;
 }

@@ -27,11 +27,28 @@ namespace sequence {
 	*/
 	class Sequence {
 
+		// friends
+		friend bool operator== (const int other, const Sequence& cur);
+		friend bool operator> (const int other, const Sequence& cur);
+		friend bool operator< (const int other, const Sequence& cur);
+		friend bool operator>= (const int other, const Sequence& cur);
+		friend bool operator<= (const int other, const Sequence& cur);
+
+		friend int operator- (const int other, const Sequence& cur);
+		friend int operator-= (const int other, const Sequence& cur);
+		friend int operator* (const int other, const Sequence& cur);
+		friend int operator*= (const int other, const Sequence& cur);
+		friend int operator/ (const int other, const Sequence& cur);
+		friend int operator/= (const int other, const Sequence& cur);
+		friend int operator% (const int other, const Sequence& cur);
+		friend int operator%= (const int other, const Sequence& cur);
+
 	public:
 
 		Sequence();
 		Sequence(const int item);
 		Sequence(const int size, const int* pData);
+		Sequence(const int* pData); // обязательно терминальное значение INT_MAX
 
 		int getSize() const;
 		int getMaxSize() const;
@@ -69,13 +86,33 @@ namespace sequence {
 		*/
 		int getSameCount(const int value) const;
 
+		// operators
 		bool operator== (const Sequence& other) const; // полное совпадение
 		bool operator> (const Sequence& other) const; // размер
 		bool operator< (const Sequence& other) const; // размер
+		bool operator>= (const Sequence& other) const; // размер
+		bool operator<= (const Sequence& other) const; // размер
+
+		bool operator== (const int other) const; // размер
+		bool operator> (const int other) const; // размер
+		bool operator< (const int other) const; // размер
+		bool operator>= (const int other) const; // размер
+		bool operator<= (const int other) const; // размер
+
 		Sequence& operator= (const Sequence& src);
+		Sequence& operator= (const int src);
+		Sequence& operator= (const int* pSrc); // обязательно терминальное значение INT_MAX
+		
 		Sequence& operator+ (const Sequence& other) const;
+		Sequence& operator+ (const int value) const;
 		Sequence& operator+= (const int value);
+
 		int operator[] (const int id) const;
+
+		int operator- (const int other) const;
+		int operator* (const int other) const;
+		int operator/ (const int other) const;
+		int operator% (const int other) const;
 
 	private:
 
@@ -84,5 +121,4 @@ namespace sequence {
 		int size = 0;
 
 	};
-
 }

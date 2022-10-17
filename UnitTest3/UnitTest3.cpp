@@ -9,7 +9,13 @@ namespace UnitTest3
 	TEST_CLASS(UnitTest3)
 	{
 	public:
-		
+
+		/*
+		* Тестирование перегруженных операторов не имеет смысла,
+		* так как работа многих из них основана на вызове методов,
+		* а также многие операторы были использованы для написания самих методов.
+		*/
+
 		TEST_METHOD(Constructor_GetSize_GetMaxSize_GetElement_Insert)
 		{
 			Sequence a;
@@ -41,7 +47,23 @@ namespace UnitTest3
 			Assert::IsTrue(f.getSize() == 100, L"120-size");
 			for (int i = 0; i < count; i++) {
 				if (i < f.getSize()) Assert::IsTrue(f.getElement(i) == i, L"120 0..99");
-				else Assert::IsTrue(f.getElement(i) == INT_MAX, L"120 0..99"); // код ошибки
+				else Assert::IsTrue(f.getElement(i) == INT_MAX, L"120 100..119"); // код ошибки
+			}
+
+			data[119] = INT_MAX; // терминальное значение
+			Sequence g(data);
+			Assert::IsTrue(g.getSize() == 100, L"g 120-size");
+			for (int i = 0; i < count; i++) {
+				if (i < g.getSize()) Assert::IsTrue(g.getElement(i) == i, L"g 120 0..99");
+				else Assert::IsTrue(g.getElement(i) == INT_MAX, L"g 120 100..119");
+			}
+
+			data[99] = INT_MAX;
+			Sequence h(data);
+			Assert::IsTrue(h.getSize() == 99, L"g 99-size");
+			for (int i = 0; i < count; i++) {
+				if (i < h.getSize()) Assert::IsTrue(h.getElement(i) == i, L"g 99 0..98");
+				else Assert::IsTrue(h.getElement(i) == INT_MAX, L"g 99 99..119");
 			}
 		}
 

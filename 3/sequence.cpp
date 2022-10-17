@@ -9,8 +9,15 @@ namespace sequence {
 		*this += item;
 	}
 	Sequence::Sequence(const int size, const int* pData) {
-		if (pData == NULL) return;
+		if (pData == NULL)
+			throw std::invalid_argument("pData == NULL in Sequence::Sequence()");
 		for (int i = 0; i < size; i++) *this += pData[i];
+	}
+	Sequence::Sequence(const int* pData) {
+		if (pData == NULL)
+			throw std::invalid_argument("pData == NULL in Sequence::Sequence()");
+		int i = 0;
+		while (this->insert(pData[i]) == SUCCESS) i++;
 	}
 
 	int Sequence::getSize() const {
@@ -20,7 +27,7 @@ namespace sequence {
 		return this->maxSize;
 	}
 	int Sequence::getElement(const int id) const {
-		if (id >= 0 && id < this->size) return this->pNums[id];
+		if (id >= 0 && id < (*this)) return this->pNums[id];
 		return INT_MAX;
 	}
 
@@ -32,31 +39,31 @@ namespace sequence {
 	void Sequence::input() {
 		int value;
 
-		while (this->size < this->maxSize) { 
+		while ((*this) < this->maxSize) { 
 			std::cin >> value;
 			if (!std::cin.good()) {// если ошибка ввода
 				std::cin.clear(); // возвращаем "нормальный" режим работы
 				break;
 			}
-			if (this->insert(value) != 0) break; // ловим переполнение
+			if (this->insert(value) != SUCCESS) break; // ловим переполнение
 		}
 		// очищаем буфер ввода
 		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	}
 	void Sequence::output() const {
 		std::cout << "{";
-		for (int i = 0; i < this->size; i++) {
-			std::cout << this->pNums[i];
-			if (i < this->size - 1) std::cout << ", ";
+		for (int i = 0; i < (*this); i++) {
+			std::cout << (*this)[i];
+			if (i < (*this) - 1) std::cout << ", ";
 		}
 		std::cout << "}";
 	}
 	
 	Sequence& Sequence::plus(const Sequence& other) const {
-		Sequence result = this->makeClone();
+		Sequence result = (*this);
 		int i = 0;
 
-		while (result.size < this->maxSize && i < other.size) {
+		while (result < this->maxSize && i < other) {
 			result += other[i];
 			i++;
 		}
@@ -70,7 +77,7 @@ namespace sequence {
 		int last = (*this)[0];
 		int startId = 0;
 
-		for (int counter = 1; counter < this->size; counter++) {
+		for (int counter = 1; counter < (*this); counter++) {
 
 			if ((*this)[counter] <= last && order == 0 || 
 				(*this)[counter] >= last && order != 0) {
@@ -102,7 +109,7 @@ namespace sequence {
 	}
 
 	int Sequence::insert(const int value) {
-		if (this->size == this->maxSize) return OVERSIZE;
+		if ((*this) == this->maxSize) return OVERSIZE;
 		if (value == INT_MAX) return WRONG_PARAMS;
 		this->pNums[this->size] = value;
 		this->size++;
@@ -110,41 +117,27 @@ namespace sequence {
 	}
 
 	int Sequence::getGroupsCount() const {
-		int* pCash;
-		if (this->size == 0) return 0;
+		if ((*this) == 0) return 0;
+		int* pCash = new int[this->size];
+		int count = 0, j;
 
-		try { pCash = new int[this->size * 2]; }
-		catch (...) { return -MEMORY_ERROR; }
+		for (int i = 0; i < (*this); i++) {
+			j = 0;
+			for (j = 0; j < count; j++)
+				if ((*this)[i] == pCash[j]) j = count;
 
-		int i, j, k;
-		for (i = 1; i < this->size * 2; i += 2) pCash[i] = 0;
-
-		pCash[0] = (*this)[0];
-		pCash[1] = 1;
-
-		for (i = 1; i < this->size; i++) {
-			for (j = 0; j < this->size * 2; j += 2) {
-				if (pCash[j + 1] == 0 || (*this)[i] == pCash[j]) {
-					pCash[j] = (*this)[i];
-					pCash[j + 1]++;
-					break;
-				}
-			}
-		}
-
-		j = 0;
-		for (i = 1; i < this->size * 2; i += 2) {
-			if (pCash[i] == 0) break;
-			j++;
+			if (j == count + 1) continue;
+			pCash[count] = (*this)[i];
+			count++;
 		}
 
 		delete[] pCash;
-		return j;
+		return count;
 	}
 
 	int Sequence::getSameCount(const int value) const {
 		int result = 0;
-		for (int i = 0; i < this->size; i++)
+		for (int i = 0; i < (*this); i++)
 			if ((*this)[i] == value) result++;
 		return result;
 	}
@@ -154,32 +147,120 @@ namespace sequence {
 	bool Sequence::operator== (const Sequence& other) const {
 		if (this->size != other.size) return false;
 		for (int i = 0; i < this->size; i++)
-			if (this->pNums[i] != other.pNums[i]) return false;
+			if ((*this)[i] != other[i]) return false;
 		return true;
 	}
-
 	bool Sequence::operator> (const Sequence& other) const {
 		return this->size > other.size;
 	}
-
 	bool Sequence::operator< (const Sequence& other) const {
 		return this->size < other.size;
+	}
+	bool Sequence::operator>= (const Sequence& other) const {
+		return this->size >= other.size;
+	}
+	bool Sequence::operator<= (const Sequence& other) const {
+		return this->size <= other.size;
+	}
+
+	bool Sequence::operator== (const int other) const {
+		return this->size == other;
+	}
+	bool Sequence::operator> (const int other) const {
+		return this->size > other;
+	}
+	bool Sequence::operator< (const int other) const {
+		return this->size < other;
+	}
+	bool Sequence::operator>= (const int other) const {
+		return this->size >= other;
+	}
+	bool Sequence::operator<= (const int other) const {
+		return this->size <= other;
 	}
 
 	Sequence& Sequence::operator=(const Sequence& src) {
 		this->size = src.size;
-		memcpy(this->pNums, src.pNums, src.size * sizeof(int));
+		memcpy(this->pNums, src.pNums, src * sizeof(int));
 		return *this;
+	}
+	Sequence& Sequence::operator= (const int src) {
+		Sequence res(src);
+		return res;
+	}
+	Sequence& Sequence::operator= (const int* pSrc) {
+		if (pSrc == NULL)
+			throw std::invalid_argument("pSrc == NULL in Sequence::operator=");
+		Sequence res(pSrc);
+		return res;
 	}
 
 	Sequence& Sequence::operator+ (const Sequence& other) const { 
 		return this->plus(other);
 	}
-
+	Sequence& Sequence::operator+ (const int value) const {
+		return this->makeClone() += value;
+	}
 	Sequence& Sequence::operator+= (const int value) {
 		this->insert(value);
 		return *this;
 	}
 
 	int Sequence::operator[] (const int id) const {	return this->getElement(id); }
+
+	int Sequence::operator- (const int other) const {
+		return this->size - other;
+	}
+	int Sequence::operator* (const int other) const {
+		return this->size * other;
+	}
+	int Sequence::operator/ (const int other) const {
+		return this->size / other;
+	}
+	int Sequence::operator% (const int other) const {
+		return this->size % other;
+	}
+
+	// friends
+
+	bool operator== (const int other, const Sequence& cur) {
+		return other == cur.size;
+	}
+	bool operator> (const int other, const Sequence& cur) {
+		return other > cur.size;
+	}
+	bool operator< (const int other, const Sequence& cur) {
+		return other < cur.size;
+	}
+	bool operator>= (const int other, const Sequence& cur) {
+		return other >= cur.size;
+	}
+	bool operator<= (const int other, const Sequence& cur) {
+		return other <= cur.size;
+	}
+
+	int operator- (const int other, const Sequence& cur) {
+		return other - cur.size;
+	}
+	int operator* (const int other, const Sequence& cur) {
+		return other * cur.size;
+	}
+	int operator/ (const int other, const Sequence& cur) {
+		return other / cur.size;
+	}
+	int operator% (const int other, const Sequence& cur) {
+		return other % cur.size;
+	}
+	int operator-= (int other, const Sequence& cur) {
+		return other -= cur.size;
+	}
+	int operator*= (int other, const Sequence& cur) {
+		return other *= cur.size;
+	}
+	int operator/= (int other, const Sequence& cur) {
+		return other /= cur.size;
+	}
+	int operator%= (int other, const Sequence& cur) {
+		return other %= cur.size;
+	}
 }

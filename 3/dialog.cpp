@@ -6,7 +6,7 @@
 namespace dialog {
 
 	int getNum(int* pNum) {
-		if (pNum == NULL) return WRONG_PARAMS;
+		if (pNum == NULL) throw std::invalid_argument("pNum == NULL in getNum()");
 		int status = FAIL;
 
 		std::cin >> *pNum;
@@ -47,14 +47,14 @@ namespace dialog {
 	int exit(Sequence* pS) { return FAIL; }
 
 	int initFree(Sequence* pS) {
-		if (pS == NULL) return WRONG_PARAMS;
+		if (pS == NULL) throw std::invalid_argument("pS == NULL in initFree()");
 		Sequence free;
 		*pS = free;
 		return SUCCESS;
 	}
 
 	int initOne(Sequence* pS) {
-		if (pS == NULL) return WRONG_PARAMS;
+		if (pS == NULL) throw std::invalid_argument("pS == NULL in initOne()");
 
 		int value = getNum("Enter integer: ", "Invalid value! Enter integer: ");
 		Sequence one(value);
@@ -66,7 +66,7 @@ namespace dialog {
 	}
 
 	int initByArray(Sequence* pS) {
-		if (pS == NULL) return WRONG_PARAMS;
+		if (pS == NULL) throw std::invalid_argument("pS == NULL in initByArray()");
 
 		int i;
 		int pArr[MAX_SIZE];
@@ -90,19 +90,19 @@ namespace dialog {
 	}
 
 	int printSize(Sequence* pS) {
-		if (pS == NULL) return WRONG_PARAMS;
+		if (pS == NULL) throw std::invalid_argument("pS == NULL in printSize()");
 		std::cout << "Size of current sequence: " << pS->getSize() << std::endl;
 		return SUCCESS;
 	}
 
 	int printMaxSize(Sequence* pS) {
-		if (pS == NULL) return WRONG_PARAMS;
+		if (pS == NULL) throw std::invalid_argument("pS == NULL in printMaxSize()");
 		std::cout << "Max size of current sequence: " << pS->getMaxSize() << std::endl;
 		return SUCCESS;
 	}
 
 	int printElement(Sequence* pS) {
-		if (pS == NULL) return WRONG_PARAMS;
+		if (pS == NULL) throw std::invalid_argument("pS == NULL in printElement()");
 		if (pS->getSize() == 0) {
 			std::cout << "Sequence is free!" << std::endl;
 			return SUCCESS;
@@ -121,7 +121,7 @@ namespace dialog {
 	}
 
 	int makeClone(Sequence* pS) {
-		if (pS == NULL) return WRONG_PARAMS;
+		if (pS == NULL) throw std::invalid_argument("pS == NULL in makeClone()");
 		Sequence clone = pS->makeClone();
 
 		std::cout << "Clone: ";
@@ -134,7 +134,7 @@ namespace dialog {
 	}
 
 	int input(Sequence* pS) {
-		if (pS == NULL) return WRONG_PARAMS;
+		if (pS == NULL) throw std::invalid_argument("pS == NULL in input()");
 		std::cout << "Enter via space integer or something else if you want to stop: ";
 		pS->input();
 
@@ -144,8 +144,8 @@ namespace dialog {
 		return SUCCESS;
 	}
 
-	int output(Sequence*pS) {
-		if (pS == NULL) return WRONG_PARAMS;
+	int output(Sequence* pS) {
+		if (pS == NULL) throw std::invalid_argument("pS == NULL in output()");
 
 		std::cout << "Current sequence: ";
 		pS->output();
@@ -154,7 +154,7 @@ namespace dialog {
 	}
 
 	int plus(Sequence* pS) {
-		if (pS == NULL) return WRONG_PARAMS;
+		if (pS == NULL) throw std::invalid_argument("pS == NULL in plus()");
 		Sequence other;
 
 		std::cout << "Making the second sequence" << std::endl;
@@ -178,7 +178,7 @@ namespace dialog {
 	}
 
 	int findMonotonicity(Sequence* pS) {
-		if (pS == NULL) return WRONG_PARAMS;
+		if (pS == NULL) throw std::invalid_argument("pS == NULL in findMonotonicity()");
 		int order = 0;
 
 		std::cout << "Enter 0 to find ascending subsequence "
@@ -198,7 +198,7 @@ namespace dialog {
 	}
 
 	int insert(Sequence* pS) {
-		if (pS == NULL) return WRONG_PARAMS;
+		if (pS == NULL) throw std::invalid_argument("pS == NULL in insert()");
 		int value = getNum("Enter new value (integer): ", "Invalid value! Try again: ");
 		
 		value = pS->insert(value);
@@ -208,14 +208,14 @@ namespace dialog {
 	}
 
 	int printGroupsCount(Sequence* pS) {
-		if (pS == NULL) return WRONG_PARAMS;
+		if (pS == NULL) throw std::invalid_argument("pS == NULL in printGroupsCount()");
 		std::cout << "There are " << pS->getGroupsCount()
 			<< " groups in the sequence" << std::endl;
 		return SUCCESS;
 	}
 
 	int printSameCount(Sequence* pS) {
-		if (pS == NULL) return WRONG_PARAMS;
+		if (pS == NULL) throw std::invalid_argument("pS == NULL in printSameCount()");
 
 		int value = getNum("Enter value (integer): ", "Invalid value! Try again: ");
 		std::cout << "There are " << pS->getSameCount(value)
