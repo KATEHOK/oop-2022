@@ -2,10 +2,6 @@
 
 #define SEQUENCE_H
 
-#ifndef MAX_SIZE
-#define MAX_SIZE 100
-#endif
-
 #ifndef APP
 
 #include <iostream>
@@ -23,6 +19,7 @@ enum status {
 #endif
 
 namespace sequence {
+	const int MAX_SIZE = 100;
 
 	/*
 	* INT_MAX - служебное значение
