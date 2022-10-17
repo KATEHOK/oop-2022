@@ -7,6 +7,7 @@
 #include <limits>
 #include <stdlib.h>
 #include <crtdbg.h>
+#include <exception>
 
 #include "sequence.h"
 #include "dialog.h"

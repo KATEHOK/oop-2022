@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <limits>
+#include <exception>
 
 enum status {
 	SUCCESS = 0,
@@ -41,20 +42,20 @@ namespace sequence {
 		/*
 		* Клонирует экземпляр
 		*/
-		Sequence* makeClone() const;
+		Sequence& makeClone() const;
 
 		/*
-		* Not a number character is required after the last num
+		* Чтобы завершить ввод, необходимо ввести NaN
 		*/
 		void input();
 		void output() const;
 
-		Sequence* plus(const Sequence* pOther) const;
+		Sequence& plus(const Sequence& other) const;
 
 		/*
 		* Ищет монотонную подпоследовательность
 		*/
-		Sequence* findMonotonicity(const int order) const;
+		Sequence& findMonotonicity(const int order) const;
 
 		int insert(const int value);
 

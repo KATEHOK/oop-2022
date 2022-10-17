@@ -143,22 +143,16 @@ namespace dialog {
 			return SUCCESS;
 		}
 
-		Sequence* pNew = (*ppS)->makeClone();
-		if (pNew == NULL) {
-			std::cout << "Something went wrong, clone was not created!" << std::endl;
-			return SUCCESS;
-		}
-
+		Sequence clone = (*ppS)->makeClone();
 		std::cout << "Clone: ";
-		pNew->output();
+		clone.output();
 		std::cout << std::endl;
 
 		std::cout << "Do you want to replace your current sequence?" << std::endl;
 		if (confirm() == SUCCESS) {
 			delete (*ppS);
-			(*ppS) = pNew;
+			(*ppS) = &clone;
 		}
-		else delete pNew;
 		return SUCCESS;
 	}
 
@@ -204,26 +198,21 @@ namespace dialog {
 		other.input();
 		std::cout << std::endl;
 
-		Sequence* pRes = (*ppS)->plus(&other);
-		if (pRes == NULL) {
-			std::cout << "Sequence was not inited!" << std::endl;
-			return SUCCESS;
-		}
+		Sequence res = (*ppS)->plus(other);
 
 		std::cout << std::endl;
 		(*ppS)->output();
 		std::cout << " + ";
 		other.output();
 		std::cout << " = ";
-		pRes->output();
+		res.output();
 		std::cout << std::endl;
 		
 		std::cout << "Do you want to replace your current sequence?" << std::endl;
 		if (confirm() == SUCCESS) {
 			delete (*ppS);
-			(*ppS) = pRes;
+			(*ppS) = &res;
 		}
-		else delete pRes;
 		return SUCCESS;
 	}
 
@@ -241,23 +230,17 @@ namespace dialog {
 			std::cout << std::endl << "Invalid value! Try again: ";
 		std::cout << std::endl;
 
-		Sequence* pNew = (*ppS)->findMonotonicity(order);
-		if (pNew == NULL) {
-			std::cout
-				<< "Subsequence was not found or something went wrong!" << std::endl;
-			return SUCCESS;
-		}
+		Sequence sub = (*ppS)->findMonotonicity(order);
 
 		std::cout << "Subsequence: ";
-		pNew->output();
+		sub.output();
 		std::cout << std::endl;
 
 		std::cout << "Do you want to replace your current sequence?" << std::endl;
 		if (confirm() == SUCCESS) {
 			delete (*ppS);
-			(*ppS) = pNew;
+			(*ppS) = &sub;
 		}
-		else delete pNew;
 		return SUCCESS;
 	}
 

@@ -17,11 +17,10 @@ namespace sequence {
 		if (id >= 0 && id < this->size) return this->pNums[id];
 		return INT_MAX;
 	}
-	Sequence* Sequence::makeClone() const {
-		Sequence* pResult = NULL;
-		try { pResult = new Sequence(this->size, this->pNums); }
-		catch (...) { return NULL; }
-		return pResult;
+
+	Sequence& Sequence::makeClone() const {
+		Sequence result(this->size, this->pNums);
+		return result;
 	}
 
 	void Sequence::input() {
@@ -47,26 +46,20 @@ namespace sequence {
 		std::cout << "}";
 	}
 	
-	Sequence* Sequence::plus(const Sequence* pOther) const {
-		if (pOther == NULL) return NULL;
-		Sequence* pResult = this->makeClone();
-
-		if (pResult == NULL) return NULL;
+	Sequence& Sequence::plus(const Sequence& other) const {
+		Sequence result = this->makeClone();
 		int i = 0;
 
-		while (pResult->size < this->maxSize && i < pOther->size) {
-			pResult->insert(pOther->pNums[i]);
+		while (result.size < this->maxSize && i < other.size) {
+			result.insert(other.pNums[i]);
 			i++;
 		}
 
-		return pResult;
+		return result;
 	}
 
-	Sequence* Sequence::findMonotonicity(const int order) const {
-		Sequence* pResult;
-
-		try { pResult = new Sequence; }
-		catch (...) { return NULL; }
+	Sequence& Sequence::findMonotonicity(const int order) const {
+		Sequence res;
 
 		int last = this->pNums[0];
 		int startId = 0;
@@ -91,15 +84,15 @@ namespace sequence {
 			}
 			// найдена монотонность из 3 элементов
 			if (counter - startId == 2) {
-				pResult->insert(this->pNums[startId]);
-				pResult->insert(this->pNums[startId + 1]);
+				res.insert(this->pNums[startId]);
+				res.insert(this->pNums[startId + 1]);
 			}
 			// продолжение монотонности длинее 2 элементов
 			last = this->pNums[counter];
-			pResult->insert(this->pNums[counter]);
+			res.insert(this->pNums[counter]);
 		}
 
-		return pResult;
+		return res;
 	}
 
 	int Sequence::insert(const int value) {

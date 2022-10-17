@@ -43,7 +43,7 @@ int main() {
 		status = operations[choice](&pSeq);
 	}
 
-	if (pSeq != NULL) delete pSeq;
+	//if (pSeq != NULL) delete pSeq;
 	std::cout << "Code: " << status << std::endl;
 	return SUCCESS;
 }
