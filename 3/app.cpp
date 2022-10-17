@@ -5,6 +5,8 @@
 using namespace dialog;
 
 int main() {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
 	int choice;
 	const int mCount = 15;
 	sequence::Sequence* pSeq = NULL;
@@ -41,6 +43,7 @@ int main() {
 		status = operations[choice](&pSeq);
 	}
 
+	if (pSeq != NULL) delete pSeq;
 	std::cout << "Code: " << status << std::endl;
 	return SUCCESS;
 }

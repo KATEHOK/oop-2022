@@ -1,9 +1,12 @@
 ﻿#pragma once
 
 #define APP
+#define _CRTDBG_MAP_ALLOC
 
 #include <iostream>
 #include <limits>
+#include <stdlib.h>
+#include <crtdbg.h>
 
 #include "sequence.h"
 #include "dialog.h"
