@@ -12,24 +12,24 @@ namespace dialog {
 	int getNum(const char* pFMsg = NULL, const char* pSMsg = NULL);
 	int confirm();
 
-	int exit(Sequence** ppS = NULL);
-	int initFree(Sequence** ppS = NULL);
-	int initOne(Sequence** ppS = NULL);
-	int initByArray(Sequence** ppS = NULL);
+	int exit(Sequence* pS = NULL);
+	int initFree(Sequence* pS = NULL);
+	int initOne(Sequence* pS = NULL);
+	int initByArray(Sequence* pS = NULL);
 
-	int printSize(Sequence** ppS = NULL);
-	int printMaxSize(Sequence** ppS = NULL);
+	int printSize(Sequence* pS = NULL);
+	int printMaxSize(Sequence* pS = NULL);
 
-	int printElement(Sequence** ppS = NULL);
-	int makeClone(Sequence** ppS = NULL);
+	int printElement(Sequence* pS = NULL);
+	int makeClone(Sequence* pS = NULL);
 
-	int input(Sequence** ppS = NULL);
-	int output(Sequence** ppS = NULL);
+	int input(Sequence* pS = NULL);
+	int output(Sequence* pS = NULL);
 
-	int plus(Sequence** ppS = NULL);
-	int findMonotonicity(Sequence** ppS = NULL);
+	int plus(Sequence* pS = NULL);
+	int findMonotonicity(Sequence* pS = NULL);
 
-	int insert(Sequence** ppS = NULL);
-	int printGroupsCount(Sequence** ppS = NULL);
-	int printSameCount(Sequence** ppS = NULL);
+	int insert(Sequence* pS = NULL);
+	int printGroupsCount(Sequence* pS = NULL);
+	int printSameCount(Sequence* pS = NULL);
 };

@@ -69,6 +69,14 @@ namespace sequence {
 		*/
 		int getSameCount(const int value) const;
 
+		bool operator== (const Sequence& other) const; // полное совпадение
+		bool operator> (const Sequence& other) const; // размер
+		bool operator< (const Sequence& other) const; // размер
+		Sequence& operator= (const Sequence& src);
+		Sequence& operator+ (const Sequence& other) const;
+		Sequence& operator+= (const int value);
+		int operator[] (const int id) const;
+
 	private:
 
 		const int maxSize = MAX_SIZE;

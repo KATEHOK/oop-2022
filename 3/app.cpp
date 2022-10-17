@@ -5,11 +5,13 @@
 using namespace dialog;
 
 int main() {
+	// Для выявления утечек памяти
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	int choice;
 	const int mCount = 15;
-	sequence::Sequence* pSeq = NULL;
+	sequence::Sequence seq;
+
 	const char* ppVars[mCount] = {
 		"Exit", "Init free", "Init one", "Init by array",
 		"Print size", "Print max size",
@@ -18,7 +20,8 @@ int main() {
 		"Add other", "Find monotonicity",
 		"Insert value", "Get groups count", "Get same count"
 	};
-	int (*operations[mCount])(sequence::Sequence**) = {
+
+	int (*operations[mCount])(sequence::Sequence*) = {
 		exit, initFree, initOne, initByArray,
 		printSize, printMaxSize,
 		printElement, makeClone,
@@ -40,10 +43,9 @@ int main() {
 			std::cout << std::endl << "Wrong value! Choose point: ";
 		std::cout << std::endl;
 		
-		status = operations[choice](&pSeq);
+		status = operations[choice](&seq);
 	}
 
-	//if (pSeq != NULL) delete pSeq;
 	std::cout << "Code: " << status << std::endl;
 	return SUCCESS;
 }

@@ -5,14 +5,20 @@
 namespace sequence {
 
 	Sequence::Sequence() {}
-	Sequence::Sequence(const int item) { this->insert(item); }
+	Sequence::Sequence(const int item) {
+		*this += item;
+	}
 	Sequence::Sequence(const int size, const int* pData) {
 		if (pData == NULL) return;
-		for (int i = 0; i < size; i++) this->insert(pData[i]);
+		for (int i = 0; i < size; i++) *this += pData[i];
 	}
 
-	int Sequence::getSize() const { return this->size; }
-	int Sequence::getMaxSize() const { return this->maxSize; }
+	int Sequence::getSize() const {
+		return this->size;
+	}
+	int Sequence::getMaxSize() const {
+		return this->maxSize;
+	}
 	int Sequence::getElement(const int id) const {
 		if (id >= 0 && id < this->size) return this->pNums[id];
 		return INT_MAX;
@@ -51,7 +57,7 @@ namespace sequence {
 		int i = 0;
 
 		while (result.size < this->maxSize && i < other.size) {
-			result.insert(other.pNums[i]);
+			result += other[i];
 			i++;
 		}
 
@@ -61,16 +67,16 @@ namespace sequence {
 	Sequence& Sequence::findMonotonicity(const int order) const {
 		Sequence res;
 
-		int last = this->pNums[0];
+		int last = (*this)[0];
 		int startId = 0;
 
 		for (int counter = 1; counter < this->size; counter++) {
 
-			if (this->pNums[counter] <= last && order == 0 || 
-				this->pNums[counter] >= last && order != 0) {
+			if ((*this)[counter] <= last && order == 0 || 
+				(*this)[counter] >= last && order != 0) {
 				// прерывание монотонности из 1 или 2 элементов (продолжаем)
 				if (counter - startId <= 2) {
-					last = this->pNums[counter];
+					last = (*this)[counter];
 					startId = counter;
 					continue;
 				}
@@ -79,17 +85,17 @@ namespace sequence {
 			}
 			// монотонность короче 3 элементов
 			if (counter - startId < 2) {
-				last = this->pNums[counter];
+				last = (*this)[counter];
 				continue;
 			}
 			// найдена монотонность из 3 элементов
 			if (counter - startId == 2) {
-				res.insert(this->pNums[startId]);
-				res.insert(this->pNums[startId + 1]);
+				res += (*this)[startId];
+				res += (*this)[startId + 1];
 			}
 			// продолжение монотонности длинее 2 элементов
-			last = this->pNums[counter];
-			res.insert(this->pNums[counter]);
+			last = (*this)[counter];
+			res += (*this)[counter];
 		}
 
 		return res;
@@ -113,13 +119,13 @@ namespace sequence {
 		int i, j, k;
 		for (i = 1; i < this->size * 2; i += 2) pCash[i] = 0;
 
-		pCash[0] = this->pNums[0];
+		pCash[0] = (*this)[0];
 		pCash[1] = 1;
 
 		for (i = 1; i < this->size; i++) {
 			for (j = 0; j < this->size * 2; j += 2) {
-				if (pCash[j + 1] == 0 || this->pNums[i] == pCash[j]) {
-					pCash[j] = this->pNums[i];
+				if (pCash[j + 1] == 0 || (*this)[i] == pCash[j]) {
+					pCash[j] = (*this)[i];
 					pCash[j + 1]++;
 					break;
 				}
@@ -139,7 +145,41 @@ namespace sequence {
 	int Sequence::getSameCount(const int value) const {
 		int result = 0;
 		for (int i = 0; i < this->size; i++)
-			if (this->pNums[i] == value) result++;
+			if ((*this)[i] == value) result++;
 		return result;
 	}
+
+	// operators
+
+	bool Sequence::operator== (const Sequence& other) const {
+		if (this->size != other.size) return false;
+		for (int i = 0; i < this->size; i++)
+			if (this->pNums[i] != other.pNums[i]) return false;
+		return true;
+	}
+
+	bool Sequence::operator> (const Sequence& other) const {
+		return this->size > other.size;
+	}
+
+	bool Sequence::operator< (const Sequence& other) const {
+		return this->size < other.size;
+	}
+
+	Sequence& Sequence::operator=(const Sequence& src) {
+		this->size = src.size;
+		memcpy(this->pNums, src.pNums, src.size * sizeof(int));
+		return *this;
+	}
+
+	Sequence& Sequence::operator+ (const Sequence& other) const { 
+		return this->plus(other);
+	}
+
+	Sequence& Sequence::operator+= (const int value) {
+		this->insert(value);
+		return *this;
+	}
+
+	int Sequence::operator[] (const int id) const {	return this->getElement(id); }
 }

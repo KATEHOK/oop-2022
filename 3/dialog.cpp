@@ -44,32 +44,29 @@ namespace dialog {
 		return SUCCESS;
 	}
 
-	int exit(Sequence** ppS) { return FAIL; }
+	int exit(Sequence* pS) { return FAIL; }
 
-	int initFree(Sequence** ppS) {
-		if (ppS == NULL) return WRONG_PARAMS;
-		if ((*ppS) != NULL) delete (*ppS);
-		try { *ppS = new Sequence;	}
-		catch (...) { return MEMORY_ERROR; }
+	int initFree(Sequence* pS) {
+		if (pS == NULL) return WRONG_PARAMS;
+		Sequence free;
+		*pS = free;
 		return SUCCESS;
 	}
 
-	int initOne(Sequence** ppS) {
-		if (ppS == NULL) return WRONG_PARAMS;
-		if ((*ppS) != NULL) delete (*ppS);
+	int initOne(Sequence* pS) {
+		if (pS == NULL) return WRONG_PARAMS;
+
 		int value = getNum("Enter integer: ", "Invalid value! Enter integer: ");
+		Sequence one(value);
+		*pS = one;
 
-		try { *ppS = new Sequence(value); }
-		catch (...) { return MEMORY_ERROR; }
-
-		(*ppS)->output();
+		pS->output();
 		std::cout << std::endl;
 		return SUCCESS;
 	}
 
-	int initByArray(Sequence** ppS) {
-		if (ppS == NULL) return WRONG_PARAMS;
-		if ((*ppS) != NULL) delete (*ppS);
+	int initByArray(Sequence* pS) {
+		if (pS == NULL) return WRONG_PARAMS;
 
 		int i;
 		int pArr[MAX_SIZE];
@@ -84,124 +81,91 @@ namespace dialog {
 		}
 		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-		try { *ppS = new Sequence(i, pArr); }
-		catch (...) { return MEMORY_ERROR; }
+		Sequence res(i, pArr);
+		*pS = res;
 
-		(*ppS)->output();
+		pS->output();
 		std::cout << std::endl;
 		return SUCCESS;
 	}
 
-	int printSize(Sequence** ppS) {
-		if (ppS == NULL) return WRONG_PARAMS;
-		if ((*ppS) == NULL) {
-			std::cout << "Sequence was not inited!" << std::endl;
-			return SUCCESS;
-		}
-		std::cout << "Size of current sequence: " << (*ppS)->getSize() << std::endl;
+	int printSize(Sequence* pS) {
+		if (pS == NULL) return WRONG_PARAMS;
+		std::cout << "Size of current sequence: " << pS->getSize() << std::endl;
 		return SUCCESS;
 	}
 
-	int printMaxSize(Sequence** ppS) {
-		if (ppS == NULL) return WRONG_PARAMS;
-		if ((*ppS) == NULL) {
-			std::cout << "Sequence was not inited!" << std::endl;
-			return SUCCESS;
-		}
-		std::cout
-			<< "Max size of current sequence: " << (*ppS)->getMaxSize() << std::endl;
+	int printMaxSize(Sequence* pS) {
+		if (pS == NULL) return WRONG_PARAMS;
+		std::cout << "Max size of current sequence: " << pS->getMaxSize() << std::endl;
 		return SUCCESS;
 	}
 
-	int printElement(Sequence** ppS) {
-		if (ppS == NULL) return WRONG_PARAMS;
-		if ((*ppS) == NULL) {
-			std::cout << "Sequence was not inited!" << std::endl;
-			return SUCCESS;
-		}
-		if ((*ppS)->getSize() == 0) {
+	int printElement(Sequence* pS) {
+		if (pS == NULL) return WRONG_PARAMS;
+		if (pS->getSize() == 0) {
 			std::cout << "Sequence is free!" << std::endl;
 			return SUCCESS;
 		}
 
 		int value = 0;
 		std::cout << "Enter id (extended natural from 0 to "
-			<< (*ppS)->getSize() - 1 << "): ";
+			<< pS->getSize() - 1 << "): ";
 
-		while (getNum(&value) == FAIL || value < 0 || value >= (*ppS)->getSize())
+		while (getNum(&value) == FAIL || value < 0 || value >= pS->getSize())
 			std::cout << std::endl << "Invalid value! Enter extended natural: ";
 		std::cout << std::endl;
 
-		std::cout << "[" << value << "] " << (*ppS)->getElement(value) << std::endl;
+		std::cout << "[" << value << "] " << pS->getElement(value) << std::endl;
 		return SUCCESS;
 	}
 
-	int makeClone(Sequence** ppS) {
-		if (ppS == NULL) return WRONG_PARAMS;
-		if ((*ppS) == NULL) {
-			std::cout << "Sequence was not inited!" << std::endl;
-			return SUCCESS;
-		}
+	int makeClone(Sequence* pS) {
+		if (pS == NULL) return WRONG_PARAMS;
+		Sequence clone = pS->makeClone();
 
-		Sequence clone = (*ppS)->makeClone();
 		std::cout << "Clone: ";
 		clone.output();
 		std::cout << std::endl;
 
 		std::cout << "Do you want to replace your current sequence?" << std::endl;
-		if (confirm() == SUCCESS) {
-			delete (*ppS);
-			(*ppS) = &clone;
-		}
+		if (confirm() == SUCCESS) *pS = clone;
 		return SUCCESS;
 	}
 
-	int input(Sequence** ppS) {
-		if (ppS == NULL) return WRONG_PARAMS;
-		if ((*ppS) == NULL) {
-			std::cout << "Sequence was not inited!" << std::endl;
-			return SUCCESS;
-		}
-
+	int input(Sequence* pS) {
+		if (pS == NULL) return WRONG_PARAMS;
 		std::cout << "Enter via space integer or something else if you want to stop: ";
-		(*ppS)->input();
+		pS->input();
 
 		std::cout << std::endl << "Current sequence: ";
-		(*ppS)->output();
+		pS->output();
 		std::cout << std::endl;
 		return SUCCESS;
 	}
 
-	int output(Sequence** ppS) {
-		if (ppS == NULL) return WRONG_PARAMS;
-		if ((*ppS) == NULL) {
-			std::cout << "Sequence was not inited!" << std::endl;
-			return SUCCESS;
-		}
+	int output(Sequence*pS) {
+		if (pS == NULL) return WRONG_PARAMS;
 
 		std::cout << "Current sequence: ";
-		(*ppS)->output();
+		pS->output();
 		std::cout << std::endl;
 		return SUCCESS;
 	}
 
-	int plus(Sequence** ppS) {
-		if (ppS == NULL) return WRONG_PARAMS;
-		if ((*ppS) == NULL) {
-			std::cout << "Sequence was not inited!" << std::endl;
-			return SUCCESS;
-		}
-
+	int plus(Sequence* pS) {
+		if (pS == NULL) return WRONG_PARAMS;
 		Sequence other;
+
 		std::cout << "Making the second sequence" << std::endl;
 		std::cout << "Enter via space integer or something else if you want to stop: ";
 		other.input();
 		std::cout << std::endl;
 
-		Sequence res = (*ppS)->plus(other);
+		Sequence res = pS->plus(other);
 
 		std::cout << std::endl;
-		(*ppS)->output();
+		pS->output();
 		std::cout << " + ";
 		other.output();
 		std::cout << " = ";
@@ -209,75 +173,52 @@ namespace dialog {
 		std::cout << std::endl;
 		
 		std::cout << "Do you want to replace your current sequence?" << std::endl;
-		if (confirm() == SUCCESS) {
-			delete (*ppS);
-			(*ppS) = &res;
-		}
+		if (confirm() == SUCCESS) *pS = res;
 		return SUCCESS;
 	}
 
-	int findMonotonicity(Sequence** ppS) {
-		if (ppS == NULL) return WRONG_PARAMS;
-		if ((*ppS) == NULL) {
-			std::cout << "Sequence was not inited!" << std::endl;
-			return SUCCESS;
-		}
-
+	int findMonotonicity(Sequence* pS) {
+		if (pS == NULL) return WRONG_PARAMS;
 		int order = 0;
+
 		std::cout << "Enter 0 to find ascending subsequence "
 			<< "or 1 to find descending subsequence: ";
 		while (getNum(&order) == FAIL || (order != 0 && order != 1))
 			std::cout << std::endl << "Invalid value! Try again: ";
 		std::cout << std::endl;
 
-		Sequence sub = (*ppS)->findMonotonicity(order);
-
+		Sequence sub = pS->findMonotonicity(order);
 		std::cout << "Subsequence: ";
 		sub.output();
 		std::cout << std::endl;
 
 		std::cout << "Do you want to replace your current sequence?" << std::endl;
-		if (confirm() == SUCCESS) {
-			delete (*ppS);
-			(*ppS) = &sub;
-		}
+		if (confirm() == SUCCESS) *pS = sub;
 		return SUCCESS;
 	}
 
-	int insert(Sequence** ppS) {
-		if (ppS == NULL) return WRONG_PARAMS;
-		if ((*ppS) == NULL) {
-			std::cout << "Sequence was not inited!" << std::endl;
-			return SUCCESS;
-		}
-
+	int insert(Sequence* pS) {
+		if (pS == NULL) return WRONG_PARAMS;
 		int value = getNum("Enter new value (integer): ", "Invalid value! Try again: ");
-		value = (*ppS)->insert(value);
+		
+		value = pS->insert(value);
 		if (value != SUCCESS)
 			std::cout << "Value was not inserted! (code: " << value << ")" << std::endl;
 		return SUCCESS;
 	}
 
-	int printGroupsCount(Sequence** ppS) {
-		if (ppS == NULL) return WRONG_PARAMS;
-		if ((*ppS) == NULL) {
-			std::cout << "Sequence was not inited!" << std::endl;
-			return SUCCESS;
-		}
-		std::cout << "There are " << (*ppS)->getGroupsCount()
+	int printGroupsCount(Sequence* pS) {
+		if (pS == NULL) return WRONG_PARAMS;
+		std::cout << "There are " << pS->getGroupsCount()
 			<< " groups in the sequence" << std::endl;
 		return SUCCESS;
 	}
 
-	int printSameCount(Sequence** ppS) {
-		if (ppS == NULL) return WRONG_PARAMS;
-		if ((*ppS) == NULL) {
-			std::cout << "Sequence was not inited!" << std::endl;
-			return SUCCESS;
-		}
+	int printSameCount(Sequence* pS) {
+		if (pS == NULL) return WRONG_PARAMS;
 
 		int value = getNum("Enter value (integer): ", "Invalid value! Try again: ");
-		std::cout << "There are " << (*ppS)->getSameCount(value)
+		std::cout << "There are " << pS->getSameCount(value)
 			<< " elements equal " << value << " in the sequence" << std::endl;
 		return SUCCESS;
 	}
