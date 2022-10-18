@@ -28,21 +28,6 @@ namespace sequence {
 	class Sequence {
 
 		// friends
-		friend bool operator== (const int other, const Sequence& cur);
-		friend bool operator> (const int other, const Sequence& cur);
-		friend bool operator< (const int other, const Sequence& cur);
-		friend bool operator>= (const int other, const Sequence& cur);
-		friend bool operator<= (const int other, const Sequence& cur);
-
-		friend int operator- (const int other, const Sequence& cur);
-		friend int operator-= (const int other, const Sequence& cur);
-		friend int operator* (const int other, const Sequence& cur);
-		friend int operator*= (const int other, const Sequence& cur);
-		friend int operator/ (const int other, const Sequence& cur);
-		friend int operator/= (const int other, const Sequence& cur);
-		friend int operator% (const int other, const Sequence& cur);
-		friend int operator%= (const int other, const Sequence& cur);
-
 		friend std::ostream& operator<<(std::ostream& out, const Sequence& seq);
 		friend std::istream& operator>>(std::istream& in, Sequence& seq);
 
@@ -71,6 +56,8 @@ namespace sequence {
 		void output(std::ostream& out) const;
 
 		Sequence& plus(const Sequence& other) const;
+		Sequence& minus(const Sequence& other) const;
+		Sequence& minusNum(const int other) const;
 
 		/*
 		* Ищет монотонную подпоследовательность
@@ -91,37 +78,32 @@ namespace sequence {
 
 		// operators
 		bool operator== (const Sequence& other) const; // полное совпадение
+		bool operator!= (const Sequence& other) const;
 		bool operator> (const Sequence& other) const; // размер
 		bool operator< (const Sequence& other) const; // размер
 		bool operator>= (const Sequence& other) const; // размер
 		bool operator<= (const Sequence& other) const; // размер
 
-		bool operator== (const int other) const; // размер
-		bool operator> (const int other) const; // размер
-		bool operator< (const int other) const; // размер
-		bool operator>= (const int other) const; // размер
-		bool operator<= (const int other) const; // размер
-
 		Sequence& operator= (const Sequence& src);
-		Sequence& operator= (const int src);
-		Sequence& operator= (const int* pSrc); // обязательно терминальное значение INT_MAX
 		
 		Sequence& operator+ (const Sequence& other) const;
-		Sequence& operator+ (const int value) const;
-		Sequence& operator+= (const int value);
+		Sequence& operator+= (const Sequence& other);
+
+		Sequence& operator- (const Sequence& other) const;
+		Sequence& operator-= (const Sequence& other);
 
 		int operator[] (const int id) const;
-
-		int operator- (const int other) const;
-		int operator* (const int other) const;
-		int operator/ (const int other) const;
-		int operator% (const int other) const;
 
 	private:
 
 		const int maxSize = MAX_SIZE;
 		int pNums[MAX_SIZE];
 		int size = 0;
+
+		/*
+		* Ищет индекс последнего вхождения элемента
+		*/
+		int findBack(const int value) const;
 
 	};
 }

@@ -58,8 +58,7 @@ namespace dialog {
 		if (pS == NULL) throw std::invalid_argument("pS == NULL in initOne()");
 
 		int value = getNum("Enter integer: ", "Invalid value! Enter integer: ");
-		Sequence one(value);
-		*pS = one;
+		*pS = value;
 
 		std::cout << *pS << std::endl;
 		return SUCCESS;
@@ -115,7 +114,7 @@ namespace dialog {
 			std::cout << std::endl << "Invalid value! Enter extended natural: ";
 		std::cout << std::endl;
 
-		std::cout << "[" << value << "] " << pS->getElement(value) << std::endl;
+		std::cout << "[" << value << "] " << (*pS)[value] << std::endl;
 		return SUCCESS;
 	}
 
@@ -154,7 +153,7 @@ namespace dialog {
 		std::cin >> other;
 		std::cout << std::endl;
 
-		Sequence res = pS->plus(other);
+		Sequence res = *pS + other;
 		std::cout << std::endl << *pS << " + " << other << " = " << res << std::endl;
 		
 		std::cout << "Do you want to replace your current sequence?" << std::endl;
@@ -184,9 +183,7 @@ namespace dialog {
 		if (pS == NULL) throw std::invalid_argument("pS == NULL in insert()");
 		int value = getNum("Enter new value (integer): ", "Invalid value! Try again: ");
 		
-		value = pS->insert(value);
-		if (value != SUCCESS)
-			std::cout << "Value was not inserted! (code: " << value << ")" << std::endl;
+		*pS += value;
 		return SUCCESS;
 	}
 
