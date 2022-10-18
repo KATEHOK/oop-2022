@@ -50,6 +50,7 @@ namespace dialog {
 		if (pS == NULL) throw std::invalid_argument("pS == NULL in initFree()");
 		Sequence free;
 		*pS = free;
+		std::cout << *pS << std::endl;
 		return SUCCESS;
 	}
 
@@ -60,8 +61,7 @@ namespace dialog {
 		Sequence one(value);
 		*pS = one;
 
-		pS->output();
-		std::cout << std::endl;
+		std::cout << *pS << std::endl;
 		return SUCCESS;
 	}
 
@@ -84,8 +84,7 @@ namespace dialog {
 		Sequence res(i, pArr);
 		*pS = res;
 
-		pS->output();
-		std::cout << std::endl;
+		std::cout << *pS << std::endl;
 		return SUCCESS;
 	}
 
@@ -123,10 +122,7 @@ namespace dialog {
 	int makeClone(Sequence* pS) {
 		if (pS == NULL) throw std::invalid_argument("pS == NULL in makeClone()");
 		Sequence clone = pS->makeClone();
-
-		std::cout << "Clone: ";
-		clone.output();
-		std::cout << std::endl;
+		std::cout << "Clone: " << clone << std::endl;
 
 		std::cout << "Do you want to replace your current sequence?" << std::endl;
 		if (confirm() == SUCCESS) *pS = clone;
@@ -136,20 +132,15 @@ namespace dialog {
 	int input(Sequence* pS) {
 		if (pS == NULL) throw std::invalid_argument("pS == NULL in input()");
 		std::cout << "Enter via space integer or something else if you want to stop: ";
-		pS->input();
+		std::cin >> *pS;
 
-		std::cout << std::endl << "Current sequence: ";
-		pS->output();
-		std::cout << std::endl;
+		std::cout << std::endl << "Current sequence: " << *pS << std::endl;
 		return SUCCESS;
 	}
 
 	int output(Sequence* pS) {
 		if (pS == NULL) throw std::invalid_argument("pS == NULL in output()");
-
-		std::cout << "Current sequence: ";
-		pS->output();
-		std::cout << std::endl;
+		std::cout << "Current sequence: " << *pS << std::endl;
 		return SUCCESS;
 	}
 
@@ -159,18 +150,12 @@ namespace dialog {
 
 		std::cout << "Making the second sequence" << std::endl;
 		std::cout << "Enter via space integer or something else if you want to stop: ";
-		other.input();
+
+		std::cin >> other;
 		std::cout << std::endl;
 
 		Sequence res = pS->plus(other);
-
-		std::cout << std::endl;
-		pS->output();
-		std::cout << " + ";
-		other.output();
-		std::cout << " = ";
-		res.output();
-		std::cout << std::endl;
+		std::cout << std::endl << *pS << " + " << other << " = " << res << std::endl;
 		
 		std::cout << "Do you want to replace your current sequence?" << std::endl;
 		if (confirm() == SUCCESS) *pS = res;
@@ -188,9 +173,7 @@ namespace dialog {
 		std::cout << std::endl;
 
 		Sequence sub = pS->findMonotonicity(order);
-		std::cout << "Subsequence: ";
-		sub.output();
-		std::cout << std::endl;
+		std::cout << "Subsequence: " << sub << std::endl;
 
 		std::cout << "Do you want to replace your current sequence?" << std::endl;
 		if (confirm() == SUCCESS) *pS = sub;

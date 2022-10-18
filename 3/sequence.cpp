@@ -36,27 +36,27 @@ namespace sequence {
 		return result;
 	}
 
-	void Sequence::input() {
+	void Sequence::input(std::istream& in) {
 		int value;
 
 		while ((*this) < this->maxSize) { 
-			std::cin >> value;
-			if (!std::cin.good()) {// если ошибка ввода
-				std::cin.clear(); // возвращаем "нормальный" режим работы
+			in >> value;
+			if (!in.good()) {// если ошибка ввода
+				in.clear(); // возвращаем "нормальный" режим работы
 				break;
 			}
 			if (this->insert(value) != SUCCESS) break; // ловим переполнение
 		}
 		// очищаем буфер ввода
-		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		in.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 	}
-	void Sequence::output() const {
-		std::cout << "{";
+	void Sequence::output(std::ostream& out) const {
+		out << "{";
 		for (int i = 0; i < (*this); i++) {
-			std::cout << (*this)[i];
-			if (i < (*this) - 1) std::cout << ", ";
+			out << (*this)[i];
+			if (i < (*this) - 1) out << ", ";
 		}
-		std::cout << "}";
+		out << "}";
 	}
 	
 	Sequence& Sequence::plus(const Sequence& other) const {
@@ -262,5 +262,14 @@ namespace sequence {
 	}
 	int operator%= (int other, const Sequence& cur) {
 		return other %= cur.size;
+	}
+
+	std::ostream& operator<<(std::ostream& out, const Sequence& seq) {
+		seq.output(out);
+		return out;
+	}
+	std::istream& operator>>(std::istream& in, Sequence& seq) {
+		seq.input(in);
+		return in;
 	}
 }

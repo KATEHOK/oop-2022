@@ -43,6 +43,9 @@ namespace sequence {
 		friend int operator% (const int other, const Sequence& cur);
 		friend int operator%= (const int other, const Sequence& cur);
 
+		friend std::ostream& operator<<(std::ostream& out, const Sequence& seq);
+		friend std::istream& operator>>(std::istream& in, Sequence& seq);
+
 	public:
 
 		Sequence();
@@ -64,8 +67,8 @@ namespace sequence {
 		/*
 		* Чтобы завершить ввод, необходимо ввести NaN
 		*/
-		void input();
-		void output() const;
+		void input(std::istream& in);
+		void output(std::ostream& out) const;
 
 		Sequence& plus(const Sequence& other) const;
 
