@@ -9,13 +9,13 @@ namespace sequence {
 		this->insert(item);
 	}
 	Sequence::Sequence(const int size, const int* pData) {
-		if (pData == NULL)
-			throw std::invalid_argument("pData == NULL in Sequence::Sequence()");
+		if (pData == nullptr)
+			throw std::invalid_argument("pData == nullptr in Sequence::Sequence()");
 		for (int i = 0; i < size; i++) this->insert(pData[i]);
 	}
 	Sequence::Sequence(const int* pData) {
-		if (pData == NULL)
-			throw std::invalid_argument("pData == NULL in Sequence::Sequence()");
+		if (pData == nullptr)
+			throw std::invalid_argument("pData == nullptr in Sequence::Sequence()");
 		int i = 0;
 		try { while (this->insert(pData[i]) == SUCCESS) i++; }
 		catch (...) { throw std::invalid_argument("pData can not be Sequence");}

@@ -6,7 +6,7 @@
 namespace dialog {
 
 	int getNum(int* pNum) {
-		if (pNum == NULL) throw std::invalid_argument("pNum == NULL in getNum()");
+		if (pNum == nullptr) throw std::invalid_argument("pNum == nullptr in getNum()");
 		int status = FAIL;
 
 		std::cin >> *pNum;
@@ -47,7 +47,7 @@ namespace dialog {
 	int exit(Sequence* pS) { return FAIL; }
 
 	int initFree(Sequence* pS) {
-		if (pS == NULL) throw std::invalid_argument("pS == NULL in initFree()");
+		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in initFree()");
 		Sequence free;
 		*pS = free;
 		std::cout << *pS << std::endl;
@@ -55,7 +55,7 @@ namespace dialog {
 	}
 
 	int initOne(Sequence* pS) {
-		if (pS == NULL) throw std::invalid_argument("pS == NULL in initOne()");
+		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in initOne()");
 
 		int value = getNum("Enter integer: ", "Invalid value! Enter integer: ");
 		*pS = value;
@@ -65,7 +65,7 @@ namespace dialog {
 	}
 
 	int initByArray(Sequence* pS) {
-		if (pS == NULL) throw std::invalid_argument("pS == NULL in initByArray()");
+		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in initByArray()");
 
 		int i;
 		int pArr[MAX_SIZE];
@@ -88,19 +88,19 @@ namespace dialog {
 	}
 
 	int printSize(Sequence* pS) {
-		if (pS == NULL) throw std::invalid_argument("pS == NULL in printSize()");
+		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in printSize()");
 		std::cout << "Size of current sequence: " << pS->getSize() << std::endl;
 		return SUCCESS;
 	}
 
 	int printMaxSize(Sequence* pS) {
-		if (pS == NULL) throw std::invalid_argument("pS == NULL in printMaxSize()");
+		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in printMaxSize()");
 		std::cout << "Max size of current sequence: " << pS->getMaxSize() << std::endl;
 		return SUCCESS;
 	}
 
 	int printElement(Sequence* pS) {
-		if (pS == NULL) throw std::invalid_argument("pS == NULL in printElement()");
+		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in printElement()");
 		if (pS->getSize() == 0) {
 			std::cout << "Sequence is free!" << std::endl;
 			return SUCCESS;
@@ -119,7 +119,7 @@ namespace dialog {
 	}
 
 	int makeClone(Sequence* pS) {
-		if (pS == NULL) throw std::invalid_argument("pS == NULL in makeClone()");
+		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in makeClone()");
 		Sequence clone = pS->makeClone();
 		std::cout << "Clone: " << clone << std::endl;
 
@@ -129,7 +129,7 @@ namespace dialog {
 	}
 
 	int input(Sequence* pS) {
-		if (pS == NULL) throw std::invalid_argument("pS == NULL in input()");
+		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in input()");
 		std::cout << "Enter via space integer or something else if you want to stop: ";
 		std::cin >> *pS;
 
@@ -138,13 +138,13 @@ namespace dialog {
 	}
 
 	int output(Sequence* pS) {
-		if (pS == NULL) throw std::invalid_argument("pS == NULL in output()");
+		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in output()");
 		std::cout << "Current sequence: " << *pS << std::endl;
 		return SUCCESS;
 	}
 
 	int plus(Sequence* pS) {
-		if (pS == NULL) throw std::invalid_argument("pS == NULL in plus()");
+		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in plus()");
 		Sequence other;
 
 		std::cout << "Making the second sequence" << std::endl;
@@ -162,7 +162,7 @@ namespace dialog {
 	}
 
 	int findMonotonicity(Sequence* pS) {
-		if (pS == NULL) throw std::invalid_argument("pS == NULL in findMonotonicity()");
+		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in findMonotonicity()");
 		int order = 0;
 
 		std::cout << "Enter 0 to find ascending subsequence "
@@ -180,7 +180,7 @@ namespace dialog {
 	}
 
 	int insert(Sequence* pS) {
-		if (pS == NULL) throw std::invalid_argument("pS == NULL in insert()");
+		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in insert()");
 		int value = getNum("Enter new value (integer): ", "Invalid value! Try again: ");
 		
 		*pS += value;
@@ -188,14 +188,14 @@ namespace dialog {
 	}
 
 	int printGroupsCount(Sequence* pS) {
-		if (pS == NULL) throw std::invalid_argument("pS == NULL in printGroupsCount()");
+		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in printGroupsCount()");
 		std::cout << "There are " << pS->getGroupsCount()
 			<< " groups in the sequence" << std::endl;
 		return SUCCESS;
 	}
 
 	int printSameCount(Sequence* pS) {
-		if (pS == NULL) throw std::invalid_argument("pS == NULL in printSameCount()");
+		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in printSameCount()");
 
 		int value = getNum("Enter value (integer): ", "Invalid value! Try again: ");
 		std::cout << "There are " << pS->getSameCount(value)
