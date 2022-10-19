@@ -68,8 +68,9 @@ namespace dialog {
 		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in initByArray()");
 
 		int i;
+		const int MAX_SIZE = 100;
 		int pArr[MAX_SIZE];
-		std::cout << "Enter numbers via space: ";
+		std::cout << "Enter not more 100 numbers via space: ";
 
 		for (i = 0; i < MAX_SIZE; i++) {
 			std::cin >> pArr[i];
@@ -145,9 +146,9 @@ namespace dialog {
 
 		Sequence res = *pS + other;
 		std::cout << std::endl << *pS << " + " << other << " = " << res << std::endl;
-		
+
 		std::cout << "Do you want to replace your current sequence?" << std::endl;
-		if (confirm() == SUCCESS) *pS = res;
+		if (confirm() == SUCCESS) (*pS) = res;
 		return SUCCESS;
 	}
 

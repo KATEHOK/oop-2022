@@ -21,9 +21,7 @@ enum status {
 
 namespace sequence {
 
-	/*
-	* INT_MAX - служебное значение
-	*/
+	// INT_MAX - служебное значение
 	class Sequence {
 
 		// friends
@@ -41,36 +39,18 @@ namespace sequence {
 
 		int getSize() const;
 		int getMaxSize() const;
-		/*
-		* В случае переполнения вернет INT_MAX
-		*/
-		int getElement(const int id) const;
 
-		/*
-		* Чтобы завершить ввод, необходимо ввести NaN
-		*/
+		// Чтобы завершить ввод, необходимо ввести NaN
 		void input(std::istream& in);
 		void output(std::ostream& out) const;
 
-		Sequence& plus(const Sequence& other) const;
-		Sequence& minus(const Sequence& other) const;
+		// Ищет монотонную подпоследовательность
+		Sequence findMonotonicity(const int order) const;
 
-		/*
-		* Ищет монотонную подпоследовательность
-		*/
-		Sequence& findMonotonicity(const int order) const;
-
-		int insert(const int value);
-		int remove(const int value);
-
-		/*
-		* Считает количество групп
-		*/
+		// Считает количество групп
 		int getGroupsCount() const;
 
-		/*
-		* Считает количество двойников для данного элемента
-		*/
+		// Считает количество двойников для данного элемента		
 		int getSameCount(const int value) const;
 
 		// operators
@@ -81,12 +61,15 @@ namespace sequence {
 
 		Sequence& operator= (const Sequence& src);
 		
-		Sequence& operator+ (const Sequence& other) const;
+		// работают, как объединение
+		Sequence operator+ (const Sequence& other) const;
 		Sequence& operator+= (const Sequence& other);
 
-		Sequence& operator- (const Sequence& other) const;
-		Sequence& operator-= (const Sequence& other);
+		// работают, как с множествами, только с конца
+		Sequence operator- (const Sequence& other) const;
+		Sequence& operator-= (const Sequence& other); 
 
+		// В случае отсутствия вернет INT_MAX
 		int operator[] (const int id) const;
 
 	private:
@@ -96,12 +79,16 @@ namespace sequence {
 		int maxSize = 0;
 		int* pNums = nullptr;
 
-		/*
-		* Ищет индекс последнего вхождения элемента
-		*/
+		int insert(const int value);
+		int remove(const int value);
+
+		Sequence& plusEqual(const Sequence& other);
+		Sequence& minusEqual(const Sequence& other);
+
+		// Ищет индекс последнего вхождения элемента
 		int findBack(const int value) const;
 
-		void realloc(const int blockSize = 0);
+		void reinit(const int blockSize = 0);
 		void addBlock();
 		void removeBlock();
 

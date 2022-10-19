@@ -21,10 +21,12 @@ namespace sequence {
 		catch (...) { throw std::invalid_argument("pData can not be Sequence");}
 	}
 	Sequence::Sequence(const Sequence& other) {
-		(*this) = Sequence(other.size, other.pNums);
+		this->reinit(other.maxSize);
+		this->size = other.size;
+		if (this->pNums != nullptr) memcpy(this->pNums, other.pNums, other.size * sizeof(int));
 	}
 	Sequence::~Sequence() {
-		this->realloc(0);
+		this->reinit(0);
 	}
 
 	int Sequence::getSize() const {
@@ -32,10 +34,6 @@ namespace sequence {
 	}
 	int Sequence::getMaxSize() const {
 		return this->maxSize;
-	}
-	int Sequence::getElement(const int id) const {
-		if (id >= 0 && id < this->size) return this->pNums[id];
-		return INT_MAX;
 	}
 
 	void Sequence::input(std::istream& in) {
@@ -60,21 +58,10 @@ namespace sequence {
 		}
 		out << "}";
 	}
-	
-	Sequence& Sequence::plus(const Sequence& other) const {
-		Sequence result(this->size, this->pNums);
-		for (int i = 0; i < other.size; i++) if (result.insert(other.pNums[i]) != SUCCESS)
-			throw std::invalid_argument("other is invalid in Sequence::plus()");
-		return result;
-	}
-	Sequence& Sequence::minus(const Sequence& other) const {
-		Sequence res(this->size, this->pNums);
-		for (int i = 0; i < other.size; i++) res.remove(other.pNums[i]);
-		return res;
-	}
 
-	Sequence& Sequence::findMonotonicity(const int order) const {
+	Sequence Sequence::findMonotonicity(const int order) const {
 		Sequence res;
+		if (this->size == 0) return res;
 
 		int last = this->pNums[0];
 		int startId = 0;
@@ -109,25 +96,6 @@ namespace sequence {
 		return res;
 	}
 
-	int Sequence::insert(const int value) {
-		if (value == INT_MAX) return WRONG_PARAMS;
-		if (this->size == this->maxSize) this->addBlock();
-
-		this->pNums[this->size] = value;
-		this->size++;
-		return SUCCESS;
-	}
-	int Sequence::remove(const int value) {
-		int id = this->findBack(value);
-		if (id == INT_MAX) return NOT_FOUND;
-
-		for (int i = id; i < this->size - 1; i++) this->pNums[i] = this->pNums[i + 1];
-		this->size--;
-
-		if (this->maxSize - this->size >= this->BLOCK_SIZE) this->removeBlock();
-		return SUCCESS;
-	}
-
 	int Sequence::getGroupsCount() const {
 		if (this->size == 0) return 0;
 		int* pCash = new int[this->size];
@@ -154,12 +122,41 @@ namespace sequence {
 		return result;
 	}
 
+	int Sequence::insert(const int value) {
+		if (value == INT_MAX) return WRONG_PARAMS;
+		if (this->size == this->maxSize) this->addBlock();
+
+		this->pNums[this->size] = value;
+		this->size++;
+		return SUCCESS;
+	}
+	int Sequence::remove(const int value) {
+		int id = this->findBack(value);
+		if (id == INT_MAX) return NOT_FOUND;
+
+		for (int i = id; i < this->size - 1; i++) this->pNums[i] = this->pNums[i + 1];
+		this->size--;
+
+		if (this->maxSize - this->size >= this->BLOCK_SIZE) this->removeBlock();
+		return SUCCESS;
+	}
+
+	Sequence& Sequence::plusEqual(const Sequence& other) {
+		for (int i = 0; i < other.size; i++) if (this->insert(other.pNums[i]) != SUCCESS)
+			throw std::invalid_argument("other is invalid in Sequence::plusEqual()");
+		return *this;
+	}
+	Sequence& Sequence::minusEqual(const Sequence& other) {
+		for (int i = 0; i < other.size; i++) this->remove(other.pNums[i]);
+		return *this;
+	}
+
 	int Sequence::findBack(const int value) const {
 		for (int i = this->size - 1; i >= 0; i--) if (this->pNums[i] == value) return i;
 		return INT_MAX;
 	}
 
-	void Sequence::realloc(const int blockSize) {
+	void Sequence::reinit(const int blockSize) {
 		if (blockSize <= 0) {
 			delete[] this->pNums;
 			this->pNums = nullptr;
@@ -180,10 +177,10 @@ namespace sequence {
 		this->maxSize = blockSize;
 	}
 	void Sequence::addBlock() {
-		this->realloc(this->maxSize + this->BLOCK_SIZE);
+		this->reinit(this->maxSize + this->BLOCK_SIZE);
 	}
 	void Sequence::removeBlock() {
-		this->realloc(this->maxSize - this->BLOCK_SIZE);
+		this->reinit(this->maxSize - this->BLOCK_SIZE);
 	}
 
 	// operators
@@ -206,29 +203,36 @@ namespace sequence {
 	}
 
 	Sequence& Sequence::operator= (const Sequence& src) {
-		this->realloc(src.maxSize);
+		this->reinit(src.maxSize);
 		this->size = src.size;
-		memcpy(this->pNums, src.pNums, src.size * sizeof(int));
+		if (this->size > 0) memcpy(this->pNums, src.pNums, src.size * sizeof(int));
 		return *this;
 	}
 
-	Sequence& Sequence::operator+ (const Sequence& other) const { 
-		return this->plus(other);
+	Sequence Sequence::operator+ (const Sequence& other) const {
+		Sequence result(*this);
+		result.plusEqual(other);
+		return result;
 	}
 	Sequence& Sequence::operator+= (const Sequence& other) {
-		(*this) = this->plus(other);
-		return (*this);
+		this->plusEqual(other);
+		return *this;
 	}
 
-	Sequence& Sequence::operator- (const Sequence& other) const {
-		return this->minus(other);
+	Sequence Sequence::operator- (const Sequence& other) const {
+		Sequence result(*this);
+		result.minusEqual(other);
+		return result;
 	}
 	Sequence& Sequence::operator-= (const Sequence& other) {
-		(*this) = this->minus(other);
-		return (*this);
+		this->minusEqual(other);
+		return *this;
 	}
 
-	int Sequence::operator[] (const int id) const {	return this->pNums[id]; }
+	int Sequence::operator[] (const int id) const {
+		if (id >= 0 && id < this->size) return this->pNums[id];
+		return INT_MAX;
+	}
 
 	// friends
 	std::ostream& operator<< (std::ostream& out, const Sequence& seq) {
