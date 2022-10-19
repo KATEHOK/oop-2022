@@ -20,6 +20,9 @@ namespace sequence {
 		try { while (this->insert(pData[i]) == SUCCESS) i++; }
 		catch (...) { throw std::invalid_argument("pData can not be Sequence");}
 	}
+	Sequence::Sequence(const Sequence& other) {
+		(*this) = Sequence(other.size, other.pNums);
+	}
 
 	int Sequence::getSize() const {
 		return this->size;

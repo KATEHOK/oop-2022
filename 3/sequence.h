@@ -37,6 +37,7 @@ namespace sequence {
 		Sequence(const int item);
 		Sequence(const int size, const int* pData);
 		Sequence(const int* pData); // обязательно терминальное значение INT_MAX
+		Sequence(const Sequence& other);
 
 		int getSize() const;
 		int getMaxSize() const;
