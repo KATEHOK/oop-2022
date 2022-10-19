@@ -20,7 +20,6 @@ enum status {
 #endif
 
 namespace sequence {
-	const int MAX_SIZE = 100;
 
 	/*
 	* INT_MAX - служебное значение
@@ -38,6 +37,7 @@ namespace sequence {
 		Sequence(const int size, const int* pData);
 		Sequence(const int* pData); // обязательно терминальное значение INT_MAX
 		Sequence(const Sequence& other);
+		~Sequence();
 
 		int getSize() const;
 		int getMaxSize() const;
@@ -45,10 +45,6 @@ namespace sequence {
 		* В случае переполнения вернет INT_MAX
 		*/
 		int getElement(const int id) const;
-		/*
-		* Клонирует экземпляр
-		*/
-		Sequence& makeClone() const;
 
 		/*
 		* Чтобы завершить ввод, необходимо ввести NaN
@@ -58,7 +54,6 @@ namespace sequence {
 
 		Sequence& plus(const Sequence& other) const;
 		Sequence& minus(const Sequence& other) const;
-		Sequence& minusNum(const int other) const;
 
 		/*
 		* Ищет монотонную подпоследовательность
@@ -66,6 +61,7 @@ namespace sequence {
 		Sequence& findMonotonicity(const int order) const;
 
 		int insert(const int value);
+		int remove(const int value);
 
 		/*
 		* Считает количество групп
@@ -79,11 +75,9 @@ namespace sequence {
 
 		// operators
 		bool operator== (const Sequence& other) const; // полное совпадение
-		bool operator!= (const Sequence& other) const;
+		bool operator!= (const Sequence& other) const; // хотя бы частичное несовпадение
 		bool operator> (const Sequence& other) const; // размер
 		bool operator< (const Sequence& other) const; // размер
-		bool operator>= (const Sequence& other) const; // размер
-		bool operator<= (const Sequence& other) const; // размер
 
 		Sequence& operator= (const Sequence& src);
 		
@@ -97,14 +91,19 @@ namespace sequence {
 
 	private:
 
-		const int maxSize = MAX_SIZE;
-		int pNums[MAX_SIZE];
+		const int BLOCK_SIZE = 10;
 		int size = 0;
+		int maxSize = 0;
+		int* pNums = nullptr;
 
 		/*
 		* Ищет индекс последнего вхождения элемента
 		*/
 		int findBack(const int value) const;
+
+		void realloc(const int blockSize = 0);
+		void addBlock();
+		void removeBlock();
 
 	};
 }

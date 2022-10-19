@@ -9,14 +9,13 @@ int main() {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	int choice;
-	const int mCount = 15;
+	const int mCount = 14;
 	sequence::Sequence seq;
 
 	const char* ppVars[mCount] = {
 		"Exit", "Init free", "Init one", "Init by array",
 		"Print size", "Print max size",
-		"Find element by ID", "Clone",
-		"Input", "Output",
+		"Find element by ID", "Input", "Output",
 		"Add other", "Find monotonicity",
 		"Insert value", "Get groups count", "Get same count"
 	};
@@ -24,8 +23,7 @@ int main() {
 	int (*operations[mCount])(sequence::Sequence*) = {
 		exit, initFree, initOne, initByArray,
 		printSize, printMaxSize,
-		printElement, makeClone,
-		input, output,
+		printElement, input, output,
 		plus, findMonotonicity,
 		insert, printGroupsCount, printSameCount
 	};

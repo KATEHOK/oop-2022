@@ -118,16 +118,6 @@ namespace dialog {
 		return SUCCESS;
 	}
 
-	int makeClone(Sequence* pS) {
-		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in makeClone()");
-		Sequence clone = pS->makeClone();
-		std::cout << "Clone: " << clone << std::endl;
-
-		std::cout << "Do you want to replace your current sequence?" << std::endl;
-		if (confirm() == SUCCESS) *pS = clone;
-		return SUCCESS;
-	}
-
 	int input(Sequence* pS) {
 		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in input()");
 		std::cout << "Enter via space integer or something else if you want to stop: ";

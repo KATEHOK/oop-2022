@@ -21,7 +21,6 @@ namespace dialog {
 	int printMaxSize(Sequence* pS = nullptr);
 
 	int printElement(Sequence* pS = nullptr);
-	int makeClone(Sequence* pS = nullptr);
 
 	int input(Sequence* pS = nullptr);
 	int output(Sequence* pS = nullptr);
