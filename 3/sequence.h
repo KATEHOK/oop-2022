@@ -74,7 +74,7 @@ namespace sequence {
 
 	private:
 
-		const int BLOCK_SIZE = 10;
+		static const int BLOCK_SIZE = 10;
 		int size = 0;
 		int maxSize = 0;
 		int* pNums = nullptr;
