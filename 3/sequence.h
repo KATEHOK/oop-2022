@@ -35,6 +35,7 @@ namespace sequence {
 		Sequence(const int size, const int* pData);
 		Sequence(const int* pData); // обязательно терминальное значение INT_MAX
 		Sequence(const Sequence& other);
+		Sequence(Sequence&& other) noexcept;
 		~Sequence();
 
 		int getSize() const;
@@ -60,6 +61,7 @@ namespace sequence {
 		bool operator< (const Sequence& other) const; // размер
 
 		Sequence& operator= (const Sequence& src);
+		Sequence& operator= (Sequence&& src) noexcept;
 		
 		// работают, как объединение
 		Sequence operator+ (const Sequence& other) const;

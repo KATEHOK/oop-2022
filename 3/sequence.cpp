@@ -25,6 +25,9 @@ namespace sequence {
 		this->size = other.size;
 		if (this->pNums != nullptr) memcpy(this->pNums, other.pNums, other.size * sizeof(int));
 	}
+	Sequence::Sequence(Sequence&& other) noexcept {
+		*this = std::move(other);
+	}
 	Sequence::~Sequence() {
 		this->reinit(0);
 	}
@@ -158,7 +161,7 @@ namespace sequence {
 
 	void Sequence::reinit(const int blockSize) {
 		if (blockSize <= 0) {
-			delete[] this->pNums;
+			if (this->pNums != nullptr) delete[] this->pNums;
 			this->pNums = nullptr;
 			this->size = 0;
 			this->maxSize = 0;
@@ -206,6 +209,26 @@ namespace sequence {
 		this->reinit(src.maxSize);
 		this->size = src.size;
 		if (this->size > 0) memcpy(this->pNums, src.pNums, src.size * sizeof(int));
+
+		std::cout << "Copy!" << std::endl;
+
+		return *this;
+	}
+	Sequence& Sequence::operator= (Sequence&& src) noexcept {
+		if (this != &src) {
+			this->reinit(0);
+
+			this->size = src.size;
+			this->maxSize = src.maxSize;
+			this->pNums = src.pNums;
+
+			src.size = 0;
+			src.maxSize = 0;
+			src.pNums = nullptr;
+		}
+
+		std::cout << "Transfer!" << std::endl;
+
 		return *this;
 	}
 
