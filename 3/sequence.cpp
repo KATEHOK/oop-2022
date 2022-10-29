@@ -209,20 +209,9 @@ namespace sequence {
 		return *this;
 	}
 
-	Sequence Sequence::operator+ (const Sequence& other) const {
-		Sequence result(*this);
-		result.plusEqual(other);
-		return result;
-	}
 	Sequence& Sequence::operator+= (const Sequence& other) {
 		this->plusEqual(other);
 		return *this;
-	}
-
-	Sequence Sequence::operator- (const Sequence& other) const {
-		Sequence result(*this);
-		result.minusEqual(other);
-		return result;
 	}
 	Sequence& Sequence::operator-= (const Sequence& other) {
 		this->minusEqual(other);
@@ -242,5 +231,16 @@ namespace sequence {
 	std::istream& operator>> (std::istream& in, Sequence& seq) {
 		seq.input(in);
 		return in;
+	}
+
+	Sequence operator+ (const Sequence& first, const Sequence& second) {
+		Sequence result(first);
+		result.plusEqual(second);
+		return result;
+	}
+	Sequence operator- (const Sequence& first, const Sequence& second) {
+		Sequence result(first);
+		result.minusEqual(second);
+		return result;
 	}
 }
