@@ -28,6 +28,9 @@ namespace sequence {
 		friend std::ostream& operator<<(std::ostream& out, const Sequence& seq);
 		friend std::istream& operator>>(std::istream& in, Sequence& seq);
 
+		friend Sequence operator+ (const Sequence& first, const Sequence& second);
+		friend Sequence operator- (const Sequence& first, const Sequence& second);
+
 	public:
 
 		Sequence();
@@ -64,11 +67,9 @@ namespace sequence {
 		Sequence& operator= (Sequence&& src) noexcept;
 		
 		// работают, как объединение
-		Sequence operator+ (const Sequence& other) const;
 		Sequence& operator+= (const Sequence& other);
 
 		// работают, как с множествами, только с конца
-		Sequence operator- (const Sequence& other) const;
 		Sequence& operator-= (const Sequence& other); 
 
 		// В случае отсутствия вернет INT_MAX
