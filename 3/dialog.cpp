@@ -81,9 +81,7 @@ namespace dialog {
 		}
 		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-		Sequence res(i, pArr);
-		*pS = res;
-
+		*pS = Sequence(i, pArr);
 		std::cout << *pS << std::endl;
 		return SUCCESS;
 	}
@@ -148,7 +146,7 @@ namespace dialog {
 		std::cout << std::endl << *pS << " + " << other << " = " << res << std::endl;
 
 		std::cout << "Do you want to replace your current sequence?" << std::endl;
-		if (confirm() == SUCCESS) (*pS) = res;
+		if (confirm() == SUCCESS) *pS = res;
 		return SUCCESS;
 	}
 
