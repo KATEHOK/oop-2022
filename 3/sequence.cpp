@@ -209,9 +209,6 @@ namespace sequence {
 		this->reinit(src.maxSize);
 		this->size = src.size;
 		if (this->size > 0) memcpy(this->pNums, src.pNums, src.size * sizeof(int));
-
-		std::cout << "Copy!" << std::endl;
-
 		return *this;
 	}
 	Sequence& Sequence::operator= (Sequence&& src) noexcept {
@@ -226,9 +223,6 @@ namespace sequence {
 			src.maxSize = 0;
 			src.pNums = nullptr;
 		}
-
-		std::cout << "Transfer!" << std::endl;
-
 		return *this;
 	}
 
