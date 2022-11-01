@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include <crtdbg.h>
 #include <exception>
+#include <string>
+#include <vector>
 
 #include "sequence.h"
 #include "dialog.h"

@@ -31,6 +31,26 @@ namespace sequence {
 		friend Sequence operator+ (const Sequence& first, const Sequence& second);
 		friend Sequence operator- (const Sequence& first, const Sequence& second);
 
+	private:
+
+		static const int BLOCK_SIZE = 10;
+		int size = 0;
+		int maxSize = 0;
+		int* pNums = nullptr;
+
+		int insert(const int value);
+		int remove(const int value);
+
+		Sequence& plusEqual(const Sequence& other);
+		Sequence& minusEqual(const Sequence& other);
+
+		// Ищет индекс последнего вхождения элемента
+		int findBack(const int value) const;
+
+		void reinit(const int blockSize = 0);
+		void addBlock();
+		void removeBlock();
+
 	public:
 
 		Sequence();
@@ -41,8 +61,12 @@ namespace sequence {
 		Sequence(Sequence&& other) noexcept;
 		~Sequence();
 
-		int getSize() const;
-		int getMaxSize() const;
+		int getSize() const {
+			return this->size;
+		}
+		int getMaxSize() const {
+			return this->maxSize;
+		}
 
 		// Чтобы завершить ввод, необходимо ввести NaN
 		void input(std::istream& in);
@@ -74,26 +98,5 @@ namespace sequence {
 
 		// В случае отсутствия вернет INT_MAX
 		int operator[] (const int id) const;
-
-	private:
-
-		static const int BLOCK_SIZE = 10;
-		int size = 0;
-		int maxSize = 0;
-		int* pNums = nullptr;
-
-		int insert(const int value);
-		int remove(const int value);
-
-		Sequence& plusEqual(const Sequence& other);
-		Sequence& minusEqual(const Sequence& other);
-
-		// Ищет индекс последнего вхождения элемента
-		int findBack(const int value) const;
-
-		void reinit(const int blockSize = 0);
-		void addBlock();
-		void removeBlock();
-
 	};
 }

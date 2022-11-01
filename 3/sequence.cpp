@@ -32,13 +32,6 @@ namespace sequence {
 		this->reinit(0);
 	}
 
-	int Sequence::getSize() const {
-		return this->size;
-	}
-	int Sequence::getMaxSize() const {
-		return this->maxSize;
-	}
-
 	void Sequence::input(std::istream& in) {
 		int value;
 

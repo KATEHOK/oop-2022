@@ -9,7 +9,7 @@ using namespace sequence;
 namespace dialog {
 
 	int getNum(int* pNum = nullptr);
-	int getNum(const char* pFMsg = nullptr, const char* pSMsg = nullptr);
+	int getNum(const std::string fMsg, const std::string sMsg);
 	int confirm();
 
 	int exit(Sequence* pS = nullptr);

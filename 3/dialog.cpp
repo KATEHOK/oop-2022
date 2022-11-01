@@ -17,11 +17,11 @@ namespace dialog {
 		return status;
 	}
 
-	int getNum(const char* pFMsg, const char* pSMsg) {
+	int getNum(const std::string fMsg, const std::string sMsg) {
 		int value = 0;
-		std::cout << pFMsg;
+		std::cout << fMsg;
 		while (getNum(&value) == FAIL)
-			std::cout << std::endl << pSMsg;
+			std::cout << std::endl << sMsg;
 		std::cout << std::endl;
 		return value;
 	}

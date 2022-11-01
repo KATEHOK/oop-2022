@@ -12,7 +12,7 @@ int main() {
 	const int mCount = 14;
 	sequence::Sequence seq;
 
-	const char* ppVars[mCount] = {
+	const std::vector<std::string> vars = {
 		"Exit", "Init free", "Init one", "Init by array",
 		"Print size", "Print max size",
 		"Find element by ID", "Input", "Output",
@@ -32,15 +32,19 @@ int main() {
 	int status = getNum(&choice);
 
 	while (status == SUCCESS) {
+		// вывод возможностей
 		std::cout << std::endl;
-		for (int i = 0; i < mCount; i++)
-			std::cout << " " << i << ") " << ppVars[i] << std::endl;
 
+		for (auto it = vars.begin(); it != vars.end(); ++it)
+			std::cout << " " << (it - vars.begin()) << ") " << *it << std::endl;
+
+		// запрос выбора
 		std::cout << std::endl << "Choose point: ";
 		while (getNum(&choice) == FAIL || choice < 0 || choice > mCount)
 			std::cout << std::endl << "Wrong value! Choose point: ";
 		std::cout << std::endl;
 		
+		// исполнение выбора
 		try { status = operations[choice](&seq); }
 		catch (std::exception& err) {
 			std::cout << "Exception: " << err.what() << std::endl;
