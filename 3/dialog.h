@@ -8,27 +8,44 @@ using namespace sequence;
 
 namespace dialog {
 
-	int getNum(int* pNum = nullptr);
-	int getNum(const std::string fMsg, const std::string sMsg);
-	int confirm();
+	typedef bool (*func)(Sequence&);
 
-	int exit(Sequence* pS = nullptr);
-	int initFree(Sequence* pS = nullptr);
-	int initOne(Sequence* pS = nullptr);
-	int initByArray(Sequence* pS = nullptr);
+	template<typename T>
+	int getNum(T* pNum) {
+		if (pNum == nullptr) throw std::invalid_argument("pNum == nullptr in getNum()");
+		int status = FAIL;
 
-	int printSize(Sequence* pS = nullptr);
-	int printMaxSize(Sequence* pS = nullptr);
+		std::cin >> *pNum;
+		if (std::cin.good()) status = SUCCESS;
+		else std::cin.clear();
 
-	int printElement(Sequence* pS = nullptr);
+		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		return status;
+	}
 
-	int input(Sequence* pS = nullptr);
-	int output(Sequence* pS = nullptr);
+	int askNum(const std::string fMsg, const std::string sMsg);
+	bool confirm();
 
-	int plus(Sequence* pS = nullptr);
-	int findMonotonicity(Sequence* pS = nullptr);
+	bool exit(Sequence& seq);
+	bool initFree(Sequence& seq);
+	bool initOne(Sequence& seq);
+	bool initByArray(Sequence& seq);
 
-	int insert(Sequence* pS = nullptr);
-	int printGroupsCount(Sequence* pS = nullptr);
-	int printSameCount(Sequence* pS = nullptr);
+	bool printSize(Sequence& seq);
+	bool printMaxSize(Sequence& seq);
+
+	bool printElement(Sequence& seq);
+
+	bool input(Sequence& seq);
+	bool output(Sequence& seq);
+
+	bool plus(Sequence& seq);
+	bool findMonotonicity(Sequence& seq);
+
+	bool insert(Sequence& seq);
+	bool printGroupsCount(Sequence& seq);
+	bool printSameCount(Sequence& seq);
+
+	void printVars(std::vector<std::string> vars);
+	int getChoice(const int mCount);
 };

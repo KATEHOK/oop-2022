@@ -11,9 +11,6 @@
 #include <string>
 #include <vector>
 
-#include "sequence.h"
-#include "dialog.h"
-
 enum status {
 	SUCCESS = 0,
 	FAIL,
@@ -22,3 +19,6 @@ enum status {
 	NOT_FOUND,
 	WRONG_PARAMS,
 };
+
+#include "sequence.h"
+#include "dialog.h"

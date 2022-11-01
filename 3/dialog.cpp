@@ -5,19 +5,7 @@
 
 namespace dialog {
 
-	int getNum(int* pNum) {
-		if (pNum == nullptr) throw std::invalid_argument("pNum == nullptr in getNum()");
-		int status = FAIL;
-
-		std::cin >> *pNum;
-		if (std::cin.good()) status = SUCCESS;
-		else std::cin.clear();
-
-		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-		return status;
-	}
-
-	int getNum(const std::string fMsg, const std::string sMsg) {
+	int askNum(const std::string fMsg, const std::string sMsg) {
 		int value = 0;
 		std::cout << fMsg;
 		while (getNum(&value) == FAIL)
@@ -26,7 +14,7 @@ namespace dialog {
 		return value;
 	}
 
-	int confirm() {
+	bool confirm() {
 		char choice = '\0';
 		std::cout << "Enter Y or N: ";
 		std::cin >> choice;
@@ -40,33 +28,28 @@ namespace dialog {
 
 		std::cin.clear();
 		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-		if (choice == 'N') return FAIL;
-		return SUCCESS;
+		if (choice == 'N') return false;
+		return true;
 	}
 
-	int exit(Sequence* pS) { return FAIL; }
+	bool exit(Sequence& seq) { return false; }
 
-	int initFree(Sequence* pS) {
-		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in initFree()");
+	bool initFree(Sequence& seq) {
 		Sequence free;
-		*pS = free;
-		std::cout << *pS << std::endl;
-		return SUCCESS;
+		seq = free;
+		std::cout << seq << std::endl;
+		return true;
 	}
 
-	int initOne(Sequence* pS) {
-		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in initOne()");
+	bool initOne(Sequence& seq) {
+		int value = askNum("Enter integer: ", "Invalid value! Enter integer: ");
+		seq = value;
 
-		int value = getNum("Enter integer: ", "Invalid value! Enter integer: ");
-		*pS = value;
-
-		std::cout << *pS << std::endl;
-		return SUCCESS;
+		std::cout << seq << std::endl;
+		return true;
 	}
 
-	int initByArray(Sequence* pS) {
-		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in initByArray()");
-
+	bool initByArray(Sequence& seq) {
 		int i;
 		const int MAX_SIZE = 100;
 		int pArr[MAX_SIZE];
@@ -81,59 +64,53 @@ namespace dialog {
 		}
 		std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-		*pS = Sequence(i, pArr);
-		std::cout << *pS << std::endl;
-		return SUCCESS;
+		seq = Sequence(i, pArr);
+		std::cout << seq << std::endl;
+		return true;
 	}
 
-	int printSize(Sequence* pS) {
-		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in printSize()");
-		std::cout << "Size of current sequence: " << pS->getSize() << std::endl;
-		return SUCCESS;
+	bool printSize(Sequence& seq) {
+		std::cout << "Size of current sequence: " << seq.getSize() << std::endl;
+		return true;
 	}
 
-	int printMaxSize(Sequence* pS) {
-		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in printMaxSize()");
-		std::cout << "Max size of current sequence: " << pS->getMaxSize() << std::endl;
-		return SUCCESS;
+	bool printMaxSize(Sequence& seq) {
+		std::cout << "Max size of current sequence: " << seq.getMaxSize() << std::endl;
+		return true;
 	}
 
-	int printElement(Sequence* pS) {
-		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in printElement()");
-		if (pS->getSize() == 0) {
+	bool printElement(Sequence& seq) {
+		if (seq.getSize() == 0) {
 			std::cout << "Sequence is free!" << std::endl;
-			return SUCCESS;
+			return true;
 		}
 
 		int value = 0;
 		std::cout << "Enter id (extended natural from 0 to "
-			<< pS->getSize() - 1 << "): ";
+			<< seq.getSize() - 1 << "): ";
 
-		while (getNum(&value) == FAIL || value < 0 || value >= pS->getSize())
+		while (getNum(&value) == FAIL || value < 0 || value >= seq.getSize())
 			std::cout << std::endl << "Invalid value! Enter extended natural: ";
 		std::cout << std::endl;
 
-		std::cout << "[" << value << "] " << (*pS)[value] << std::endl;
-		return SUCCESS;
+		std::cout << "[" << value << "] " << seq[value] << std::endl;
+		return true;
 	}
 
-	int input(Sequence* pS) {
-		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in input()");
+	bool input(Sequence& seq) {
 		std::cout << "Enter via space integer or something else if you want to stop: ";
-		std::cin >> *pS;
+		std::cin >> seq;
 
-		std::cout << std::endl << "Current sequence: " << *pS << std::endl;
-		return SUCCESS;
+		std::cout << std::endl << "Current sequence: " << seq << std::endl;
+		return true;
 	}
 
-	int output(Sequence* pS) {
-		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in output()");
-		std::cout << "Current sequence: " << *pS << std::endl;
-		return SUCCESS;
+	bool output(Sequence& seq) {
+		std::cout << "Current sequence: " << seq << std::endl;
+		return true;
 	}
 
-	int plus(Sequence* pS) {
-		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in plus()");
+	bool plus(Sequence& seq) {
 		Sequence other;
 
 		std::cout << "Making the second sequence" << std::endl;
@@ -142,16 +119,15 @@ namespace dialog {
 		std::cin >> other;
 		std::cout << std::endl;
 
-		Sequence res = *pS + other;
-		std::cout << std::endl << *pS << " + " << other << " = " << res << std::endl;
+		Sequence res = seq + other;
+		std::cout << std::endl << seq << " + " << other << " = " << res << std::endl;
 
 		std::cout << "Do you want to replace your current sequence?" << std::endl;
-		if (confirm() == SUCCESS) *pS = res;
-		return SUCCESS;
+		if (confirm()) seq = res;
+		return true;
 	}
 
-	int findMonotonicity(Sequence* pS) {
-		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in findMonotonicity()");
+	bool findMonotonicity(Sequence& seq) {
 		int order = 0;
 
 		std::cout << "Enter 0 to find ascending subsequence "
@@ -160,35 +136,45 @@ namespace dialog {
 			std::cout << std::endl << "Invalid value! Try again: ";
 		std::cout << std::endl;
 
-		Sequence sub = pS->findMonotonicity(order);
+		Sequence sub = seq.findMonotonicity(order);
 		std::cout << "Subsequence: " << sub << std::endl;
 
 		std::cout << "Do you want to replace your current sequence?" << std::endl;
-		if (confirm() == SUCCESS) *pS = sub;
-		return SUCCESS;
+		if (confirm()) seq = sub;
+		return true;
 	}
 
-	int insert(Sequence* pS) {
-		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in insert()");
-		int value = getNum("Enter new value (integer): ", "Invalid value! Try again: ");
-		
-		*pS += value;
-		return SUCCESS;
+	bool insert(Sequence& seq) {
+		int value = askNum("Enter new value (integer): ", "Invalid value! Try again: ");
+		seq += value;
+		return true;
 	}
 
-	int printGroupsCount(Sequence* pS) {
-		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in printGroupsCount()");
-		std::cout << "There are " << pS->getGroupsCount()
+	bool printGroupsCount(Sequence& seq) {
+		std::cout << "There are " << seq.getGroupsCount()
 			<< " groups in the sequence" << std::endl;
-		return SUCCESS;
+		return true;
 	}
 
-	int printSameCount(Sequence* pS) {
-		if (pS == nullptr) throw std::invalid_argument("pS == nullptr in printSameCount()");
-
-		int value = getNum("Enter value (integer): ", "Invalid value! Try again: ");
-		std::cout << "There are " << pS->getSameCount(value)
+	bool printSameCount(Sequence& seq) {
+		int value = askNum("Enter value (integer): ", "Invalid value! Try again: ");
+		std::cout << "There are " << seq.getSameCount(value)
 			<< " elements equal " << value << " in the sequence" << std::endl;
-		return SUCCESS;
+		return true;
+	}
+
+	void printVars(const std::vector<std::string> vars) {
+		std::cout << std::endl;
+		for (auto it = vars.begin(); it != vars.end(); ++it)
+			std::cout << " " << (it - vars.begin()) << ") " << *it << std::endl;
+	}
+
+	int getChoice(const int mCount) {
+		int choice = FAIL;
+		std::cout << std::endl << "Choose point: ";
+		while (getNum(&choice) == FAIL || choice < 0 || choice > mCount)
+			std::cout << std::endl << "Wrong value! Choose point: ";
+		std::cout << std::endl;
+		return choice;
 	}
 };
