@@ -22,8 +22,31 @@ namespace department {
 		return _id;
 	}
 
+	Department& Department::operator= (const Department& src) {
+		_id = src._id;
+		_name = src._name;
+		return *this;
+	}
+
+	Department& Department::operator= (Department&& src) {
+		if (this != &src) {
+			_id = src._id;
+			_name = src._name;
+			src._name.clear();
+		}
+		return *this;
+	}
+
 	std::string Department::name() const {
 		return _name;
+	}
+
+	bool operator== (const Department& left, const Department& right) {
+		return (left._id == right._id || left._name == right._name);
+	}
+
+	bool operator!= (const Department& left, const Department& right) {
+		return !(left == right);
 	}
 
 	std::ostream& operator<< (std::ostream& out, const Department& d) {
@@ -57,6 +80,19 @@ namespace department {
 		_departments.clear();
 	}
 
+	DepartmentsTable& DepartmentsTable::operator= (const DepartmentsTable& src) {
+		_departments = src._departments;
+		return *this;
+	}
+
+	DepartmentsTable& DepartmentsTable::operator= (DepartmentsTable&& src) {
+		if (this != &src) {
+			_departments = src._departments;
+			src._departments.clear();
+		}
+		return *this;
+	}
+
 	void DepartmentsTable::push_back(Department& department) {
 		if (find(department._id) >= 0 || find(department._name) >= 0) return;
 		_departments.push_back(department);
@@ -68,10 +104,20 @@ namespace department {
 		return -1;
 	}
 
-	int DepartmentsTable::find(std::string department_name) const {
+	int DepartmentsTable::find(const std::string department_name) const {
 		for (int i = 0; i < _departments.size(); ++i)
 			if (_departments[i]._name == department_name) return i;
 		return -1;
+	}
+
+	int DepartmentsTable::find(const Department& d) const {
+		for (int i = 0; i < _departments.size(); ++i)
+			if (_departments[i] == d) return i;
+		return -1;
+	}
+
+	int DepartmentsTable::size() const {
+		return _departments.size();
 	}
 
 	std::ostream& operator<< (std::ostream& out, const DepartmentsTable& dt) {
