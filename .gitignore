@@ -5,3 +5,5 @@
 *.vcxproj*
 *x64/
 *.vs/
+*.png
+*.pdf
