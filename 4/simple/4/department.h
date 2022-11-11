@@ -16,9 +16,9 @@ namespace department {
 		std::string _name;
 
 	public:
-		Department(int id, std::string name);
+		Department(int id, const std::string name) : _id(id), _name(name) {}
 
-		Department(const Department& src);
+		Department(const Department& src) : _id(src._id), _name(src._name) {}
 
 		Department(Department&& src);
 
@@ -28,15 +28,15 @@ namespace department {
 
 		std::string name() const;
 
-		friend std::ostream& operator<< (std::ostream& out, Department& d);
+		friend std::ostream& operator<< (std::ostream& out, const Department& d);
 	};
 
 	class DepartmentsTable {
 	private:
-		std::vector<Department> _departments;
+		std::vector<Department> _departments; // имя и индекс - уникальны
 
 	public:
-		DepartmentsTable();
+		DepartmentsTable() {}
 
 		DepartmentsTable(const Department& src);
 
@@ -48,16 +48,22 @@ namespace department {
 
 		~DepartmentsTable();
 
-		void insert(Department& department);
+		void push_back(Department& department); // не добавит дублирующиеся имена и индексы
 
-		int find(int department_id) const; // индекс в векторе
+		int find(int department_id) const; // индекс в векторе (не найдено - 0)
 
-		int find(std::string department_name) const; // индекс в векторе
+		int find(std::string department_name) const; // индекс в векторе (не найдено - 0)
 
-		void erase(int department_id);
+		// по имени или индексу департамента (НЕ по индексу вектора!)
+		template<typename T>
+		void erase(T id_or_name) { 
+			int id = find(id_or_name);
+			if (id < 0) return;
 
-		void erase(std::string department_name);
+			auto it = _departments.begin() + id;
+			_departments.erase(it);
+		}
 
-		friend std::ostream& operator<< (std::ostream& out, DepartmentsTable& dt);
+		friend std::ostream& operator<< (std::ostream& out, const DepartmentsTable& dt);
 	};
 }

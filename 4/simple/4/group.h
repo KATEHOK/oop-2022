@@ -32,7 +32,7 @@ namespace group {
 
 		int department_id() const;
 
-		friend std::ostream& operator<< (std::ostream& out, Group& g);
+		friend std::ostream& operator<< (std::ostream& out, const Group& g);
 	};
 
 	class DayGroup : public Group {

@@ -71,6 +71,6 @@ namespace group {
 
 		void erase(int group_ptr);
 
-		friend std::ostream& operator<< (std::ostream& out, GroupsTable& gt);
+		friend std::ostream& operator<< (std::ostream& out, const GroupsTable& gt);
 	};
 }
