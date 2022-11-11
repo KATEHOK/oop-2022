@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#define PRECOMPILED
+#define SAME
 
 #include <vector>
 #include <string>

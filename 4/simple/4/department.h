@@ -1,8 +1,8 @@
 ﻿#pragma once
 
-#ifndef PRECOMPILED
-#include "precompiled.h"
-#endif // !PRECOMPILED
+#ifndef SAME
+#include "same.h"
+#endif // !SAME
 
 #define DEPARTMENT
 
@@ -16,38 +16,19 @@ namespace department {
 		std::string _name;
 
 	public:
-		Department(int id, std::string name) : _id(id), _name(name) {}
+		Department(int id, std::string name);
 
-		Department(const Department& src) : _id(src._id), _name(src._name) {}
+		Department(const Department& src);
 
-		Department(Department&& src) noexcept : _id(src._id), _name(src._name)
-		{
-			if (this != &src) {
-				src._id = -1;
-				src._name.clear();
-			}
-		}
+		Department(Department&& src);
 
-		~Department()
-		{
-			_id = -1;
-			_name.clear();
-		}
+		~Department();
 
-		int id() const
-		{
-			return _id;
-		}
+		int id() const;
 
-		std::string name() const
-		{
-			return _name;
-		}
+		std::string name() const;
 
-		void output(std::ostream& out) const
-		{
-			out << '{' << _id << ", " << _name << '}';
-		}
+		friend std::ostream& operator<< (std::ostream& out, Department& d);
 	};
 
 	class DepartmentsTable {
@@ -55,57 +36,19 @@ namespace department {
 		std::vector<Department> _departments;
 
 	public:
-		DepartmentsTable() {}
+		DepartmentsTable();
 
-		DepartmentsTable(const Department& src)
-		{
-			_departments.clear();
-			_departments.push_back(src);
-		}
+		DepartmentsTable(const Department& src);
 
-		DepartmentsTable(Department&& src)
-		{
-			_departments.clear();
-			_departments.push_back(src);
+		DepartmentsTable(Department&& src);
 
-			src._id = -1;
-			src._name.clear();
-		}
+		DepartmentsTable(const DepartmentsTable& src);
 
-		DepartmentsTable(const DepartmentsTable& src)
-		{
-			_departments.clear();
-			for (auto it = src._departments.cbegin(); it != src._departments.cend(); ++it) {
-				_departments.push_back(*it);
-			}
-		}
+		DepartmentsTable(DepartmentsTable&& src);
 
-		DepartmentsTable(DepartmentsTable&& src) noexcept
-		{
-			if (this != &src) _departments.clear();
-			for (auto it = src._departments.begin(); it != src._departments.end(); ++it) {
-				_departments.push_back(*it);
+		~DepartmentsTable();
 
-				if (this != &src) {
-					(*it)._id = -1;
-					(*it)._name.clear();
-				}
-			}
-			if (this != &src) src._departments.clear();
-		}
-
-		~DepartmentsTable()
-		{
-			for (auto it = _departments.begin(); it != _departments.end(); ++it) {
-				(*it).~Department();
-			}
-			_departments.clear();
-		}
-
-		void insert(Department& department)
-		{
-			_departments.push_back(department);
-		}
+		void insert(Department& department);
 
 		int find(int department_id) const; // индекс в векторе
 
@@ -115,13 +58,6 @@ namespace department {
 
 		void erase(std::string department_name);
 
-		void output(std::ostream& out) const
-		{
-			for (auto it = _departments.cbegin(); it != _departments.cend(); ++it)
-			{
-				(*it).output(out);
-				out << std::endl;
-			}
-		}
+		friend std::ostream& operator<< (std::ostream& out, DepartmentsTable& dt);
 	};
 }

@@ -1,8 +1,8 @@
 ﻿#pragma once
 
-#ifndef PRECOMPILED
-#include "precompiled.h"
-#endif // !PRECOMPILED
+#ifndef SAME
+#include "same.h"
+#endif // !SAME
 
 #define GROUP
 
@@ -16,46 +16,23 @@ namespace group {
 		int _study_duration; // срок обучения
 
 	public:
-		Group(int id, int size, int department_id, int study_duration) :
-			_id(id), _size(size),
-			_department_id(department_id),
-			_study_duration(study_duration) {}
+		Group(int id, int size, int department_id, int study_duration);
 
-		Group(const Group& src) :
-			_id(src._id), _size(src._size),
-			_department_id(src._department_id),
-			_study_duration(src._study_duration) {}
+		Group(const Group& src);
 
 		// нужно ли в данном случае делать конструктор перемещения?
 
 		~Group() {}
 
-		int id() const
-		{
-			return _id;
-		}
+		int id() const;
 
-		int size() const
-		{
-			return _size;
-		}
+		int size() const;
 
-		int size(int size)
-		{
-			_size = size;
-			return _size;
-		}
+		int size(int size);
 
-		int department_id() const
-		{
-			return _department_id;
-		}
+		int department_id() const;
 
-		void output(std::ostream& out) const
-		{
-			out << '{' << _id << ", " << _size << ", "
-				<< _department_id << ", " << _study_duration << '}';
-		}
+		friend std::ostream& operator<< (std::ostream& out, Group& g);
 	};
 
 	class DayGroup : public Group {
@@ -66,58 +43,23 @@ namespace group {
 
 	public:
 		DayGroup(int id, int size, int department_id, int study_duration,
-			std::string specialization, float stipend, int fellows_amount) :
-			Group(id, size, department_id, study_duration),
-			_specialization(specialization),
-			_stipend(stipend),
-			_fellows_amount(fellows_amount) {}
+			std::string specialization, float stipend, int fellows_amount);
 
-		DayGroup(const DayGroup& src) :
-			Group(src._id, src._size, src._department_id, src._study_duration),
-			_specialization(src._specialization),
-			_stipend(src._stipend),
-			_fellows_amount(src._fellows_amount) {}
+		DayGroup(const DayGroup& src);
 
-		DayGroup(DayGroup&& src) noexcept :
-			Group(src._id, src._size, src._department_id, src._study_duration),
-			_specialization(src._specialization),
-			_stipend(src._stipend),
-			_fellows_amount(src._fellows_amount)
-		{
-			if (this != &src) src._specialization.clear();
-		}
+		DayGroup(DayGroup&& src);
 
-		~DayGroup()
-		{
-			_specialization.clear();
-		}
+		~DayGroup();
 
-		std::string specialization() const
-		{
-			return _specialization;
-		}
+		std::string specialization() const;
 
-		float stipend() const
-		{
-			return _stipend;
-		}
+		float stipend() const;
 
-		float stipend(float stipend)
-		{
-			if (stipend >= 0) _stipend = stipend;
-			return _stipend;
-		}
+		float stipend(float stipend);
 
-		int fellows_amount() const
-		{
-			return _fellows_amount;
-		}
+		int fellows_amount() const;
 
-		int fellows_amount(int amount)
-		{
-			_fellows_amount = amount;
-			return _fellows_amount;
-		}
+		int fellows_amount(int amount);
 	};
 
 	class EveningGroup : public Group {
@@ -127,42 +69,17 @@ namespace group {
 
 	public:
 		EveningGroup(int id, int size, int department_id, int study_duration,
-			std::string contingent, std::string qualification) :
-			Group(id, size, department_id, study_duration),
-			_contingent(contingent),
-			_qualification(qualification) {}
+			std::string contingent, std::string qualification);
 
-		EveningGroup(const EveningGroup& src) :
-			Group(src._id, src._size, src._department_id, src._study_duration),
-			_contingent(src._contingent),
-			_qualification(src._qualification){}
+		EveningGroup(const EveningGroup& src);
 
-		EveningGroup(EveningGroup&& src) noexcept :
-			Group(src._id, src._size, src._department_id, src._study_duration),
-			_contingent(src._contingent),
-			_qualification(src._qualification)
-		{
-			if (this != &src) {
-				src._contingent.clear();
-				src._qualification.clear();
-			}
-		}
+		EveningGroup(EveningGroup&& src);
 
-		~EveningGroup()
-		{
-			_contingent.clear();
-			_qualification.clear();
-		}
+		~EveningGroup();
 
-		std::string contingent() const
-		{
-			return _contingent;
-		}
+		std::string contingent() const;
 
-		std::string qualification() const
-		{
-			return _qualification;
-		}
+		std::string qualification() const;
 	};
 
 	class PaidGroup : public Group {
@@ -172,25 +89,12 @@ namespace group {
 
 	public:
 		PaidGroup(int id, int size, int department_id, int study_duration,
-			int contract_id, float payment_size) :
-			Group(id, size, department_id, study_duration),
-			_contract_id(contract_id),
-			_payment_size(payment_size) {}
+			int contract_id, float payment_size);
 
-		PaidGroup(const PaidGroup& src) :
-			Group(src._id, src._size, src._department_id, src._study_duration),
-			_contract_id(src._contract_id),
-			_payment_size(src._payment_size) {}
+		PaidGroup(const PaidGroup& src);
 
-		float payment_size() const
-		{
-			return _payment_size;
-		}
+		float payment_size() const;
 
-		float payment_size(float payment_size)
-		{
-			if (payment_size >= 0) _payment_size = payment_size;
-			return _payment_size;
-		}
+		float payment_size(float payment_size);
 	};
 }

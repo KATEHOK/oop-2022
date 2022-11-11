@@ -1,8 +1,8 @@
 ﻿#pragma once
 
-#ifndef PRECOMPILED
-#include "precompiled.h"
-#endif // !PRECOMPILED
+#ifndef SAME
+#include "same.h"
+#endif // !SAME
 
 #ifndef GROUP
 #include "group.h"
@@ -21,40 +21,21 @@ namespace group {
 		Group* _group_ptr = nullptr;
 
 	public:
-		GroupsTableItem(int group_id, Group* group_ptr) :
-			_group_id(group_id), _group_ptr(group_ptr) {}
+		GroupsTableItem(int group_id, Group* group_ptr);
 
-		GroupsTableItem(Group& group) :	_group_id(group.id()), _group_ptr(&group) {}
+		GroupsTableItem(Group& group);
 
-		GroupsTableItem(const GroupsTableItem& src) :
-			_group_id(src._group_id), _group_ptr(src._group_ptr) {}
+		GroupsTableItem(const GroupsTableItem& src);
 
-		GroupsTableItem(GroupsTableItem&& src) noexcept :
-			_group_id(src._group_id), _group_ptr(src._group_ptr)
-		{
-			if (this != &src) src._group_ptr = nullptr;
-		}
+		GroupsTableItem(GroupsTableItem&& src);
 
-		~GroupsTableItem()
-		{
-			delete _group_ptr;
-			_group_ptr = nullptr;
-		}
+		~GroupsTableItem();
 
-		bool compare(int group_id) const
-		{
-			return _group_id == group_id;
-		}
+		bool compare(int group_id) const;
 
-		bool compare(Group* group_ptr) const
-		{
-			return _group_ptr == group_ptr;
-		}
+		bool compare(Group* group_ptr) const;
 
-		void output(std::ostream& out) const
-		{
-			out << '{' << _group_id << ", " << _group_ptr << '}';
-		}
+		friend std::ostream& operator<< (std::ostream& out, GroupsTableItem& gti);
 	};
 
 	class GroupsTable {
@@ -62,59 +43,25 @@ namespace group {
 		std::vector<GroupsTableItem> _items;
 
 	public:
-		GroupsTable() {}
+		GroupsTable();
 
-		GroupsTable(int group_id, Group* group_ptr)
-		{
-			insert(group_id, group_ptr);
-		}
+		GroupsTable(int group_id, Group* group_ptr);
 
-		GroupsTable(Group& group)
-		{
-			insert(group);
-		}
+		GroupsTable(Group& group);
 
-		GroupsTable(GroupsTableItem& item)
-		{
-			insert(item);
-		}
+		GroupsTable(GroupsTableItem& item);
 
-		GroupsTable(const GroupsTable& src)
-		{
-			_items.clear();
-			for (auto it = src._items.cbegin(); it != src._items.cend(); ++it) {
-				_items.push_back(*it);
-			}
-		}
+		GroupsTable(const GroupsTable& src);
 
-		GroupsTable(GroupsTable&& src) noexcept
-		{
-			if (this != &src) _items.clear();
-			for (auto it = src._items.cbegin(); it != src._items.cend(); ++it) {
-				_items.push_back(*it);
-			}
-			if (this != &src) src._items.clear();
-		}
+		GroupsTable(GroupsTable&& src);
 
-		~GroupsTable()
-		{
-			for (auto it = _items.begin(); it != _items.end(); ++it) {
-				(*it).~GroupsTableItem();
-			}
-			_items.clear();
-		}
+		~GroupsTable();
 
-		void insert(int group_id, Group* group_ptr) {
-			if (find(group_ptr) < 0) _items.push_back(GroupsTableItem(group_id, group_ptr));
-		}
+		void insert(int group_id, Group* group_ptr);
 
-		void insert(Group& group) {
-			if (find(&group) < 0) _items.push_back(GroupsTableItem(group));
-		}
+		void insert(Group& group);
 
-		void insert(GroupsTableItem& item) {
-			if (find(item._group_ptr) < 0) _items.push_back(item);
-		}
+		void insert(GroupsTableItem& item);
 
 		int find(int group_id) const;
 
@@ -124,13 +71,6 @@ namespace group {
 
 		void erase(int group_ptr);
 
-		void output(std::ostream& out) const
-		{
-			for (auto it = _items.cbegin(); it != _items.cend(); ++it)
-			{
-				(*it).output(out);
-				out << std::endl;
-			}
-		}
+		friend std::ostream& operator<< (std::ostream& out, GroupsTable& gt);
 	};
 }
