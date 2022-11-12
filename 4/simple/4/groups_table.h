@@ -23,27 +23,41 @@ namespace group {
 	public:
 		GroupsTableItem(int group_id, Group* group_ptr);
 
-		GroupsTableItem(Group& group);
+		GroupsTableItem(Group& group) : GroupsTableItem(group._id, &group) {}
 
-		GroupsTableItem(const GroupsTableItem& src);
+		GroupsTableItem(const GroupsTableItem& src) :
+			GroupsTableItem(src._group_id, src._group_ptr) {}
 
-		GroupsTableItem(GroupsTableItem&& src);
+		GroupsTableItem(GroupsTableItem&& src) : GroupsTableItem(src._group_id, src._group_ptr) {
+			if (this != &src) src._group_ptr = nullptr;
+		}
 
 		~GroupsTableItem();
 
-		bool compare(int group_id) const;
+		GroupsTableItem& operator= (const GroupsTableItem& src);
 
-		bool compare(Group* group_ptr) const;
+		GroupsTableItem& operator= (GroupsTableItem&& src);
 
-		friend std::ostream& operator<< (std::ostream& out, GroupsTableItem& gti);
+		bool operator== (int group_id) const;
+
+		bool operator== (Group* group_ptr) const;
+
+		template<typename T>
+		bool operator!= (T id_or_ptr) const {
+			return !(operator==(id_or_ptr));
+		}
+
+		friend std::ostream& operator<< (std::ostream& out, const GroupsTableItem& gti);
 	};
 
 	class GroupsTable {
 	private:
+
 		std::vector<GroupsTableItem> _items;
 
 	public:
-		GroupsTable();
+
+		GroupsTable() {}
 
 		GroupsTable(int group_id, Group* group_ptr);
 
@@ -57,19 +71,36 @@ namespace group {
 
 		~GroupsTable();
 
+		GroupsTable& operator= (const GroupsTable& src);
+
+		GroupsTable& operator= (GroupsTable&& src);
+
+		int size() const;
+
 		void insert(int group_id, Group* group_ptr);
 
 		void insert(Group& group);
 
 		void insert(GroupsTableItem& item);
 
-		int find(int group_id) const;
+		// вернет индекс в векторе или -1
+		template<typename T>
+		int find(T group_id_or_ptr) const {
+			for (int i = 0; i < _items.size(); ++i)
+				if (_items[i] == group_id_or_ptr) return i;
+			return -1;
+		}
 
-		int find(Group* group_ptr) const;
+		template<typename T>
+		void erase(T group_id_or_ptr) {
+			int id = find(group_id_or_ptr);
+			if (id < 0) return;
 
-		void erase(int group_id);
+			auto it = _items.begin() + id;
+			_items.erase(it);
+		}
 
-		void erase(int group_ptr);
+		void output() const;
 
 		friend std::ostream& operator<< (std::ostream& out, const GroupsTable& gt);
 	};

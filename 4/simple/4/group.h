@@ -9,6 +9,10 @@
 namespace group {
 
 	class Group {
+
+		friend class GroupsTableItem;
+		friend class GroupsTable;
+
 	protected:
 		int _id; // уникален в рамках одной таблицы
 		int _size; // количество студентов
