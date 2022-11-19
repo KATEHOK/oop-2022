@@ -6,20 +6,14 @@ namespace group {
 
 	// class GroupsTableItem
 
-	GroupsTableItem::GroupsTableItem(int group_id, Group* group_ptr) {
-		if (group_ptr != nullptr) {
+	GroupsTableItem::GroupsTableItem(int group_id, std::shared_ptr<Group> group_ptr) {
+		if (group_ptr.get() != nullptr) {
 			_group_id = group_id;
 			_group_ptr = group_ptr;
 		}
 	}
 
-	GroupsTableItem::~GroupsTableItem() {
-		delete _group_ptr;
-		_group_ptr = nullptr;
-	}
-
 	GroupsTableItem& GroupsTableItem::operator= (const GroupsTableItem& src) {
-		delete _group_ptr;
 		_group_id = src._group_id;
 		_group_ptr = src._group_ptr;
 		return *this;
@@ -27,8 +21,6 @@ namespace group {
 
 	GroupsTableItem& GroupsTableItem::operator= (GroupsTableItem&& src) {
 		if (this != &src) {
-			delete _group_ptr;
-
 			_group_id = src._group_id;
 			_group_ptr = src._group_ptr;
 
@@ -41,19 +33,23 @@ namespace group {
 		return (_group_id == group_id);
 	}
 
-	bool GroupsTableItem::operator== (Group* group_ptr) const {
+	bool GroupsTableItem::operator== (std::shared_ptr<Group> group_ptr) const {
 		return (_group_ptr == group_ptr);
 	}
 
+	bool GroupsTableItem::operator== (Group* group_ptr) const {
+		return (_group_ptr.get() == group_ptr);
+	}
+
 	std::ostream& operator<< (std::ostream& out, const GroupsTableItem& gti) {
-		out << '[' << gti._group_id << ", " << gti._group_ptr << ']';
+		out << '[' << gti._group_id << ", " << gti._group_ptr.get() << ']';
 		return out;
 	}
 
 	// class GroupsTable
 
-	GroupsTable::GroupsTable(int group_id, Group* group_ptr) {
-		if (group_ptr != nullptr) {
+	GroupsTable::GroupsTable(int group_id, std::shared_ptr<Group> group_ptr) {
+		if (group_ptr.get() != nullptr) {
 			_items.push_back(GroupsTableItem(group_id, group_ptr));
 		}
 	}
@@ -67,13 +63,11 @@ namespace group {
 	}
 
 	GroupsTable::GroupsTable(const GroupsTable& src) {
-		_items.clear();
 		_items = src._items;
 	}
 
 	GroupsTable::GroupsTable(GroupsTable&& src) {
 		if (this != &src) {
-			_items.clear();
 			_items = src._items;
 			src._items.clear();
 		}
@@ -94,17 +88,6 @@ namespace group {
 
 	int GroupsTable::size() const {
 		return _items.size();
-	}
-
-	void GroupsTable::insert(int group_id, Group* group_ptr) {
-		if (group_ptr == nullptr || find(group_id) >= 0 || find(group_ptr) >= 0) return;
-
-		for (auto it = _items.begin(); it != _items.end(); ++it)
-
-			if ((*it)._group_id > group_id) {
-				_items.insert(it, GroupsTableItem(group_id, group_ptr));
-				break;
-			}
 	}
 
 	void GroupsTable::insert(Group& group) {

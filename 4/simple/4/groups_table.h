@@ -10,6 +10,8 @@
 
 #define GROUPS_TABLE
 
+#include <memory>
+
 namespace group {
 
 	class GroupsTableItem {
@@ -18,10 +20,13 @@ namespace group {
 
 	private:
 		int _group_id;
-		Group* _group_ptr = nullptr;
+		std::shared_ptr<Group> _group_ptr = nullptr;
 
 	public:
-		GroupsTableItem(int group_id, Group* group_ptr);
+		GroupsTableItem(int group_id, std::shared_ptr<Group> group_ptr);
+
+		GroupsTableItem(int group_id, Group* group_ptr) :
+			GroupsTableItem(group_id, std::shared_ptr<Group>(group_ptr)) {}
 
 		GroupsTableItem(Group& group) : GroupsTableItem(group._id, &group) {}
 
@@ -32,13 +37,13 @@ namespace group {
 			if (this != &src) src._group_ptr = nullptr;
 		}
 
-		~GroupsTableItem();
-
 		GroupsTableItem& operator= (const GroupsTableItem& src);
 
 		GroupsTableItem& operator= (GroupsTableItem&& src);
 
 		bool operator== (int group_id) const;
+
+		bool operator== (std::shared_ptr<Group> group_ptr) const;
 
 		bool operator== (Group* group_ptr) const;
 
@@ -59,7 +64,10 @@ namespace group {
 
 		GroupsTable() {}
 
-		GroupsTable(int group_id, Group* group_ptr);
+		GroupsTable(int group_id, std::shared_ptr<Group> group_ptr);
+
+		GroupsTable(int group_id, Group* group_ptr) :
+			GroupsTable(group_id, std::shared_ptr<Group>(group_ptr)) {}
 
 		GroupsTable(Group& group);
 
@@ -75,11 +83,21 @@ namespace group {
 
 		int size() const;
 
-		void insert(int group_id, Group* group_ptr);
-
 		void insert(Group& group);
 
 		void insert(GroupsTableItem& item);
+
+		template<typename T>
+		void insert(int group_id, T group_ptr) {
+			if (group_ptr == nullptr || find(group_id) >= 0 || find(group_ptr) >= 0) return;
+
+			for (auto it = _items.begin(); it != _items.end(); ++it)
+
+				if ((*it)._group_id > group_id) {
+					_items.insert(it, GroupsTableItem(group_id, group_ptr));
+					break;
+				}
+		}
 
 		// вернет индекс в векторе или -1
 		template<typename T>
