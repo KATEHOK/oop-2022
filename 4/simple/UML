@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2022-11-12T10:26:26.132Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36" etag="83IdB9OFy0i0Gr5zfPsd" version="20.5.3" type="github">
+<mxfile host="app.diagrams.net" modified="2022-11-19T10:39:48.109Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0 Safari/537.36" etag="4wTYlCZ55wrHfvCPa-g_" version="20.5.3" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
-    <mxGraphModel dx="1038" dy="652" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1422" dy="772" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
@@ -171,7 +171,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="PN8njpq-bYIlwUAXqx_K-14" value="GroupsTable" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="480" y="90" width="390" height="268" as="geometry" />
+          <mxGeometry x="480" y="34" width="390" height="268" as="geometry" />
         </mxCell>
         <mxCell id="PN8njpq-bYIlwUAXqx_K-31" value="- _items: vector&lt;GroupsTableItem&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="PN8njpq-bYIlwUAXqx_K-14" vertex="1">
           <mxGeometry y="26" width="390" height="26" as="geometry" />
@@ -179,10 +179,10 @@
         <mxCell id="PN8njpq-bYIlwUAXqx_K-16" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="PN8njpq-bYIlwUAXqx_K-14" vertex="1">
           <mxGeometry y="52" width="390" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="bDoyHddwBEHWW0zQj0s--4" value="+ size(): int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="PN8njpq-bYIlwUAXqx_K-14">
+        <mxCell id="bDoyHddwBEHWW0zQj0s--4" value="+ size(): int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="PN8njpq-bYIlwUAXqx_K-14" vertex="1">
           <mxGeometry y="60" width="390" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="bDoyHddwBEHWW0zQj0s--2" value="+ insert(group_id: int, group_ptr: Group*)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="PN8njpq-bYIlwUAXqx_K-14">
+        <mxCell id="bDoyHddwBEHWW0zQj0s--2" value="+ insert(group_id: int, group_ptr: T)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="PN8njpq-bYIlwUAXqx_K-14" vertex="1">
           <mxGeometry y="86" width="390" height="26" as="geometry" />
         </mxCell>
         <mxCell id="PN8njpq-bYIlwUAXqx_K-17" value="+ insert(group: Group&amp;)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="PN8njpq-bYIlwUAXqx_K-14" vertex="1">
@@ -197,21 +197,21 @@
         <mxCell id="PN8njpq-bYIlwUAXqx_K-41" value="+ erase(group_id_or_ptr_ptr: T)" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="PN8njpq-bYIlwUAXqx_K-14" vertex="1">
           <mxGeometry y="190" width="390" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="bDoyHddwBEHWW0zQj0s--3" value="+ output()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="PN8njpq-bYIlwUAXqx_K-14">
+        <mxCell id="bDoyHddwBEHWW0zQj0s--3" value="+ output()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="PN8njpq-bYIlwUAXqx_K-14" vertex="1">
           <mxGeometry y="216" width="390" height="26" as="geometry" />
         </mxCell>
         <mxCell id="PN8njpq-bYIlwUAXqx_K-52" value="friend operator&lt;&lt; (out: ostream&amp;, gt: const GroupsTable&amp;): ostream&amp;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="PN8njpq-bYIlwUAXqx_K-14" vertex="1">
           <mxGeometry y="242" width="390" height="26" as="geometry" />
         </mxCell>
         <mxCell id="PN8njpq-bYIlwUAXqx_K-27" value="GroupsTableItem" style="swimlane;fontStyle=0;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="7.5" y="123" width="402.5" height="190" as="geometry">
+          <mxGeometry x="11" y="60" width="402.5" height="216" as="geometry">
             <mxRectangle x="95" y="130" width="130" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
         <mxCell id="PN8njpq-bYIlwUAXqx_K-15" value="- _group_id: int" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="PN8njpq-bYIlwUAXqx_K-27" vertex="1">
           <mxGeometry y="26" width="402.5" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="PN8njpq-bYIlwUAXqx_K-18" value="- _group_ptr: Group*" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="PN8njpq-bYIlwUAXqx_K-27" vertex="1">
+        <mxCell id="PN8njpq-bYIlwUAXqx_K-18" value="- _group_ptr: shared_ptr&lt;Group&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="PN8njpq-bYIlwUAXqx_K-27" vertex="1">
           <mxGeometry y="52" width="402.5" height="26" as="geometry" />
         </mxCell>
         <mxCell id="PN8njpq-bYIlwUAXqx_K-29" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;strokeColor=inherit;" parent="PN8njpq-bYIlwUAXqx_K-27" vertex="1">
@@ -220,14 +220,17 @@
         <mxCell id="PN8njpq-bYIlwUAXqx_K-66" value="+ operator==(group_id: int): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="PN8njpq-bYIlwUAXqx_K-27" vertex="1">
           <mxGeometry y="86" width="402.5" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="bDoyHddwBEHWW0zQj0s--1" value="+ operator==(group_ptr: Group*): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="PN8njpq-bYIlwUAXqx_K-27">
+        <mxCell id="bDoyHddwBEHWW0zQj0s--1" value="+ operator==(group_ptr: shared_ptr&lt;Group&gt;): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="PN8njpq-bYIlwUAXqx_K-27" vertex="1">
           <mxGeometry y="112" width="402.5" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="bDoyHddwBEHWW0zQj0s--0" value="+ operator!=(id_or_ptr: T): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="PN8njpq-bYIlwUAXqx_K-27">
+        <mxCell id="GZ2KUzGrOhfMPoj2J5YF-0" value="+ operator== (group_ptr: Group*): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="PN8njpq-bYIlwUAXqx_K-27">
           <mxGeometry y="138" width="402.5" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="PN8njpq-bYIlwUAXqx_K-30" value="friend operator&lt;&lt; (out: ostream&amp;, gti: const GroupsTableItem&amp;): ostream&amp;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="PN8njpq-bYIlwUAXqx_K-27" vertex="1">
+        <mxCell id="bDoyHddwBEHWW0zQj0s--0" value="+ operator!=(id_or_ptr: T): bool" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="PN8njpq-bYIlwUAXqx_K-27" vertex="1">
           <mxGeometry y="164" width="402.5" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="PN8njpq-bYIlwUAXqx_K-30" value="friend operator&lt;&lt; (out: ostream&amp;, gti: const GroupsTableItem&amp;): ostream&amp;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="PN8njpq-bYIlwUAXqx_K-27" vertex="1">
+          <mxGeometry y="190" width="402.5" height="26" as="geometry" />
         </mxCell>
         <mxCell id="PN8njpq-bYIlwUAXqx_K-33" value="" style="endArrow=diamondThin;endFill=1;endSize=24;html=1;rounded=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="PN8njpq-bYIlwUAXqx_K-27" target="PN8njpq-bYIlwUAXqx_K-14" edge="1">
           <mxGeometry width="160" relative="1" as="geometry">
