@@ -69,8 +69,6 @@ namespace group {
 
 		GroupsTable(GroupsTable&& src);
 
-		~GroupsTable();
-
 		GroupsTable& operator= (const GroupsTable& src);
 
 		GroupsTable& operator= (GroupsTable&& src);

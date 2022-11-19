@@ -33,12 +33,7 @@ namespace group {
 
 	// class DayGroup
 
-	DayGroup::~DayGroup() {
-		_specialization.clear();
-	}
-
 	DayGroup& DayGroup::operator= (const DayGroup& src) {
-		_specialization.clear();
 		_size = src._size;
 		_department_id = src._department_id;
 		_study_duration = src._study_duration;
@@ -52,7 +47,6 @@ namespace group {
 	DayGroup& DayGroup::operator= (DayGroup&& src) {
 		if (this == &src) return *this;
 
-		_specialization.clear();
 		_size = src._size;
 		_department_id = src._department_id;
 		_study_duration = src._study_duration;
@@ -99,15 +93,7 @@ namespace group {
 
 	// class EveningGroup
 
-	EveningGroup::~EveningGroup() {
-		_contingent.clear();
-		_qualification.clear();
-	}
-
 	EveningGroup& EveningGroup::operator= (const EveningGroup& src) {
-		_contingent.clear();
-		_qualification.clear();
-
 		_size = src._size;
 		_department_id = src._department_id;
 		_study_duration = src._study_duration;
@@ -120,9 +106,6 @@ namespace group {
 
 	EveningGroup& EveningGroup::operator= (EveningGroup&& src) {
 		if (this == &src) return *this;
-
-		_contingent.clear();
-		_qualification.clear();
 
 		_size = src._size;
 		_department_id = src._department_id;

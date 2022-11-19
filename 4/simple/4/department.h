@@ -24,8 +24,6 @@ namespace department {
 
 		Department(Department&& src);
 
-		~Department();
-
 		Department& operator= (const Department& src);
 
 		Department& operator= (Department&& src);
@@ -57,8 +55,6 @@ namespace department {
 		DepartmentsTable(const DepartmentsTable& src);
 
 		DepartmentsTable(DepartmentsTable&& src);
-
-		~DepartmentsTable();
 
 		DepartmentsTable& operator= (const DepartmentsTable& src);
 

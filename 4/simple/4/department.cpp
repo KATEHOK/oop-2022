@@ -14,10 +14,6 @@ namespace department {
 		}
 	}
 
-	Department::~Department() {
-		_name.clear();
-	}
-
 	int Department::id() const {
 		return _id;
 	}
@@ -74,10 +70,6 @@ namespace department {
 			for (auto i : src._departments) _departments.push_back(i);
 			src._departments.clear();
 		}
-	}
-
-	DepartmentsTable::~DepartmentsTable() {
-		_departments.clear();
 	}
 
 	DepartmentsTable& DepartmentsTable::operator= (const DepartmentsTable& src) {

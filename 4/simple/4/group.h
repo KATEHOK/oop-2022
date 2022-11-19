@@ -73,8 +73,6 @@ namespace group {
 			if (this != &src) src._specialization.clear();
 		}
 
-		~DayGroup();
-
 		DayGroup& operator= (const DayGroup& src);
 
 		DayGroup& operator= (DayGroup&& src);
@@ -119,8 +117,6 @@ namespace group {
 			}
 		}
 
-		~EveningGroup();
-
 		EveningGroup& operator= (const EveningGroup& src);
 
 		EveningGroup& operator= (EveningGroup&& src);
@@ -153,8 +149,6 @@ namespace group {
 			Group(src),
 			_contract_id(src._contract_id),
 			_payment_size(src._payment_size) {}
-
-		~PaidGroup() {}
 
 		PaidGroup& operator= (const PaidGroup& src);
 

@@ -79,19 +79,13 @@ namespace group {
 		}
 	}
 
-	GroupsTable::~GroupsTable() {
-		_items.clear();
-	}
-
 	GroupsTable& GroupsTable::operator= (const GroupsTable& src) {
-		_items.clear();
 		_items = src._items;
 		return *this;
 	}
 
 	GroupsTable& GroupsTable::operator= (GroupsTable&& src) {
 		if (this != &src) {
-			_items.clear();
 			_items = src._items;
 			src._items.clear();
 		}
