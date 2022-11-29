@@ -31,12 +31,17 @@ namespace group {
 		out << _id << ", " << _size << ", " << _department_id << ", " << _study_duration;
 	}
 
-	// class DayGroup
-
-	DayGroup& DayGroup::operator= (const DayGroup& src) {
+	void Group::copy_from(const Group& src) {
+		_id = src._id;
 		_size = src._size;
 		_department_id = src._department_id;
 		_study_duration = src._study_duration;
+	}
+
+	// class DayGroup
+
+	DayGroup& DayGroup::operator= (const DayGroup& src) {
+		copy_from(src);
 
 		_specialization = src._specialization;
 		_stipend = src._stipend;
@@ -46,10 +51,7 @@ namespace group {
 
 	DayGroup& DayGroup::operator= (DayGroup&& src) {
 		if (this == &src) return *this;
-
-		_size = src._size;
-		_department_id = src._department_id;
-		_study_duration = src._study_duration;
+		copy_from(src);
 
 		_specialization = src._specialization;
 		_stipend = src._stipend;
@@ -94,9 +96,7 @@ namespace group {
 	// class EveningGroup
 
 	EveningGroup& EveningGroup::operator= (const EveningGroup& src) {
-		_size = src._size;
-		_department_id = src._department_id;
-		_study_duration = src._study_duration;
+		copy_from(src);
 
 		_contingent = src._contingent;
 		_qualification = src._qualification;
@@ -106,10 +106,7 @@ namespace group {
 
 	EveningGroup& EveningGroup::operator= (EveningGroup&& src) {
 		if (this == &src) return *this;
-
-		_size = src._size;
-		_department_id = src._department_id;
-		_study_duration = src._study_duration;
+		copy_from(src);
 
 		_contingent = src._contingent;
 		_qualification = src._qualification;
@@ -140,9 +137,7 @@ namespace group {
 	// class PaidGroup
 
 	PaidGroup& PaidGroup::operator= (const PaidGroup& src) {
-		_size = src._size;
-		_department_id = src._department_id;
-		_study_duration = src._study_duration;
+		copy_from(src);
 
 		_contract_id = src._contract_id;
 		_payment_size = src._payment_size;
@@ -151,10 +146,7 @@ namespace group {
 
 	PaidGroup& PaidGroup::operator= (PaidGroup&& src) {
 		if (this == &src) return *this;
-
-		_size = src._size;
-		_department_id = src._department_id;
-		_study_duration = src._study_duration;
+		copy_from(src);
 
 		_contract_id = src._contract_id;
 		_payment_size = src._payment_size;

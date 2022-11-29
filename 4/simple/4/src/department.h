@@ -160,21 +160,21 @@ namespace department {
 		* @param department_id Номер искомой кафедры
 		* @return Индекс внутри вектора (или -1 при отсутствии)
 		*/
-		int find(int department_id) const; // индекс в векторе (не найдено - 0)
+		int find(int department_id) const;
 
 		/**
 		* @brief Функция поиска объекта кафедры в таблице по наименованию кафедры
 		* @param department_name Наименование искомой кафедры
 		* @return Индекс внутри вектора (или -1 при отсутствии)
 		*/
-		int find(const std::string department_name) const; // индекс в векторе (не найдено - 0)
+		int find(const std::string department_name) const;
 
 		/**
 		* @brief Функция поиска объекта кафедры в таблице по самому объекту
 		* @param d Ссылка на искомый объект кафедры
 		* @return Индекс внутри вектора (или -1 при отсутствии)
 		*/
-		int find(const Department& d) const; // индекс в векторе (не найдено - 0)
+		int find(const Department& d) const;
 
 		/**
 		* @brief Геттер размера таблицы

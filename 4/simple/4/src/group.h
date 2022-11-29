@@ -19,16 +19,16 @@ namespace group {
 	protected:
 
 		//! Номер группы (уникален в рамках одной таблицы)
-		int _id;
+		int _id = 0;
 
 		//! Количество студентов группы
-		int _size;
+		int _size = 0;
 
 		//! Номер профилирующей кафедры
-		int _department_id;
+		int _department_id = 0;
 
 		//! срок обучения
-		int _study_duration;
+		int _study_duration = 0;
 
 		/**
 		* @brief Функция вывода абстрактной группы в стандартный поток вывода
@@ -36,7 +36,18 @@ namespace group {
 		*/
 		void output(std::ostream& out) const;
 
+		/**
+		* @brief Копирует параметры абстрактной группы
+		* @param src Ссылка на объект с которого копируются параметры
+		*/
+		void copy_from(const Group& src);
+
 	public:
+
+		/**
+		* @brief Конструктор по умолчанию (везде нули)
+		*/
+		Group() {}
 
 		/**
 		* @brief Конструктор по значениям полей
@@ -100,15 +111,20 @@ namespace group {
 	private:
 
 		//! Специализация группы
-		std::string _specialization;
+		std::string _specialization = "";
 
 		//! Размер стипендии в группе
-		float _stipend;
+		float _stipend = 0;
 
 		//! Количество стипендиатов в группе
-		int _fellows_amount;
+		int _fellows_amount = 0;
 
 	public:
+
+		/**
+		* @brief Конструктор по умолчанию (везде нули)
+		*/
+		DayGroup() : Group() {}
 
 		/**
 		* @brief Конструктор по значениям полей
@@ -211,12 +227,17 @@ namespace group {
 	private:
 
 		//! Контингент
-		std::string _contingent;
+		std::string _contingent = "";
 
 		//! Квалификация
-		std::string _qualification;
+		std::string _qualification = "";
 
 	public:
+
+		/**
+		* @brief Конструктор по умолчанию (везде нули)
+		*/
+		EveningGroup() : Group() {}
 
 		/**
 		* @brief Конструктор по значениям полей
@@ -298,12 +319,17 @@ namespace group {
 	private:
 
 		//! Номер контракта
-		int _contract_id;
+		int _contract_id = 0;
 
 		//! Размер оплаты
-		float _payment_size;
+		float _payment_size = 0;
 
 	public:
+
+		/**
+		* @brief Конструктор по умолчанию (везде нули)
+		*/
+		PaidGroup() : Group() {}
 
 		/**
 		* @brief Конструктор по значениям полей
