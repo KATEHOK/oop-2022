@@ -16,7 +16,7 @@ namespace department {
 
 	private:
 		//! Номер кафедры (уникален в рамках одной таблицы)
-		int _id;
+		int _id = 0;
 		//! Наименование кафедры (уникально в рамках одной таблицы)
 		std::string _name;
 
@@ -150,7 +150,7 @@ namespace department {
 		DepartmentsTable& operator= (DepartmentsTable&& src);
 
 		/**
-		* @brief Функция, добавляющая объект кафедры в конец таблицы
+		* @brief Функция, добавляющая уникальный объект кафедры в конец таблицы
 		* @param department Ссылка на добавляемый объект кафедры
 		*/
 		void push_back(Department& department);
@@ -201,7 +201,7 @@ namespace department {
 		* @param Ссылка на найденный объект кафедры
 		*/
 		template<typename T>
-		Department& operator[] (T id_or_name) const {
+		Department operator[] (T id_or_name) const {
 			int id = find(id_or_name);
 			if (id < 0) throw std::out_of_range("Table has not this item");
 			return _departments[id];
