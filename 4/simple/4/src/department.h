@@ -15,9 +15,9 @@ namespace department {
 		friend class DepartmentsTable;
 
 	private:
-		//! Номер кафедры (уникален в рамках одной таблицы)
+		//! @brief Номер кафедры (уникален в рамках одной таблицы)
 		int _id = 0;
-		//! Наименование кафедры (уникально в рамках одной таблицы)
+		//! @brief Наименование кафедры (уникально в рамках одной таблицы)
 		std::string _name;
 
 	public:
@@ -101,7 +101,7 @@ namespace department {
 	*/
 	class DepartmentsTable {
 	private:
-		//! Вектор из кафедр
+		//! @brief Вектор из кафедр
 		std::vector<Department> _departments;
 
 	public:

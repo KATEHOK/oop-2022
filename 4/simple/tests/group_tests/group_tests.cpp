@@ -1,4 +1,4 @@
-#include "../../4/src/group.h"
+﻿#include "../../4/src/group.h"
 #include "CppUnitTest.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;

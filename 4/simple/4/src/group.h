@@ -18,16 +18,16 @@ namespace group {
 
 	protected:
 
-		//! Номер группы (уникален в рамках одной таблицы)
+		//! @brief Номер группы (уникален в рамках одной таблицы)
 		int _id = 0;
 
-		//! Количество студентов группы
+		//! @brief Количество студентов группы
 		int _size = 0;
 
-		//! Номер профилирующей кафедры
+		//! @brief Номер профилирующей кафедры
 		int _department_id = 0;
 
-		//! срок обучения
+		//! @brief Срок обучения
 		int _study_duration = 0;
 
 		/**
@@ -110,13 +110,13 @@ namespace group {
 	class DayGroup : public Group {
 	private:
 
-		//! Специализация группы
+		//! @brief Специализация группы
 		std::string _specialization = "";
 
-		//! Размер стипендии в группе
+		//! @brief Размер стипендии в группе
 		float _stipend = 0;
 
-		//! Количество стипендиатов в группе
+		//! @brief Количество стипендиатов в группе
 		int _fellows_amount = 0;
 
 	public:
@@ -226,10 +226,10 @@ namespace group {
 	class EveningGroup : public Group {
 	private:
 
-		//! Контингент
+		//! @brief Контингент
 		std::string _contingent = "";
 
-		//! Квалификация
+		//! @brief Квалификация
 		std::string _qualification = "";
 
 	public:
@@ -318,10 +318,10 @@ namespace group {
 	class PaidGroup : public Group {
 	private:
 
-		//! Номер контракта
+		//! @brief Номер контракта
 		int _contract_id = 0;
 
-		//! Размер оплаты
+		//! @brief Размер оплаты
 		float _payment_size = 0;
 
 	public:

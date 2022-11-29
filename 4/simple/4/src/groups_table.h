@@ -23,13 +23,18 @@ namespace group {
 
 	private:
 
-		//! Номер группы
-		int _group_id;
+		//! @brief Номер группы
+		int _group_id = 0;
 
-		//! Указатель на группу
+		//! @brief Указатель на группу
 		std::shared_ptr<Group> _group_ptr = nullptr;
 
 	public:
+
+		/**
+		* @brief Конструктор по умолчанию (везде нули)
+		*/
+		GroupsTableItem() {}
 
 		/**
 		* @brief Конструктор по значениям полей
@@ -112,6 +117,14 @@ namespace group {
 			return !(operator==(id_or_ptr));
 		}
 
+		int group_id() const {
+			return _group_id;
+		}
+
+		std::shared_ptr<Group> group_ptr() const {
+			return _group_ptr;
+		}
+
 		/**
 		* @brief Дружественный оператор вывода элемента таблицы групп в стандартный поток вывода
 		* @param out Ссылка на стандартный поток вывода
@@ -127,7 +140,7 @@ namespace group {
 	class GroupsTable {
 	private:
 
-		//! Вектор из элементов таблицы групп
+		//! @brief Вектор из элементов таблицы групп
 		std::vector<GroupsTableItem> _items;
 
 	public:
