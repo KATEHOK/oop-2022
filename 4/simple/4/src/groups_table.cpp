@@ -33,16 +33,16 @@ namespace group {
 		return (_group_id == group_id);
 	}
 
-	bool GroupsTableItem::operator== (std::shared_ptr<Group> group_ptr) const {
+	bool GroupsTableItem::operator== (const std::shared_ptr<Group> group_ptr) const {
 		return (_group_ptr == group_ptr);
 	}
 
-	bool GroupsTableItem::operator== (Group* group_ptr) const {
+	bool GroupsTableItem::operator== (const Group* group_ptr) const {
 		return (_group_ptr.get() == group_ptr);
 	}
 
 	std::ostream& operator<< (std::ostream& out, const GroupsTableItem& gti) {
-		out << '[' << gti._group_id << ", " << gti._group_ptr.get() << ']';
+		out << '[' << gti._group_id << ", " << gti._group_ptr << ']';
 		return out;
 	}
 
@@ -93,12 +93,14 @@ namespace group {
 	void GroupsTable::insert(Group& group) {
 		if (find(group._id) >= 0 || find(&group) >= 0) return;
 
-		for (auto it = _items.begin(); it != _items.end(); ++it)
+		for (auto it = _items.begin(); it != _items.end(); ++it) {
 
-			if ((*it)._group_id > group._id) {
+			if ((*it)._group_id > group._id || (it + 1) == _items.end()) {
 				_items.insert(it, GroupsTableItem(group));
 				break;
 			}
+
+		}
 	}
 
 	void GroupsTable::insert(GroupsTableItem& item) {
@@ -106,8 +108,20 @@ namespace group {
 
 		for (auto it = _items.begin(); it != _items.end(); ++it)
 
-			if ((*it)._group_id > item._group_id) {
+			if ((*it)._group_id > item._group_id || (it + 1) == _items.end()) {
 				_items.insert(it, item);
+				break;
+			}
+	}
+
+	void GroupsTable::insert(int group_id, std::shared_ptr<Group> group_ptr) {
+		if (group_ptr.get() == nullptr || find(group_id) >= 0 || find(group_ptr) >= 0 ||
+			group_ptr->_id != group_id) return;
+
+		for (auto it = _items.begin(); it != _items.end(); ++it)
+
+			if ((*it)._group_id > group_id || (it + 1) == _items.end()) {
+				_items.insert(it, GroupsTableItem(group_id, group_ptr));
 				break;
 			}
 	}

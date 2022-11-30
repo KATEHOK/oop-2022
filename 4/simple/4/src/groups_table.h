@@ -16,6 +16,8 @@ namespace group {
 
 	/**
 	* @brief Класс элемента таблицы групп
+	* @brief Для корректной работы память под группы необходимо выделять динамически
+	* при помощи оператора new
 	*/
 	class GroupsTableItem {
 
@@ -44,18 +46,12 @@ namespace group {
 		GroupsTableItem(int group_id, std::shared_ptr<Group> group_ptr);
 
 		/**
-		* @brief Конструктор по значениям полей
-		* @param group_id Номер группы
-		* @param group_ptr Стандартный указатель на группу
-		*/
-		GroupsTableItem(int group_id, Group* group_ptr) :
-			GroupsTableItem(group_id, std::shared_ptr<Group>(group_ptr)) {}
-
-		/**
-		* @brief Конструктор по одной группе
+		* @brief Конструктор по группе
+		* @brief Запрещается создание более одного объекта по группе (влечет ошибки с памятью)
 		* @param group Ссылка на группу
 		*/
-		GroupsTableItem(Group& group) : GroupsTableItem(group._id, &group) {}
+		GroupsTableItem(Group& group) :
+			GroupsTableItem(group._id, std::shared_ptr<Group>(&group)) {}
 
 		/**
 		* @brief Копирующий конструктор
@@ -98,18 +94,18 @@ namespace group {
 		* @param group_ptr Умный указатель на сравниваемую группу
 		* @return true, если указатель совпал с указателем данного элемента таблицы, иначе - false
 		*/
-		bool operator== (std::shared_ptr<Group> group_ptr) const;
+		bool operator== (const std::shared_ptr<Group> group_ptr) const;
 
 		/**
 		* @brief Оператор равенства
 		* @param group_ptr Указатель на сравниваемую группу
 		* @return true, если указатель совпал с указателем данного элемента таблицы, иначе - false
 		*/
-		bool operator== (Group* group_ptr) const;
+		bool operator== (const Group* group_ptr) const;
 
 		/**
 		* @brief Шаблон оператора неравенства
-		* @param id_or_ptr Умный или стандартный указатель или номер сравниваемой группы
+		* @param id_or_ptr Умный указатель или номер сравниваемой группы
 		* @return true, если соответствующие значения отличаются, иначе - false
 		*/
 		template<typename T>
@@ -158,15 +154,9 @@ namespace group {
 		GroupsTable(int group_id, std::shared_ptr<Group> group_ptr);
 
 		/**
-		* @brief Конструктор по значениям полей для первого элемента
-		* @param group_id Номер группы
-		* @param group_ptr Стандартный указатель на группу
-		*/
-		GroupsTable(int group_id, Group* group_ptr) :
-			GroupsTable(group_id, std::shared_ptr<Group>(group_ptr)) {}
-
-		/**
 		* @brief Конструктор по значению первой группы
+		* @brief Запрещено создавать объект на основе группы,
+		* если на ее основе уже существует элемент таблицы
 		* @param group Ссылка на добавляемую группу
 		*/
 		GroupsTable(Group& group);
@@ -222,26 +212,15 @@ namespace group {
 		void insert(GroupsTableItem& item);
 
 		/**
-		* @brief Шаблон функции (корректной) вставки нового элемента по значениям полей элемента
+		* @brief Функция (корректной) вставки нового элемента по значениям полей элемента
 		* @param group_id Номер группы
 		* @param group_ptr Указатель на группу
 		*/
-		template<typename T>
-		void insert(int group_id, T group_ptr) {
-			if (group_ptr == nullptr || find(group_id) >= 0 || find(group_ptr) >= 0 ||
-				group_ptr->_id != group_id) return;
-
-			for (auto it = _items.begin(); it != _items.end(); ++it)
-
-				if ((*it)._group_id > group_id) {
-					_items.insert(it, GroupsTableItem(group_id, group_ptr));
-					break;
-				}
-		}
+		void insert(int group_id, std::shared_ptr<Group> group_ptr);
 
 		/**
 		* @brief Шаблон функции поиска элемента
-		* @param group_id_or_ptr Номер или указатель (умный или стандартный) на искомую группу
+		* @param group_id_or_ptr Номер или указатель (умный или обычный) на искомую группу
 		* @return Индекс в векторе, если элемент найден, иначе -1
 		*/
 		template<typename T>
@@ -253,7 +232,7 @@ namespace group {
 
 		/**
 		* @brief Шаблон функции исключения элемента из таблицы
-		* @param group_id_or_ptr Номер или указатель (умный или стандартный) на искомую группу
+		* @param group_id_or_ptr Номер или указатель (умный или обычный) на искомую группу
 		*/
 		template<typename T>
 		void erase(T group_id_or_ptr) {
@@ -262,6 +241,18 @@ namespace group {
 
 			auto it = _items.begin() + id;
 			_items.erase(it);
+		}
+
+		/**
+		* @brief Шаблон оператора индексирования
+		* @param group_id_or_ptr Номер или указатель (умный) на искомую группу
+		* @return Копия элемента группы таблиц
+		*/
+		template<typename T>
+		GroupsTableItem operator[] (T group_id_or_ptr) const {
+			int id = find(group_id_or_ptr);
+			if (id < 0) throw std::out_of_range("This group is not exist");
+			return _items[id];
 		}
 
 		/**
