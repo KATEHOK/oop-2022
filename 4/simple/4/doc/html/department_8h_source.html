@@ -5,10 +5,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Study Groups: src/department.h Source File</title>
+<title>My Project: E:/Inst/2 course/oop/labs/oop-2022/4/simple/4/src/department.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -21,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Study Groups
+   <div id="projectname">My Project
    </div>
   </td>
  </tr>
@@ -46,6 +50,23 @@ $(function() {
 /* @license-end */
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('department_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -67,11 +88,6 @@ $(function() {
 </div>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="headertitle"><div class="title">department.h</div></div>
 </div><!--header-->
@@ -90,7 +106,7 @@ $(function() {
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="classdepartment_1_1_departments_table.html">DepartmentsTable</a>;</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        <span class="keywordtype">int</span> _id;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        <span class="keywordtype">int</span> _id = 0;</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        std::string _name;</div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keyword">public</span>:</div>
@@ -139,11 +155,11 @@ $(function() {
 <div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> </div>
 <div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        <span class="keywordtype">void</span> <a class="code hl_function" href="classdepartment_1_1_departments_table.html#ad265a0fb3f1f3ecf35fc5bc87a0b8955">push_back</a>(<a class="code hl_class" href="classdepartment_1_1_department.html">Department</a>&amp; department);</div>
 <div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> </div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        <span class="keywordtype">int</span> <a class="code hl_function" href="classdepartment_1_1_departments_table.html#ac7d7d943267dc2068a66db2ee234e896">find</a>(<span class="keywordtype">int</span> department_id) <span class="keyword">const</span>; <span class="comment">// индекс в векторе (не найдено - 0)</span></div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        <span class="keywordtype">int</span> <a class="code hl_function" href="classdepartment_1_1_departments_table.html#ac7d7d943267dc2068a66db2ee234e896">find</a>(<span class="keywordtype">int</span> department_id) <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> </div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        <span class="keywordtype">int</span> <a class="code hl_function" href="classdepartment_1_1_departments_table.html#ac7d7d943267dc2068a66db2ee234e896">find</a>(<span class="keyword">const</span> std::string department_name) <span class="keyword">const</span>; <span class="comment">// индекс в векторе (не найдено - 0)</span></div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        <span class="keywordtype">int</span> <a class="code hl_function" href="classdepartment_1_1_departments_table.html#ac7d7d943267dc2068a66db2ee234e896">find</a>(<span class="keyword">const</span> std::string department_name) <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span> </div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>        <span class="keywordtype">int</span> <a class="code hl_function" href="classdepartment_1_1_departments_table.html#ac7d7d943267dc2068a66db2ee234e896">find</a>(<span class="keyword">const</span> <a class="code hl_class" href="classdepartment_1_1_department.html">Department</a>&amp; d) <span class="keyword">const</span>; <span class="comment">// индекс в векторе (не найдено - 0)</span></div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>        <span class="keywordtype">int</span> <a class="code hl_function" href="classdepartment_1_1_departments_table.html#ac7d7d943267dc2068a66db2ee234e896">find</a>(<span class="keyword">const</span> <a class="code hl_class" href="classdepartment_1_1_department.html">Department</a>&amp; d) <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span> </div>
 <div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>        <span class="keywordtype">int</span> <a class="code hl_function" href="classdepartment_1_1_departments_table.html#a0925bafa73d8d66cfe061eca04974710">size</a>() <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span> </div>
@@ -157,7 +173,7 @@ $(function() {
 <div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>        }</div>
 <div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span> </div>
 <div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>        <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno"><a class="line" href="classdepartment_1_1_departments_table.html#a544a228ca80acfa595bada6b142cbddb">  204</a></span>        <a class="code hl_class" href="classdepartment_1_1_department.html">Department</a>&amp; <a class="code hl_function" href="classdepartment_1_1_departments_table.html#a544a228ca80acfa595bada6b142cbddb">operator[] </a>(T id_or_name)<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno"><a class="line" href="classdepartment_1_1_departments_table.html#a5c26a8c17eb569f8840977f723b92764">  204</a></span>        <a class="code hl_class" href="classdepartment_1_1_department.html">Department</a> <a class="code hl_function" href="classdepartment_1_1_departments_table.html#a5c26a8c17eb569f8840977f723b92764">operator[] </a>(T id_or_name)<span class="keyword"> const </span>{</div>
 <div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>            <span class="keywordtype">int</span> <span class="keywordtype">id</span> = <a class="code hl_function" href="classdepartment_1_1_departments_table.html#ac7d7d943267dc2068a66db2ee234e896">find</a>(id_or_name);</div>
 <div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>            <span class="keywordflow">if</span> (<span class="keywordtype">id</span> &lt; 0) <span class="keywordflow">throw</span> std::out_of_range(<span class="stringliteral">&quot;Table has not this item&quot;</span>);</div>
 <div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>            <span class="keywordflow">return</span> _departments[id];</div>
@@ -178,17 +194,21 @@ $(function() {
 <div class="ttc" id="aclassdepartment_1_1_department_html_ada16edcda45c8cfe21fd158d2da1d718"><div class="ttname"><a href="classdepartment_1_1_department.html#ada16edcda45c8cfe21fd158d2da1d718">department::Department::operator==</a></div><div class="ttdeci">friend bool operator==(const Department &amp;left, const Department &amp;right)</div><div class="ttdoc">Дружественный оператор равенства</div><div class="ttdef"><b>Definition:</b> department.cpp:40</div></div>
 <div class="ttc" id="aclassdepartment_1_1_departments_table_html"><div class="ttname"><a href="classdepartment_1_1_departments_table.html">department::DepartmentsTable</a></div><div class="ttdoc">Класс, описывающий таблицу кафедр</div><div class="ttdef"><b>Definition:</b> department.h:102</div></div>
 <div class="ttc" id="aclassdepartment_1_1_departments_table_html_a0925bafa73d8d66cfe061eca04974710"><div class="ttname"><a href="classdepartment_1_1_departments_table.html#a0925bafa73d8d66cfe061eca04974710">department::DepartmentsTable::size</a></div><div class="ttdeci">int size() const</div><div class="ttdoc">Геттер размера таблицы</div><div class="ttdef"><b>Definition:</b> department.cpp:111</div></div>
-<div class="ttc" id="aclassdepartment_1_1_departments_table_html_a544a228ca80acfa595bada6b142cbddb"><div class="ttname"><a href="classdepartment_1_1_departments_table.html#a544a228ca80acfa595bada6b142cbddb">department::DepartmentsTable::operator[]</a></div><div class="ttdeci">Department &amp; operator[](T id_or_name) const</div><div class="ttdoc">Шаблон оператора индексирования (присвоение по индексу может нарушить логику!)</div><div class="ttdef"><b>Definition:</b> department.h:204</div></div>
+<div class="ttc" id="aclassdepartment_1_1_departments_table_html_a5c26a8c17eb569f8840977f723b92764"><div class="ttname"><a href="classdepartment_1_1_departments_table.html#a5c26a8c17eb569f8840977f723b92764">department::DepartmentsTable::operator[]</a></div><div class="ttdeci">Department operator[](T id_or_name) const</div><div class="ttdoc">Шаблон оператора индексирования (присвоение по индексу может нарушить логику!)</div><div class="ttdef"><b>Definition:</b> department.h:204</div></div>
 <div class="ttc" id="aclassdepartment_1_1_departments_table_html_a84e549e4d506e420232cb870a7695015"><div class="ttname"><a href="classdepartment_1_1_departments_table.html#a84e549e4d506e420232cb870a7695015">department::DepartmentsTable::operator=</a></div><div class="ttdeci">DepartmentsTable &amp; operator=(const DepartmentsTable &amp;src)</div><div class="ttdoc">Копирующий оператор присваивания</div><div class="ttdef"><b>Definition:</b> department.cpp:75</div></div>
 <div class="ttc" id="aclassdepartment_1_1_departments_table_html_a999f873dae2ec8ad274d9eb5d09b4c0c"><div class="ttname"><a href="classdepartment_1_1_departments_table.html#a999f873dae2ec8ad274d9eb5d09b4c0c">department::DepartmentsTable::erase</a></div><div class="ttdeci">void erase(T id_or_name_or_obj)</div><div class="ttdoc">Шаблон функции удаления объекта кафедры из таблицы</div><div class="ttdef"><b>Definition:</b> department.h:190</div></div>
 <div class="ttc" id="aclassdepartment_1_1_departments_table_html_aab1819b857ba79f47b88f16c9c1fafe2"><div class="ttname"><a href="classdepartment_1_1_departments_table.html#aab1819b857ba79f47b88f16c9c1fafe2">department::DepartmentsTable::DepartmentsTable</a></div><div class="ttdeci">DepartmentsTable()</div><div class="ttdoc">Конструктор по умолчанию</div><div class="ttdef"><b>Definition:</b> department.h:112</div></div>
 <div class="ttc" id="aclassdepartment_1_1_departments_table_html_ac7d7d943267dc2068a66db2ee234e896"><div class="ttname"><a href="classdepartment_1_1_departments_table.html#ac7d7d943267dc2068a66db2ee234e896">department::DepartmentsTable::find</a></div><div class="ttdeci">int find(int department_id) const</div><div class="ttdoc">Функция поиска объекта кафедры в таблице по номеру кафедры</div><div class="ttdef"><b>Definition:</b> department.cpp:93</div></div>
 <div class="ttc" id="aclassdepartment_1_1_departments_table_html_acb5d682e9064dfd7772d9fd57f87c034"><div class="ttname"><a href="classdepartment_1_1_departments_table.html#acb5d682e9064dfd7772d9fd57f87c034">department::DepartmentsTable::operator&lt;&lt;</a></div><div class="ttdeci">friend std::ostream &amp; operator&lt;&lt;(std::ostream &amp;out, const DepartmentsTable &amp;dt)</div><div class="ttdoc">Оператор вывода таблицы на стандартный поток вывода</div><div class="ttdef"><b>Definition:</b> department.cpp:115</div></div>
-<div class="ttc" id="aclassdepartment_1_1_departments_table_html_ad265a0fb3f1f3ecf35fc5bc87a0b8955"><div class="ttname"><a href="classdepartment_1_1_departments_table.html#ad265a0fb3f1f3ecf35fc5bc87a0b8955">department::DepartmentsTable::push_back</a></div><div class="ttdeci">void push_back(Department &amp;department)</div><div class="ttdoc">Функция, добавляющая объект кафедры в конец таблицы</div><div class="ttdef"><b>Definition:</b> department.cpp:88</div></div>
+<div class="ttc" id="aclassdepartment_1_1_departments_table_html_ad265a0fb3f1f3ecf35fc5bc87a0b8955"><div class="ttname"><a href="classdepartment_1_1_departments_table.html#ad265a0fb3f1f3ecf35fc5bc87a0b8955">department::DepartmentsTable::push_back</a></div><div class="ttdeci">void push_back(Department &amp;department)</div><div class="ttdoc">Функция, добавляющая уникальный объект кафедры в конец таблицы</div><div class="ttdef"><b>Definition:</b> department.cpp:88</div></div>
 </div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_574f7310de5ba8806a41c1ad18ae0733.html">Inst</a></li><li class="navelem"><a class="el" href="dir_6c4ab0588cd4a4ef981a313a7f3bb1c7.html">2 course</a></li><li class="navelem"><a class="el" href="dir_576f36c9fda63372114a8daf870295fe.html">oop</a></li><li class="navelem"><a class="el" href="dir_f77490b5357cf25d91f7acbf82bf731b.html">labs</a></li><li class="navelem"><a class="el" href="dir_b700795e7321c5e067ed20061f78582b.html">oop-2022</a></li><li class="navelem"><a class="el" href="dir_a09c929d86075faedc918831ebe4c7e6.html">4</a></li><li class="navelem"><a class="el" href="dir_14fe5beab28f104e87b88860c4cfde8f.html">simple</a></li><li class="navelem"><a class="el" href="dir_17caff9b73fb5931a362848bb66cce44.html">4</a></li><li class="navelem"><a class="el" href="dir_86b68f87df58d2c073588ad63ba8483e.html">src</a></li><li class="navelem"><b>department.h</b></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5 </li>
+  </ul>
+</div>
 </body>
 </html>

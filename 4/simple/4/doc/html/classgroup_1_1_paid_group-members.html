@@ -5,10 +5,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Study Groups: Member List</title>
+<title>My Project: Member List</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -21,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Study Groups
+   <div id="projectname">My Project
    </div>
   </td>
  </tr>
@@ -46,6 +50,23 @@ $(function() {
 /* @license-end */
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classgroup_1_1_paid_group.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -67,11 +88,6 @@ $(function() {
 </div>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><b>group</b></li><li class="navelem"><a class="el" href="classgroup_1_1_paid_group.html">PaidGroup</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="headertitle"><div class="title">group::PaidGroup Member List</div></div>
 </div><!--header-->
@@ -84,7 +100,9 @@ $(function() {
   <tr class="even"><td class="entry"><a class="el" href="classgroup_1_1_group.html#af4a7fce3e6f5256f81bcc06cfa13d471">_size</a></td><td class="entry"><a class="el" href="classgroup_1_1_group.html">group::Group</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="classgroup_1_1_group.html#afe0275db9958a602b709f6ee00d19a9d">_study_duration</a></td><td class="entry"><a class="el" href="classgroup_1_1_group.html">group::Group</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classgroup_1_1_paid_group.html#aea228d377c12331c184008e065738fe8">contract_id</a>() const</td><td class="entry"><a class="el" href="classgroup_1_1_paid_group.html">group::PaidGroup</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classgroup_1_1_group.html#a051734499a35d4802ab7d24206e374f9">department_id</a>() const</td><td class="entry"><a class="el" href="classgroup_1_1_group.html">group::Group</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classgroup_1_1_group.html#aed390ab6d167d09e0591131770f81886">copy_from</a>(const Group &amp;src)</td><td class="entry"><a class="el" href="classgroup_1_1_group.html">group::Group</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classgroup_1_1_group.html#a051734499a35d4802ab7d24206e374f9">department_id</a>() const</td><td class="entry"><a class="el" href="classgroup_1_1_group.html">group::Group</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classgroup_1_1_group.html#a291b3dc44bee49ce52cb20c38c7a8139">Group</a>()</td><td class="entry"><a class="el" href="classgroup_1_1_group.html">group::Group</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classgroup_1_1_group.html#a5b0cd98770a346dfa301a5bc4665189b">Group</a>(int id, int size, int department_id, int study_duration)</td><td class="entry"><a class="el" href="classgroup_1_1_group.html">group::Group</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="classgroup_1_1_group.html#a410076bbe0b6a9100aa549a523528d7a">Group</a>(const Group &amp;src)</td><td class="entry"><a class="el" href="classgroup_1_1_group.html">group::Group</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classgroup_1_1_group.html#a4a2f072846b445c426830774ca44498e">id</a>() const</td><td class="entry"><a class="el" href="classgroup_1_1_group.html">group::Group</a></td><td class="entry"></td></tr>
@@ -92,18 +110,22 @@ $(function() {
   <tr class="even"><td class="entry"><a class="el" href="classgroup_1_1_paid_group.html#a32755349d7809eb8936299341ed9692f">operator=</a>(const PaidGroup &amp;src)</td><td class="entry"><a class="el" href="classgroup_1_1_paid_group.html">group::PaidGroup</a></td><td class="entry"></td></tr>
   <tr class="odd"><td class="entry"><a class="el" href="classgroup_1_1_paid_group.html#a59e9f7985691897639d3f7cacd3580da">operator=</a>(PaidGroup &amp;&amp;src)</td><td class="entry"><a class="el" href="classgroup_1_1_paid_group.html">group::PaidGroup</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classgroup_1_1_group.html#ae46d53633a4b3d07904560140be84f1f">output</a>(std::ostream &amp;out) const</td><td class="entry"><a class="el" href="classgroup_1_1_group.html">group::Group</a></td><td class="entry"><span class="mlabel">protected</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classgroup_1_1_paid_group.html#ababc51c0430e021c7e878401e2afce11">PaidGroup</a>(int id, int size, int department_id, int study_duration, int contract_id, float payment_size)</td><td class="entry"><a class="el" href="classgroup_1_1_paid_group.html">group::PaidGroup</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classgroup_1_1_paid_group.html#a73cc61130f20cf5892952c766c731813">PaidGroup</a>(const PaidGroup &amp;src)</td><td class="entry"><a class="el" href="classgroup_1_1_paid_group.html">group::PaidGroup</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classgroup_1_1_paid_group.html#a91a21be32d651113ab54c2adc1508c00">PaidGroup</a>(PaidGroup &amp;&amp;src)</td><td class="entry"><a class="el" href="classgroup_1_1_paid_group.html">group::PaidGroup</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classgroup_1_1_paid_group.html#ac8bc5a2e535b87cce3ae2a9718c5cb38">payment_size</a>() const</td><td class="entry"><a class="el" href="classgroup_1_1_paid_group.html">group::PaidGroup</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classgroup_1_1_paid_group.html#a16d4404e7af79d1d0cad20109dab318f">payment_size</a>(float payment_size)</td><td class="entry"><a class="el" href="classgroup_1_1_paid_group.html">group::PaidGroup</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classgroup_1_1_group.html#ad9bb34eccc843afe5f3dc92711a94250">size</a>() const</td><td class="entry"><a class="el" href="classgroup_1_1_group.html">group::Group</a></td><td class="entry"></td></tr>
-  <tr class="odd"><td class="entry"><a class="el" href="classgroup_1_1_group.html#aa4d2b1f2ce9f460b7e112f538fbb3aec">size</a>(int size)</td><td class="entry"><a class="el" href="classgroup_1_1_group.html">group::Group</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classgroup_1_1_group.html#a2037d4f0ca56b99a8917dc44198ba58c">study_duration</a>() const</td><td class="entry"><a class="el" href="classgroup_1_1_group.html">group::Group</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classgroup_1_1_paid_group.html#af0a0c0579e27a21da206954e9c61f10d">PaidGroup</a>()</td><td class="entry"><a class="el" href="classgroup_1_1_paid_group.html">group::PaidGroup</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classgroup_1_1_paid_group.html#ababc51c0430e021c7e878401e2afce11">PaidGroup</a>(int id, int size, int department_id, int study_duration, int contract_id, float payment_size)</td><td class="entry"><a class="el" href="classgroup_1_1_paid_group.html">group::PaidGroup</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classgroup_1_1_paid_group.html#a73cc61130f20cf5892952c766c731813">PaidGroup</a>(const PaidGroup &amp;src)</td><td class="entry"><a class="el" href="classgroup_1_1_paid_group.html">group::PaidGroup</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classgroup_1_1_paid_group.html#a91a21be32d651113ab54c2adc1508c00">PaidGroup</a>(PaidGroup &amp;&amp;src)</td><td class="entry"><a class="el" href="classgroup_1_1_paid_group.html">group::PaidGroup</a></td><td class="entry"><span class="mlabel">inline</span></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classgroup_1_1_paid_group.html#ac8bc5a2e535b87cce3ae2a9718c5cb38">payment_size</a>() const</td><td class="entry"><a class="el" href="classgroup_1_1_paid_group.html">group::PaidGroup</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classgroup_1_1_paid_group.html#a16d4404e7af79d1d0cad20109dab318f">payment_size</a>(float payment_size)</td><td class="entry"><a class="el" href="classgroup_1_1_paid_group.html">group::PaidGroup</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classgroup_1_1_group.html#ad9bb34eccc843afe5f3dc92711a94250">size</a>() const</td><td class="entry"><a class="el" href="classgroup_1_1_group.html">group::Group</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classgroup_1_1_group.html#aa4d2b1f2ce9f460b7e112f538fbb3aec">size</a>(int size)</td><td class="entry"><a class="el" href="classgroup_1_1_group.html">group::Group</a></td><td class="entry"></td></tr>
+  <tr class="odd"><td class="entry"><a class="el" href="classgroup_1_1_group.html#a2037d4f0ca56b99a8917dc44198ba58c">study_duration</a>() const</td><td class="entry"><a class="el" href="classgroup_1_1_group.html">group::Group</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5 </li>
+  </ul>
+</div>
 </body>
 </html>

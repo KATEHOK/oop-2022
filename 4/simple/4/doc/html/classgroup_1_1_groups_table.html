@@ -5,10 +5,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.5"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Study Groups: group::GroupsTable Class Reference</title>
+<title>My Project: group::GroupsTable Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -21,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">Study Groups
+   <div id="projectname">My Project
    </div>
   </td>
  </tr>
@@ -46,6 +50,23 @@ $(function() {
 /* @license-end */
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classgroup_1_1_groups_table.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -67,11 +88,6 @@ $(function() {
 </div>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><b>group</b></li><li class="navelem"><a class="el" href="classgroup_1_1_groups_table.html">GroupsTable</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
@@ -95,9 +111,6 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1841b7b4048eef040a726066deef84c9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgroup_1_1_groups_table.html#a1841b7b4048eef040a726066deef84c9">GroupsTable</a> (int group_id, std::shared_ptr&lt; <a class="el" href="classgroup_1_1_group.html">Group</a> &gt; group_ptr)</td></tr>
 <tr class="memdesc:a1841b7b4048eef040a726066deef84c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Конструктор по значениям полей для первого элемента  <a href="classgroup_1_1_groups_table.html#a1841b7b4048eef040a726066deef84c9">More...</a><br /></td></tr>
 <tr class="separator:a1841b7b4048eef040a726066deef84c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acdf2b2e54b7ca02fab6b7d1d7c374283"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgroup_1_1_groups_table.html#acdf2b2e54b7ca02fab6b7d1d7c374283">GroupsTable</a> (int group_id, <a class="el" href="classgroup_1_1_group.html">Group</a> *group_ptr)</td></tr>
-<tr class="memdesc:acdf2b2e54b7ca02fab6b7d1d7c374283"><td class="mdescLeft">&#160;</td><td class="mdescRight">Конструктор по значениям полей для первого элемента  <a href="classgroup_1_1_groups_table.html#acdf2b2e54b7ca02fab6b7d1d7c374283">More...</a><br /></td></tr>
-<tr class="separator:acdf2b2e54b7ca02fab6b7d1d7c374283"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2f845bc66a7429a5b7bc9ed941c0a974"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgroup_1_1_groups_table.html#a2f845bc66a7429a5b7bc9ed941c0a974">GroupsTable</a> (<a class="el" href="classgroup_1_1_group.html">Group</a> &amp;group)</td></tr>
 <tr class="memdesc:a2f845bc66a7429a5b7bc9ed941c0a974"><td class="mdescLeft">&#160;</td><td class="mdescRight">Конструктор по значению первой группы  <a href="classgroup_1_1_groups_table.html#a2f845bc66a7429a5b7bc9ed941c0a974">More...</a><br /></td></tr>
 <tr class="separator:a2f845bc66a7429a5b7bc9ed941c0a974"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -125,10 +138,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:adb2b50089cfbdfaba8515ccbadbd4214"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgroup_1_1_groups_table.html#adb2b50089cfbdfaba8515ccbadbd4214">insert</a> (<a class="el" href="classgroup_1_1_groups_table_item.html">GroupsTableItem</a> &amp;item)</td></tr>
 <tr class="memdesc:adb2b50089cfbdfaba8515ccbadbd4214"><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция (корректной) вставки нового элемента по значению элемента  <a href="classgroup_1_1_groups_table.html#adb2b50089cfbdfaba8515ccbadbd4214">More...</a><br /></td></tr>
 <tr class="separator:adb2b50089cfbdfaba8515ccbadbd4214"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a64c49ba6724629c3ce2636c373c65d24"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a64c49ba6724629c3ce2636c373c65d24"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgroup_1_1_groups_table.html#a64c49ba6724629c3ce2636c373c65d24">insert</a> (int group_id, T group_ptr)</td></tr>
-<tr class="memdesc:a64c49ba6724629c3ce2636c373c65d24"><td class="mdescLeft">&#160;</td><td class="mdescRight">Шаблон функции (корректной) вставки нового элемента по значениям полей элемента  <a href="classgroup_1_1_groups_table.html#a64c49ba6724629c3ce2636c373c65d24">More...</a><br /></td></tr>
-<tr class="separator:a64c49ba6724629c3ce2636c373c65d24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a943f578aa79e4d0366472f18ee8fd8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgroup_1_1_groups_table.html#a1a943f578aa79e4d0366472f18ee8fd8">insert</a> (int group_id, std::shared_ptr&lt; <a class="el" href="classgroup_1_1_group.html">Group</a> &gt; group_ptr)</td></tr>
+<tr class="memdesc:a1a943f578aa79e4d0366472f18ee8fd8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция (корректной) вставки нового элемента по значениям полей элемента  <a href="classgroup_1_1_groups_table.html#a1a943f578aa79e4d0366472f18ee8fd8">More...</a><br /></td></tr>
+<tr class="separator:a1a943f578aa79e4d0366472f18ee8fd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a841058e801588406cf277215eff1f94e"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
 <tr class="memitem:a841058e801588406cf277215eff1f94e"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgroup_1_1_groups_table.html#a841058e801588406cf277215eff1f94e">find</a> (T group_id_or_ptr) const</td></tr>
 <tr class="memdesc:a841058e801588406cf277215eff1f94e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Шаблон функции поиска элемента  <a href="classgroup_1_1_groups_table.html#a841058e801588406cf277215eff1f94e">More...</a><br /></td></tr>
@@ -137,6 +149,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:afb7a6de28874f456eaf33cfb701ec9e0"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgroup_1_1_groups_table.html#afb7a6de28874f456eaf33cfb701ec9e0">erase</a> (T group_id_or_ptr)</td></tr>
 <tr class="memdesc:afb7a6de28874f456eaf33cfb701ec9e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Шаблон функции исключения элемента из таблицы  <a href="classgroup_1_1_groups_table.html#afb7a6de28874f456eaf33cfb701ec9e0">More...</a><br /></td></tr>
 <tr class="separator:afb7a6de28874f456eaf33cfb701ec9e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ad3f15aed4b2fbcacf96d140d00f9a6"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a1ad3f15aed4b2fbcacf96d140d00f9a6"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classgroup_1_1_groups_table_item.html">GroupsTableItem</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classgroup_1_1_groups_table.html#a1ad3f15aed4b2fbcacf96d140d00f9a6">operator[]</a> (T group_id_or_ptr) const</td></tr>
+<tr class="memdesc:a1ad3f15aed4b2fbcacf96d140d00f9a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Шаблон оператора индексирования  <a href="classgroup_1_1_groups_table.html#a1ad3f15aed4b2fbcacf96d140d00f9a6">More...</a><br /></td></tr>
+<tr class="separator:a1ad3f15aed4b2fbcacf96d140d00f9a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7ca0bb0da284468847ba893d21b6d2e9"><td class="memItemLeft" align="right" valign="top"><a id="a7ca0bb0da284468847ba893d21b6d2e9" name="a7ca0bb0da284468847ba893d21b6d2e9"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>output</b> () const</td></tr>
 <tr class="memdesc:a7ca0bb0da284468847ba893d21b6d2e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Функция построчного вывода значений полей элементов таблицы <br /></td></tr>
@@ -152,7 +168,7 @@ Friends</h2></td></tr>
 <div class="textblock"><p >Класс таблицы групп, упорядоченной по их номерам </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a1841b7b4048eef040a726066deef84c9" name="a1841b7b4048eef040a726066deef84c9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1841b7b4048eef040a726066deef84c9">&#9670;&#160;</a></span>GroupsTable() <span class="overload">[1/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1841b7b4048eef040a726066deef84c9">&#9670;&#160;</a></span>GroupsTable() <span class="overload">[1/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -188,53 +204,8 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a id="acdf2b2e54b7ca02fab6b7d1d7c374283" name="acdf2b2e54b7ca02fab6b7d1d7c374283"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acdf2b2e54b7ca02fab6b7d1d7c374283">&#9670;&#160;</a></span>GroupsTable() <span class="overload">[2/6]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">group::GroupsTable::GroupsTable </td>
-          <td>(</td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>group_id</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classgroup_1_1_group.html">Group</a> *&#160;</td>
-          <td class="paramname"><em>group_ptr</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Конструктор по значениям полей для первого элемента </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">group_id</td><td>Номер группы </td></tr>
-    <tr><td class="paramname">group_ptr</td><td>Стандартный указатель на группу </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
 <a id="a2f845bc66a7429a5b7bc9ed941c0a974" name="a2f845bc66a7429a5b7bc9ed941c0a974"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2f845bc66a7429a5b7bc9ed941c0a974">&#9670;&#160;</a></span>GroupsTable() <span class="overload">[3/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f845bc66a7429a5b7bc9ed941c0a974">&#9670;&#160;</a></span>GroupsTable() <span class="overload">[2/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -250,7 +221,7 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Конструктор по значению первой группы </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p >Запрещено создавать объект на основе группы, если на ее основе уже существует элемент таблицы </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">group</td><td>Ссылка на добавляемую группу </td></tr>
   </table>
@@ -260,7 +231,7 @@ Friends</h2></td></tr>
 </div>
 </div>
 <a id="a679099c919e08631e2a5a70addbf4459" name="a679099c919e08631e2a5a70addbf4459"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a679099c919e08631e2a5a70addbf4459">&#9670;&#160;</a></span>GroupsTable() <span class="overload">[4/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a679099c919e08631e2a5a70addbf4459">&#9670;&#160;</a></span>GroupsTable() <span class="overload">[3/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -286,7 +257,7 @@ Friends</h2></td></tr>
 </div>
 </div>
 <a id="af4e6b41f2278261e1dc7c48c98f6c571" name="af4e6b41f2278261e1dc7c48c98f6c571"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af4e6b41f2278261e1dc7c48c98f6c571">&#9670;&#160;</a></span>GroupsTable() <span class="overload">[5/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af4e6b41f2278261e1dc7c48c98f6c571">&#9670;&#160;</a></span>GroupsTable() <span class="overload">[4/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -312,7 +283,7 @@ Friends</h2></td></tr>
 </div>
 </div>
 <a id="ac4290fa6f87cce9a2e2f69831b41cc59" name="ac4290fa6f87cce9a2e2f69831b41cc59"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac4290fa6f87cce9a2e2f69831b41cc59">&#9670;&#160;</a></span>GroupsTable() <span class="overload">[6/6]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4290fa6f87cce9a2e2f69831b41cc59">&#9670;&#160;</a></span>GroupsTable() <span class="overload">[5/5]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -367,7 +338,7 @@ template&lt;typename T &gt; </div>
 <p>Шаблон функции исключения элемента из таблицы </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">group_id_or_ptr</td><td>Номер или указатель (умный или стандартный) на искомую группу </td></tr>
+    <tr><td class="paramname">group_id_or_ptr</td><td>Номер или указатель (умный или обычный) на искомую группу </td></tr>
   </table>
   </dd>
 </dl>
@@ -403,7 +374,7 @@ template&lt;typename T &gt; </div>
 <p>Шаблон функции поиска элемента </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">group_id_or_ptr</td><td>Номер или указатель (умный или стандартный) на искомую группу </td></tr>
+    <tr><td class="paramname">group_id_or_ptr</td><td>Номер или указатель (умный или обычный) на искомую группу </td></tr>
   </table>
   </dd>
 </dl>
@@ -463,16 +434,11 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
-<a id="a64c49ba6724629c3ce2636c373c65d24" name="a64c49ba6724629c3ce2636c373c65d24"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a64c49ba6724629c3ce2636c373c65d24">&#9670;&#160;</a></span>insert() <span class="overload">[3/3]</span></h2>
+<a id="a1a943f578aa79e4d0366472f18ee8fd8" name="a1a943f578aa79e4d0366472f18ee8fd8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a943f578aa79e4d0366472f18ee8fd8">&#9670;&#160;</a></span>insert() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;typename T &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void group::GroupsTable::insert </td>
@@ -483,7 +449,7 @@ template&lt;typename T &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">T&#160;</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="classgroup_1_1_group.html">Group</a> &gt;&#160;</td>
           <td class="paramname"><em>group_ptr</em>&#160;</td>
         </tr>
         <tr>
@@ -492,14 +458,9 @@ template&lt;typename T &gt; </div>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Шаблон функции (корректной) вставки нового элемента по значениям полей элемента </p>
+<p>Функция (корректной) вставки нового элемента по значениям полей элемента </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">group_id</td><td>Номер группы </td></tr>
@@ -561,6 +522,43 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Ссылка на перемещенный объект таблицы </dd></dl>
+
+</div>
+</div>
+<a id="a1ad3f15aed4b2fbcacf96d140d00f9a6" name="a1ad3f15aed4b2fbcacf96d140d00f9a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ad3f15aed4b2fbcacf96d140d00f9a6">&#9670;&#160;</a></span>operator[]()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgroup_1_1_groups_table_item.html">GroupsTableItem</a> group::GroupsTable::operator[] </td>
+          <td>(</td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>group_id_or_ptr</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Шаблон оператора индексирования </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">group_id_or_ptr</td><td>Номер или указатель (умный) на искомую группу </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Копия элемента группы таблиц </dd></dl>
 
 </div>
 </div>
@@ -632,13 +630,17 @@ template&lt;typename T &gt; </div>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>src/<a class="el" href="groups__table_8h_source.html">groups_table.h</a></li>
-<li>src/groups_table.cpp</li>
+<li>E:/Inst/2 course/oop/labs/oop-2022/4/simple/4/src/<a class="el" href="groups__table_8h_source.html">groups_table.h</a></li>
+<li>E:/Inst/2 course/oop/labs/oop-2022/4/simple/4/src/groups_table.cpp</li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><b>group</b></li><li class="navelem"><a class="el" href="classgroup_1_1_groups_table.html">GroupsTable</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.5 </li>
+  </ul>
+</div>
 </body>
 </html>
