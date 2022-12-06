@@ -19,14 +19,19 @@ namespace my_template {
 		return result;
 	}
 
+	// QUESTION
 	template<class T>
 	size_t vector<T>::_resize(size_t capacity)
 	{
 		T* old_vector = _items;
+		size_t moving = _size < capacity ? _size : capacity;
 
-		_items = _get_items(capacity);
+		_items = new T[capacity];
+		for (int i = 0; i < moving; ++i) _items[i] = std::move(old_vector[i]);
+		for (int i = moving; i < _size; ++i) old_vector[i].~T();
+
 		_capacity = capacity;
-		if (_size > capacity) _size = capacity;
+		_size = moving;
 
 		delete[] old_vector;
 		return _capacity;
@@ -54,21 +59,22 @@ namespace my_template {
 		return _capacity;
 	}
 
+	// QUESTION
 	template<class T>
-	void vector<T>::_set_items(T static_arr[])
+	void vector<T>::_set_items(T (&static_arr)[])
 	{
 		size_t N = _get_static_array_size(static_arr);
 		delete[] _items;
 		_capacity = N;
 		_size = N;
 		_items = new T[N];
-		for (int i = 0; i < N; ++i) _items[i] = static_arr[i];
+		for (int i = 0; i < N; ++i) _items[i] = std::move(static_arr[i]); // ?
 	}
 
 	// public
 
 	template<class T>
-	vector<T>::vector(T static_arr[])
+	vector<T>::vector(T (&static_arr)[])
 	{
 		_set_items(static_arr);
 	}
@@ -104,7 +110,7 @@ namespace my_template {
 	}
 
 	template<class T>
-	vector<T>& vector<T>::operator= (const T static_arr[])
+	vector<T>& vector<T>::operator= (T (&static_arr)[])
 	{
 		_set_items(static_arr);
 		return *this;
@@ -160,7 +166,7 @@ namespace my_template {
 	void vector<T>::push_back(T&& value)
 	{
 		if (_size == _capacity) _add_block();
-		_items[_size] = value; // ?
+		_items[_size] = std::move(value); // ?
 		_size++;
 	}
 
@@ -181,31 +187,31 @@ namespace my_template {
 	}
 
 	template<class T>
-	vector<T>::iterator vector<T>::begin() const
+	vector_it<T> vector<T>::begin() const
 	{
 		return iterator(_items);
 	}
 
 	template<class T>
-	vector<T>::iterator vector<T>::end() const
+	vector_it<T> vector<T>::end() const
 	{
-		return iterator(_items + _size + 1);
+		return iterator(_items + _size);
 	}
 
 	template<class T>
-	vector<T>::const_iterator vector<T>::cbegin() const
+	vector_const_it<T> vector<T>::cbegin() const
 	{
 		return const_iterator(_items);
 	}
 
 	template<class T>
-	vector<T>::const_iterator vector<T>::cend() const
+	vector_const_it<T> vector<T>::cend() const
 	{
-		return const_iterator(_items + _size + 1);
+		return const_iterator(_items + _size);
 	}
 
 	template<class T>
-	vector<T>::iterator vector<T>::insert(const vector<T>::const_iterator position, const T& value)
+	vector_it<T> vector<T>::insert(const vector<T>::const_iterator position, const T& value)
 	{
 		int id = position._pointer - _items;
 		if (id >= _capacity) _add_block();
@@ -217,19 +223,19 @@ namespace my_template {
 
 	// QUESTION
 	template<class T>
-	vector<T>::iterator vector<T>::insert(const vector<T>::const_iterator position, T&& value)
+	vector_it<T> vector<T>::insert(const vector<T>::const_iterator position, T&& value)
 	{
 		int id = position._pointer - _items;
 		if (id >= _capacity) _add_block();
 		for (int i = _size; i > id; --i) _items[i] = _items[i - 1];
-		_items[id] = value; // ?
+		_items[id] = std::move(value); // ?
 		_size++;
 		return iterator(_items + id);
 	}
 
 	// QUESTION
 	template<class T>
-	vector<T>::iterator vector<T>::erase(const vector<T>::const_iterator position)
+	vector_it<T> vector<T>::erase(const vector<T>::const_iterator position)
 	{
 		int id = position._pointer - _items;
 		if (id == _size) throw std::out_of_range("Iterator is out of range in vector::erase()");

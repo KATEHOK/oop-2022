@@ -78,7 +78,7 @@ namespace my_template
 		* @brief Функция, инициализирующая вектор по массиву
 		* @param static_arr Массив (статический)
 		*/
-		void _set_items(T static_arr[]);
+		void _set_items(T (&static_arr)[]);
 
 	public:
 
@@ -88,10 +88,10 @@ namespace my_template
 		vector() {}
 
 		/**
-		* @brief Конструктор по статическому массиву
+		* @brief Конструктор по статическому массиву (пытается переместить элементы)
 		* @param static_arr Статический массив
 		*/
-		vector(T static_arr[]);
+		vector(T (&static_arr)[]);
 
 		/**
 		* @brief Копирующий конструктор
@@ -115,7 +115,7 @@ namespace my_template
 		* @param static_arr Статический массив
 		* @return Ссылка на получившийся вектор
 		*/
-		vector& operator= (const T static_arr[]);
+		vector& operator= (T (&static_arr)[]);
 
 		/**
 		* @brief Копирующий оператор присваивания
