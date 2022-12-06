@@ -1,72 +1,27 @@
 #pragma once
 
+#ifndef FUNCS
+#include "funcs.h"
+#endif // !FUNCS
+
 #define VECTOR
 
 namespace my_template
 {
-	template<typename T>
+
+	template<class T>
+	class vector_it;
+
+	template<class T>
+	class vector_const_it;
+
+	template<class T>
 	class vector
-	{
+	{		
 
-		class iterator
-		{
+		friend class vector_it<T>;
 
-		private:
-
-			vector& _owner;
-
-			int _id = 0;
-
-		public:
-
-			iterator() {}
-
-			iterator(const iterator& src);
-
-			iterator(iterator&& src);
-
-			~iterator() {}
-
-			iterator& operator= (const iterator& src);
-
-			iterator& operator= (iterator&& src);
-
-			bool operator== (const iterator& other) const;
-
-			bool operator!= (const iterator& other) const;
-
-			bool operator< (const iterator& other) const;
-
-			bool operator> (const iterator& other) const;
-
-			bool operator<= (const iterator& other) const;
-
-			bool operator>= (const iterator& other) const;
-
-			T& operator* () const;
-
-			const T& operator* () const;
-
-			iterator& operator++ ();
-
-			iterator& operator-- ();
-
-			iterator& operator++ (int value);
-
-			iterator& operator-- (int value);
-
-			iterator& operator+= (int value);
-
-			iterator& operator-= (int value);
-
-			friend iterator operator+ (const iterator& it, int value);
-
-			friend iterator operator+ (int value, const iterator& it);
-
-			friend iterator operator- (const iterator& it, int value);
-
-			friend iterator operator- (int value, const iterator& it);
-		};
+		friend class vector_const_it<T>;
 
 	private:
 
@@ -83,10 +38,22 @@ namespace my_template
 		static const size_t _block = 10;
 
 		/**
-		* @brief Создает массив - копию элементов
+		* @brief Шаблон статической функции, определяющей размер статического массива
+		* @param Статический массив
+		* @return Количество элементов массива
+		*/
+		template<size_t N>
+		size_t _get_static_array_size(T(&)[N]) const
+		{
+			return N;
+		}
+
+		/**
+		* @brief Создает массив - копию элементов вектора
+		* @param max_count Максимальное количество элементов, которое нужно скопировать
 		* @return Указатель на массив
 		*/
-		T* _copy_items() const;
+		T* _get_items(size_t max_count) const;
 
 		/**
 		* @brief Перевыделяет память с сохранением помещающихся данных
@@ -107,49 +74,161 @@ namespace my_template
 		*/
 		size_t _remove_block();
 
+		/**
+		* @brief Функция, инициализирующая вектор по массиву
+		* @param static_arr Массив (статический)
+		*/
+		void _set_items(T static_arr[]);
+
 	public:
 
-		vector();
+		/**
+		* @brief Консттруктор по умолчанию (пустой вектор)
+		*/
+		vector() {}
 
+		/**
+		* @brief Конструктор по статическому массиву
+		* @param static_arr Статический массив
+		*/
+		vector(T static_arr[]);
+
+		/**
+		* @brief Копирующий конструктор
+		* @param src Ссылка на копируемый вектор
+		*/
 		vector(const vector& src);
 
+		/**
+		* @brief Перемещающий конструктор
+		* @param src Ссылка на перемещаемый вектор
+		*/
 		vector(vector&& src);
 
+		/**
+		* @brief Деструктор
+		*/
 		~vector();
 
+		/**
+		* @brief Оператор присваивания по статическому массиву
+		* @param static_arr Статический массив
+		* @return Ссылка на получившийся вектор
+		*/
+		vector& operator= (const T static_arr[]);
+
+		/**
+		* @brief Копирующий оператор присваивания
+		* @param src Ссылка на копируемый вектор
+		* @return Ссылка на скопированный вектор
+		*/
 		vector& operator= (const vector& src);
 
+		/**
+		* @brief Перемещающий оператор присваивания
+		* @param src Ссылка на перемещаемый вектор
+		* @return Ссылка на перемещенный вектор
+		*/
 		vector& operator= (vector&& src);
 
+		/**
+		* @brief Геттер размера вектора
+		* @return Количество элементов в векторе
+		*/
 		size_t size() const;
 
+		/**
+		* @brief Геттер вместимости вектора
+		* @return Максимально возможное количество элементов в векторе на данный момент
+		*/
 		size_t capacity() const;
 
+		/**
+		* @brief Копирующая функция добавления элемента в конец вектора
+		* @param value Добавляемый элемент
+		*/
 		void push_back(const T& value);
 
+		/**
+		* @brief Перемещающая функция добавления элемента в конец вектора
+		* @param value Добавляемый элемент
+		*/
 		void push_back(T&& value);
 
-		void pop_back();
+		/**
+		* @brief Удаление последнего элемента
+		*/
+		//void pop_back(); // не используется
 
+		/**
+		* @brief Очищает вектор
+		*/
 		void clear();
 
+		/**
+		* @brief Оператор индексирования
+		* @param Индекс элемента
+		* @return Ссылка на элемент
+		*/
 		T& operator[] (int id) const;
 
-		const T& operator[] (int id) const;
+		/**
+		* @brief Константный итератор (при разыменовании нельзя изменять адрессат)
+		*/
+		typedef vector_const_it<T> const_iterator;
 
+		/**
+		* @brief Неконстантный итератор (при разыменовании можно изменять адрессат)
+		*/
+		typedef vector_it<T> iterator;
+
+		/**
+		* @brief Создает итератор, указывающий на первый элемент вектора
+		* @return Итератор
+		*/
 		iterator begin() const;
 
+		/**
+		* @brief Создает итератор, указывающий за предел вектора
+		* @return Итератор
+		*/
 		iterator end() const;
 
-		const iterator cbegin() const;
+		/**
+		* @brief Создает константный итератор, указывающий на первый элемент вектора
+		* @return Итератор
+		*/
+		const_iterator cbegin() const;
 
-		const iterator cend() const;
+		/**
+		* @brief Создает константный итератор, указывающий за предел вектора
+		* @return Итератор
+		*/
+		const_iterator cend() const;
 		
-		iterator insert(const iterator position, const T& value);
+		/**
+		* @brief Вставляет копию элемента по итератору
+		* @param position Итератор
+		* @param value Ссылка на вставляемый элемент
+		* @return Итератор на вставленный элемент
+		*/
+		iterator insert(const const_iterator position, const T& value);
 
-		iterator insert(const iterator position, T&& value);
+		/**
+		* @brief Вставляет элемент по итератору
+		* @param position Итератор
+		* @param value Ссылка на вставляемый элемент
+		* @return Итератор на вставленный элемент
+		*/
+		iterator insert(const const_iterator position, T&& value);
 
-		iterator erase(const iterator position);
+		/**
+		* @brief Удаляет элемент из вектора по итератору
+		* @param position Итератор
+		* @return Итератор на удаленный элемент
+		*/
+		iterator erase(const const_iterator position);
 	};
+
 }
 
