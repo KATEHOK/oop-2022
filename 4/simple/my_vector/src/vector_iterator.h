@@ -1,10 +1,6 @@
 #pragma once
 
-#ifndef VECTOR
-#include "vector.h"
-#endif // !VECTOR
-
-#define ITERATOR
+#define VECTOR_ITERATOR
 
 namespace my_template {
 
