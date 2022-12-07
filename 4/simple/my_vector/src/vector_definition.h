@@ -1,3 +1,7 @@
+#pragma once
+
+#define VECTOR_DEFINITION
+
 #ifndef VECTOR
 #include "vector.h"
 #endif // !VECTOR
@@ -15,17 +19,25 @@ namespace my_template {
 		return result;
 	}
 
-	// QUESTION
+	template<class T>
+	void vector<T>::_set_moved_items(T* items, size_t moving, size_t capacity)
+	{
+		if (_items != nullptr) return;
+		if (capacity < moving) capacity = moving;
+
+		_items = new T[capacity];
+		_capacity = capacity;
+		_size = moving;
+		for (int i = 0; i < moving; ++i) _items[i] = std::move(items[i]);
+	}
+
 	template<class T>
 	size_t vector<T>::_resize(size_t capacity)
 	{
 		T* old_vector = _items;
 		size_t moving = _size < capacity ? _size : capacity;
 
-		_items = new T[capacity];
-		for (int i = 0; i < moving; ++i) _items[i] = std::move(old_vector[i]);
-		for (int i = moving; i < _size; ++i) old_vector[i].~T();
-
+		_set_moved_items(old_vector, moving, capacity);
 		_capacity = capacity;
 		_size = moving;
 
@@ -55,7 +67,6 @@ namespace my_template {
 		return _capacity;
 	}
 
-	// QUESTION
 	template<class T>
 	void vector<T>::_set_items(T (&static_arr)[])
 	{
@@ -64,7 +75,7 @@ namespace my_template {
 		_capacity = N;
 		_size = N;
 		_items = new T[N];
-		for (int i = 0; i < N; ++i) _items[i] = std::move(static_arr[i]); // ?
+		for (int i = 0; i < N; ++i) _items[i] = static_arr[i];
 	}
 
 	// public
@@ -73,6 +84,12 @@ namespace my_template {
 	vector<T>::vector(T (&static_arr)[])
 	{
 		_set_items(static_arr);
+	}
+
+	template<class T>
+	vector<T>::vector(T* items, size_t moving)
+	{
+		_set_moved_items(items, moving);
 	}
 
 	template<class T>
@@ -157,12 +174,11 @@ namespace my_template {
 		_size++;
 	}
 
-	// QUESTION
 	template<class T>
 	void vector<T>::push_back(T&& value)
 	{
 		if (_size == _capacity) _add_block();
-		_items[_size] = std::move(value); // ?
+		_items[_size] = value;
 		_size++;
 	}
 
@@ -211,20 +227,19 @@ namespace my_template {
 	{
 		int id = position._pointer - _items;
 		if (id >= _capacity) _add_block();
-		for (int i = _size; i > id; --i) _items[i] = _items[i - 1];
+		for (int i = _size; i > id; --i) _items[i] = std::move(_items[i - 1]);
 		_items[id] = value;
 		_size++;
 		return iterator(_items + id);
 	}
 
-	// QUESTION
 	template<class T>
 	vector_it<T> vector<T>::insert(const vector<T>::const_iterator position, T&& value)
 	{
 		int id = position._pointer - _items;
 		if (id >= _capacity) _add_block();
-		for (int i = _size; i > id; --i) _items[i] = _items[i - 1];
-		_items[id] = std::move(value); // ?
+		for (int i = _size; i > id; --i) _items[i] = std::move(_items[i - 1]);
+		_items[id] = value;
 		_size++;
 		return iterator(_items + id);
 	}
@@ -236,8 +251,12 @@ namespace my_template {
 		int id = position._pointer - _items;
 		if (id == _size) throw std::out_of_range("Iterator is out of range in vector::erase()");
 
-		if (id < _size - 1)	for (int i = id; i < _size; ++i) _items[i] = _items[i + 1];
-		_items[_size - 1].~T(); // ?
+		if (id < _size - 1)	for (int i = id; i < _size; ++i) _items[i] = std::move(_items[i + 1]);
+		if (id == _size - 1)
+		{
+			try { _items[id].~T(); } // ?
+			catch (...);
+		}
 		_size--;
 
 		if (_capacity - _size >= _block) _remove_block();

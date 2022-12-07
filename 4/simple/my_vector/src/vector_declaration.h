@@ -1,6 +1,10 @@
 #pragma once
 
-#define VECTOR_VECTOR
+#define VECTOR_DECLARATION
+
+#ifndef VECTOR
+#include "vector.h"
+#endif // !VECTOR
 
 namespace my_template
 {
@@ -52,6 +56,15 @@ namespace my_template
 		T* _get_items(size_t max_count) const;
 
 		/**
+		* @brief Функция инициализирует вектор, перемещая элементы динамического массива
+		* (только для изначально пустого вектора)
+		* @param items Массив (динамический)
+		* @param moving Количество перемещаемых элементов
+		* @param capacity Желаемая вместимость вектора (по умолчанию = count, capacity >= count)
+		*/
+		void _set_moved_items(T* items, size_t moving, size_t capacity = 0);
+
+		/**
 		* @brief Перевыделяет память с сохранением помещающихся данных
 		* @param capacity Предел количества элементов для желаемого размера вектора
 		* @return Предел количества элементов для нового размера вектора
@@ -71,7 +84,7 @@ namespace my_template
 		size_t _remove_block();
 
 		/**
-		* @brief Функция, инициализирующая вектор по массиву
+		* @brief Функция, инициализирующая вектор по статическому массиву
 		* @param static_arr Массив (статический)
 		*/
 		void _set_items(T (&static_arr)[]);
@@ -84,10 +97,17 @@ namespace my_template
 		vector() {}
 
 		/**
-		* @brief Конструктор по статическому массиву (пытается переместить элементы)
+		* @brief Конструктор по статическому массиву (копирует элементы)
 		* @param static_arr Статический массив
 		*/
 		vector(T (&static_arr)[]);
+
+		/**
+		* @brief Конструктор по динамическому массиву (перемещает элементы из массива)
+		* @param items Динамический массив
+		* @param moving Количество перемещаемых элементов
+		*/
+		vector(T* items, size_t moving);
 
 		/**
 		* @brief Копирующий конструктор

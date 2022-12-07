@@ -2,5 +2,10 @@
 
 #define VECTOR
 
-#include "vector_vector.h"
-#include "vector_iterator.h"
+#include <utility>
+#include <stdexcept>
+
+#include "vector_declaration.h"
+#include "iterator_declaration.h"
+#include "vector_definition.h"
+#include "iterator_definition.h"
