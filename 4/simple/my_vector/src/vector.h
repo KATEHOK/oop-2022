@@ -4,8 +4,7 @@
 
 #include <utility>
 #include <stdexcept>
+#include <exception>
 
-#include "vector_declaration.h"
-#include "iterator_declaration.h"
-#include "vector_definition.h"
-#include "iterator_definition.h"
+#include "template_vector.h"
+#include "template_vector_iterator.h"
