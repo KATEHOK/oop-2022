@@ -1,13 +1,13 @@
 #pragma once
 
-#define VECTOR_DECLARATION
-
 #ifndef VECTOR
 #include "vector.h"
 #endif // !VECTOR
 
 namespace my_template
 {
+	template<class T, class returnedT>
+	class vector_iterator;
 
 	template<class T>
 	class vector_it;
@@ -19,9 +19,18 @@ namespace my_template
 	class vector
 	{		
 
+		friend class vector_iterator<T, T>;
+		friend class vector_iterator<T, const T>;
 		friend class vector_it<T>;
-
 		friend class vector_const_it<T>;
+
+	public:
+
+		//! @brief Константный итератор (при разыменовании нельзя изменять адрессат)
+		typedef vector_it<T> iterator;
+
+		//! @brief Неконстантный итератор (при разыменовании можно изменять адрессат)
+		typedef vector_const_it<T> const_iterator;
 
 	private:
 
@@ -36,17 +45,6 @@ namespace my_template
 
 		//! @brief Количество элементов, под которое за раз выделяется память
 		static const size_t _block = 10;
-
-		/**
-		* @brief Шаблон статической функции, определяющей размер статического массива
-		* @param Статический массив
-		* @return Количество элементов массива
-		*/
-		template<size_t N>
-		size_t _get_static_array_size(T(&)[N]) const
-		{
-			return N;
-		}
 
 		/**
 		* @brief Создает массив - копию элементов вектора
@@ -128,10 +126,10 @@ namespace my_template
 		/**
 		* @brief Функция, инициализирующая вектор по статическому массиву
 		* @param static_arr Массив (статический)
+		* @param N количествоо копируемых объектов
 		*/
-		void _set_items(T (&static_arr)[])
+		void _set_items(T static_arr[], size_t N)
 		{
-			size_t N = _get_static_array_size(static_arr);
 			delete[] _items;
 			_capacity = N;
 			_size = N;
@@ -150,10 +148,13 @@ namespace my_template
 		* @brief Конструктор по статическому массиву (копирует элементы)
 		* @param static_arr Статический массив
 		*/
-		vector(T (&static_arr)[])
+		template<size_t N>
+		vector(T (&static_arr)[N])
 		{
-			_set_items(static_arr);
+			_set_items(static_arr, N);
 		}
+
+		// initializer_list<T> для статического массива
 
 		/**
 		* @brief Конструктор по динамическому массиву (перемещает элементы из массива)
@@ -208,9 +209,10 @@ namespace my_template
 		* @param static_arr Статический массив
 		* @return Ссылка на получившийся вектор
 		*/
-		vector& operator= (T (&static_arr)[])
+		template<size_t N>
+		vector& operator= (T (&static_arr)[N])
 		{
-			_set_items(static_arr);
+			_set_items(static_arr, N);
 			return *this;
 		}
 
@@ -288,11 +290,6 @@ namespace my_template
 		}
 
 		/**
-		* @brief Удаление последнего элемента
-		*/
-		//void pop_back(); // не используется
-
-		/**
 		* @brief Очищает вектор
 		*/
 		void clear()
@@ -316,20 +313,10 @@ namespace my_template
 		}
 
 		/**
-		* @brief Константный итератор (при разыменовании нельзя изменять адрессат)
-		*/
-		typedef vector_const_it<T> const_iterator;
-
-		/**
-		* @brief Неконстантный итератор (при разыменовании можно изменять адрессат)
-		*/
-		typedef vector_it<T> iterator;
-
-		/**
 		* @brief Создает итератор, указывающий на первый элемент вектора
 		* @return Итератор
 		*/
-		iterator begin() const
+		iterator begin()
 		{
 			return iterator(this, 0);
 		}
@@ -338,9 +325,27 @@ namespace my_template
 		* @brief Создает итератор, указывающий за предел вектора
 		* @return Итератор
 		*/
-		iterator end() const
+		iterator end()
 		{
 			return iterator(this, _size);
+		}
+
+		/**
+		* @brief Создает итератор, указывающий на первый элемент вектора
+		* @return Итератор
+		*/
+		const_iterator begin() const
+		{
+			return const_iterator(this, 0);
+		}
+
+		/**
+		* @brief Создает итератор, указывающий за предел вектора
+		* @return Итератор
+		*/
+		const_iterator end() const
+		{
+			return const_iterator(this, _size);
 		}
 
 		/**
@@ -367,13 +372,13 @@ namespace my_template
 		* @param value Ссылка на вставляемый элемент
 		* @return Итератор на вставленный элемент
 		*/
-		iterator insert(const const_iterator position, const T& value)
+		iterator insert(const_iterator position, const T& value)
 		{
 			if (position._id >= _capacity) _add_block();
 			for (int i = _size; i > position._id; --i) _items[i] = std::move(_items[i - 1]);
 			_items[position._id] = value;
 			_size++;
-			return iterator(position);
+			return iterator(position._owner, position._id);
 		}
 
 		/**
@@ -382,13 +387,13 @@ namespace my_template
 		* @param value Ссылка на вставляемый элемент
 		* @return Итератор на вставленный элемент
 		*/
-		iterator insert(const const_iterator position, T&& value)
+		iterator insert(const_iterator position, T&& value)
 		{
 			if (position._id >= _capacity) _add_block();
 			for (int i = _size; i > position._id; --i) _items[i] = std::move(_items[i - 1]);
 			_items[position._id] = value;
 			_size++;
-			return iterator(position);
+			return iterator(position._owner, position._id);
 		}
 
 		/**
@@ -396,7 +401,7 @@ namespace my_template
 		* @param position Итератор
 		* @return Итератор на удаленный элемент
 		*/
-		iterator erase(const const_iterator position)
+		iterator erase(const_iterator position)
 		{
 			if (position._id >= _size)
 				throw std::out_of_range("Iterator is out of range in vector::erase()");
@@ -412,7 +417,7 @@ namespace my_template
 			_size--;
 
 			if (_capacity - _size >= _block) _remove_block();
-			return iterator(position);
+			return iterator(position._owner, position._id);
 		}
 
 	};

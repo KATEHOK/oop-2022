@@ -108,7 +108,7 @@ namespace department {
 		return -1;
 	}
 
-	int DepartmentsTable::size() const {
+	size_t DepartmentsTable::size() const {
 		return _departments.size();
 	}
 

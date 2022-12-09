@@ -86,7 +86,7 @@ namespace group {
 		return *this;
 	}
 
-	int GroupsTable::size() const {
+	size_t GroupsTable::size() const {
 		return _items.size();
 	}
 

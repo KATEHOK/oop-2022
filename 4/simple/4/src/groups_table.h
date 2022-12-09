@@ -12,6 +12,8 @@
 
 #include <memory>
 
+using namespace my_template;
+
 namespace group {
 
 	/**
@@ -137,7 +139,7 @@ namespace group {
 	private:
 
 		//! @brief Вектор из элементов таблицы групп
-		std::vector<GroupsTableItem> _items;
+		vector<GroupsTableItem> _items;
 
 	public:
 
@@ -197,7 +199,7 @@ namespace group {
 		* @brief Геттер количества размера таблицы
 		* @return Количество элементов в таблице
 		*/
-		int size() const;
+		size_t size() const;
 
 		/**
 		* @brief Функция (корректной) вставки нового элемента по значению группы
@@ -239,7 +241,8 @@ namespace group {
 			int id = find(group_id_or_ptr);
 			if (id < 0) return;
 
-			auto it = _items.begin() + id;
+			auto it = _items.cbegin();
+			it += id;
 			_items.erase(it);
 		}
 

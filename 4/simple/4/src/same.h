@@ -2,6 +2,6 @@
 
 #define SAME
 
-#include <vector>
+#include "../../my_vector/src/vector.h"
 #include <string>
 #include <iostream>

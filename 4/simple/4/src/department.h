@@ -6,6 +6,8 @@
 
 #define DEPARTMENT
 
+using namespace my_template;
+
 namespace department {
 
 	/**
@@ -101,8 +103,9 @@ namespace department {
 	*/
 	class DepartmentsTable {
 	private:
+
 		//! @brief Вектор из кафедр
-		std::vector<Department> _departments;
+		vector<Department> _departments;
 
 	public:
 
@@ -180,7 +183,7 @@ namespace department {
 		* @brief Геттер размера таблицы
 		* @return Количество элементов таблицы
 		*/
-		int size() const;
+		size_t size() const;
 
 		/**
 		* @brief Шаблон функции удаления объекта кафедры из таблицы
@@ -191,7 +194,8 @@ namespace department {
 			int id = find(id_or_name_or_obj);
 			if (id < 0) return;
 
-			auto it = _departments.begin() + id;
+			auto it = _departments.cbegin();
+			it += id;
 			_departments.erase(it);
 		}
 
