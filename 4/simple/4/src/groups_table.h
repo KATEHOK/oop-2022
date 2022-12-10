@@ -33,6 +33,18 @@ namespace group {
 		//! @brief Указатель на группу
 		std::shared_ptr<Group> _group_ptr = nullptr;
 
+		/**
+		* @brief Копирует параметры элемента группы
+		* @param src Ссылка на объект с которого копируются параметры
+		*/
+		void copy_from(const GroupsTableItem& src);
+
+		/**
+		* @brief Перемещает параметры элемента группы
+		* @param src Ссылка на объект с которого перемещаются параметры
+		*/
+		void move_from(GroupsTableItem&& src);
+
 	public:
 
 		/**
@@ -41,15 +53,23 @@ namespace group {
 		GroupsTableItem() {}
 
 		/**
-		* @brief Конструктор по значениям полей
+		* @brief Копирующий конструктор по значениям полей
 		* @param group_id Номер группы
-		* @param group_ptr Умный указатель на группу
+		* @param group_ptr Ссылка на умный указатель на группу
 		*/
-		GroupsTableItem(int group_id, std::shared_ptr<Group> group_ptr);
+		GroupsTableItem(int group_id, const std::shared_ptr<Group>& group_ptr);
+
+		/**
+		* @brief Перемещающий конструктор по значениям полей
+		* @param group_id Номер группы
+		* @param group_ptr Ссылка на умный указатель на группу
+		*/
+		GroupsTableItem(int group_id, std::shared_ptr<Group>&& group_ptr);
 
 		/**
 		* @brief Конструктор по группе
-		* @brief Запрещается создание более одного объекта по группе (влечет ошибки с памятью)
+		* @brief Запрещается создание,
+		* если уже существует shared_ptr этой же группы (влечет ошибки с памятью)
 		* @param group Ссылка на группу
 		*/
 		GroupsTableItem(Group& group) :
@@ -59,16 +79,13 @@ namespace group {
 		* @brief Копирующий конструктор
 		* @param src Ссылка на копируемый объект элемента таблицы
 		*/
-		GroupsTableItem(const GroupsTableItem& src) :
-			GroupsTableItem(src._group_id, src._group_ptr) {}
+		GroupsTableItem(const GroupsTableItem& src);
 
 		/**
 		* @brief Перемещающий конструктор
 		* @param src Ссылка на перемещаемый объект элемента таблицы
 		*/
-		GroupsTableItem(GroupsTableItem&& src) : GroupsTableItem(src._group_id, src._group_ptr) {
-			if (this != &src) src._group_ptr = nullptr;
-		}
+		GroupsTableItem(GroupsTableItem&& src);
 
 		/**
 		* @brief Копирующий оператор присваивания
@@ -93,10 +110,10 @@ namespace group {
 
 		/**
 		* @brief Оператор равенства
-		* @param group_ptr Умный указатель на сравниваемую группу
+		* @param group_ptr Ссылка на умный указатель на сравниваемую группу
 		* @return true, если указатель совпал с указателем данного элемента таблицы, иначе - false
 		*/
-		bool operator== (const std::shared_ptr<Group> group_ptr) const;
+		bool operator== (const std::shared_ptr<Group>& group_ptr) const;
 
 		/**
 		* @brief Оператор равенства
@@ -106,8 +123,15 @@ namespace group {
 		bool operator== (const Group* group_ptr) const;
 
 		/**
+		* @brief Оператор неравенства
+		* @param group_ptr Ссылка на умный указатель или группы
+		* @return true, если указатели отличаются, иначе - false
+		*/
+		bool operator!= (const std::shared_ptr<Group>& group_ptr) const;
+		
+		/**
 		* @brief Шаблон оператора неравенства
-		* @param id_or_ptr Умный указатель или номер сравниваемой группы
+		* @param id_or_ptr Указатель или номер сравниваемой группы
 		* @return true, если соответствующие значения отличаются, иначе - false
 		*/
 		template<typename T>
@@ -120,7 +144,7 @@ namespace group {
 		}
 
 		std::shared_ptr<Group> group_ptr() const {
-			return _group_ptr;
+			return std::shared_ptr<Group>(_group_ptr);
 		}
 
 		/**
@@ -141,6 +165,18 @@ namespace group {
 		//! @brief Вектор из элементов таблицы групп
 		vector<GroupsTableItem> _items;
 
+		/**
+		* @brief Копирует элементы таблицы
+		* @param src Ссылка на объект с которого производится копирование
+		*/
+		void copy_from(const GroupsTable& src);
+
+		/**
+		* @brief Перемещает элементы таблицы
+		* @param src Ссылка на объект с которого производится перемещение
+		*/
+		void move_from(GroupsTable&& src);
+
 	public:
 
 		/**
@@ -149,25 +185,38 @@ namespace group {
 		GroupsTable() {}
 
 		/**
-		* @brief Конструктор по значениям полей для первого элемента
+		* @brief Копирующий конструктор по значениям полей для первого элемента
 		* @param group_id Номер группы
-		* @param group_ptr Умный указатель на группу
+		* @param group_ptr Ссылка на умный указатель на группу
 		*/
-		GroupsTable(int group_id, std::shared_ptr<Group> group_ptr);
+		GroupsTable(int group_id, const std::shared_ptr<Group>& group_ptr);
+
+		/**
+		* @brief Перемещающий конструктор по значениям полей для первого элемента
+		* @param group_id Номер группы
+		* @param group_ptr Ссылка на умный указатель на группу
+		*/
+		GroupsTable(int group_id, std::shared_ptr<Group>&& group_ptr);
 
 		/**
 		* @brief Конструктор по значению первой группы
-		* @brief Запрещено создавать объект на основе группы,
-		* если на ее основе уже существует элемент таблицы
+		* @brief Запрещается создание,
+		* если уже существует shared_ptr этой же группы (влечет ошибки с памятью)
 		* @param group Ссылка на добавляемую группу
 		*/
 		GroupsTable(Group& group);
 
 		/**
-		* @brief Конструктор по значению первого элемента группы
+		* @brief Копирующий конструктор по значению первого элемента группы
 		* @param item Ссылка на добавляемый элемент
 		*/
-		GroupsTable(GroupsTableItem& item);
+		GroupsTable(const GroupsTableItem& item);
+
+		/**
+		* @brief Перемещающий конструктор по значению первого элемента группы
+		* @param item Ссылка на добавляемый элемент
+		*/
+		GroupsTable(GroupsTableItem&& item);
 
 		/**
 		* @brief Копирующий конструктор
@@ -208,21 +257,41 @@ namespace group {
 		void insert(Group& group);
 
 		/**
-		* @brief Функция (корректной) вставки нового элемента по значению элемента
+		* @brief Функция (корректной) вставки нового элемента по значению элемента (копирует)
 		* @param item Ссылка на вставляемы объект элемента таблицы
 		*/
-		void insert(GroupsTableItem& item);
+		void insert(const GroupsTableItem& item);
 
 		/**
-		* @brief Функция (корректной) вставки нового элемента по значениям полей элемента
-		* @param group_id Номер группы
-		* @param group_ptr Указатель на группу
+		* @brief Функция (корректной) вставки нового элемента по значению элемента (перемещает)
+		* @param item Ссылка на вставляемы объект элемента таблицы
 		*/
-		void insert(int group_id, std::shared_ptr<Group> group_ptr);
+		void insert(GroupsTableItem&& item);
+
+		/**
+		* @brief Функция (корректной) вставки нового элемента по значениям полей элемента (копирует)
+		* @param group_id Номер группы
+		* @param group_ptr Ссылка на указатель на группу
+		*/
+		void insert(int group_id, const std::shared_ptr<Group>& group_ptr);
+
+		/**
+		* @brief Функция (корректной) вставки нового элемента по значениям полей элемента (перемещает)
+		* @param group_id Номер группы
+		* @param group_ptr Ссылка на указатель на группу
+		*/
+		void insert(int group_id, std::shared_ptr<Group>&& group_ptr);
+
+		/**
+		* @brief Функции поиска элемента по умному указателю
+		* @param group_ptr Ссылка на умный указатель
+		* @return Индекс в векторе, если элемент найден, иначе -1
+		*/
+		int find(const std::shared_ptr<Group>& group_ptr) const;
 
 		/**
 		* @brief Шаблон функции поиска элемента
-		* @param group_id_or_ptr Номер или указатель (умный или обычный) на искомую группу
+		* @param group_id_or_ptr Номер или указатель на искомую группу
 		* @return Индекс в векторе, если элемент найден, иначе -1
 		*/
 		template<typename T>
@@ -231,6 +300,12 @@ namespace group {
 				if (_items[i] == group_id_or_ptr) return i;
 			return -1;
 		}
+
+		/**
+		* @brief Функция исключения элемента из таблицы
+		* @param group_ptr Ссылка на умный указатель на искомую группу
+		*/
+		void erase(const std::shared_ptr<Group>& group_ptr);
 
 		/**
 		* @brief Шаблон функции исключения элемента из таблицы
@@ -252,7 +327,7 @@ namespace group {
 		* @return Копия элемента группы таблиц
 		*/
 		template<typename T>
-		GroupsTableItem operator[] (T group_id_or_ptr) const {
+		const GroupsTableItem& operator[] (T group_id_or_ptr) const {
 			int id = find(group_id_or_ptr);
 			if (id < 0) throw std::out_of_range("This group is not exist");
 			return _items[id];
