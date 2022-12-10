@@ -9,13 +9,8 @@ namespace department {
 	Department::Department(Department&& src) {
 		if (this != &src) {
 			_id = src._id;
-			_name = src._name;
-			src._name.clear();
+			_name = std::move(src._name);
 		}
-	}
-
-	int Department::id() const {
-		return _id;
 	}
 
 	Department& Department::operator= (const Department& src) {
@@ -27,10 +22,13 @@ namespace department {
 	Department& Department::operator= (Department&& src) {
 		if (this != &src) {
 			_id = src._id;
-			_name = src._name;
-			src._name.clear();
+			_name = std::move(src._name);
 		}
 		return *this;
+	}
+
+	int Department::id() const {
+		return _id;
 	}
 
 	std::string Department::name() const {
@@ -57,8 +55,7 @@ namespace department {
 	}
 
 	DepartmentsTable::DepartmentsTable(Department&& src) {
-		_departments.push_back(src);
-		src._name.clear();
+		_departments.push_back(std::move(src));
 	}
 
 	DepartmentsTable::DepartmentsTable(const DepartmentsTable& src) {
@@ -66,10 +63,7 @@ namespace department {
 	}
 
 	DepartmentsTable::DepartmentsTable(DepartmentsTable&& src) {
-		if (this != &src) {
-			for (auto i : src._departments) _departments.push_back(i);
-			src._departments.clear();
-		}
+		if (this != &src) _departments = std::move(src._departments);
 	}
 
 	DepartmentsTable& DepartmentsTable::operator= (const DepartmentsTable& src) {
@@ -78,16 +72,18 @@ namespace department {
 	}
 
 	DepartmentsTable& DepartmentsTable::operator= (DepartmentsTable&& src) {
-		if (this != &src) {
-			_departments = src._departments;
-			src._departments.clear();
-		}
+		if (this != &src) _departments = std::move(src._departments);
 		return *this;
 	}
 
-	void DepartmentsTable::push_back(Department& department) {
+	void DepartmentsTable::push_back(const Department& department) {
 		if (find(department._id) >= 0 || find(department._name) >= 0) return;
 		_departments.push_back(department);
+	}
+
+	void DepartmentsTable::push_back(Department&& department) {
+		if (find(department._id) >= 0 || find(department._name) >= 0) return;
+		_departments.push_back(std::move(department));
 	}
 
 	int DepartmentsTable::find(int department_id) const {

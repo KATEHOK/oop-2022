@@ -153,10 +153,16 @@ namespace department {
 		DepartmentsTable& operator= (DepartmentsTable&& src);
 
 		/**
-		* @brief Функция, добавляющая уникальный объект кафедры в конец таблицы
+		* @brief Функция копирования, добавляющая уникальный объект кафедры в конец таблицы
 		* @param department Ссылка на добавляемый объект кафедры
 		*/
-		void push_back(Department& department);
+		void push_back(const Department& department);
+
+		/**
+		* @brief Функция перемещения, добавляющая уникальный объект кафедры в конец таблицы
+		* @param department Ссылка на добавляемый объект кафедры
+		*/
+		void push_back(Department&& department);
 
 		/**
 		* @brief Функция поиска объекта кафедры в таблице по номеру кафедры

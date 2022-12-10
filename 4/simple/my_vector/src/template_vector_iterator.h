@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 
 #ifndef VECTOR
 #include "vector.h"
@@ -7,7 +7,7 @@
 namespace my_template {
 
 	/**
-	* @brief Базовый шаблон класса итератора для вектора
+	* @brief Р‘Р°Р·РѕРІС‹Р№ С€Р°Р±Р»РѕРЅ РєР»Р°СЃСЃР° РёС‚РµСЂР°С‚РѕСЂР° РґР»СЏ РІРµРєС‚РѕСЂР°
 	*/
 	template<class T, class returnedT>
 	class vector_iterator
@@ -17,34 +17,49 @@ namespace my_template {
 
 	protected:
 
-		//! @brief Указатель на вектор - хозяин итератора
+		//! @brief РЈРєР°Р·Р°С‚РµР»СЊ РЅР° РІРµРєС‚РѕСЂ - С…РѕР·СЏРёРЅ РёС‚РµСЂР°С‚РѕСЂР°
 		vector<T>* _owner = nullptr;
 
-		//! @brief Индекс элемента (для end(), cend() равен vector.size) 
+		//! @brief РРЅРґРµРєСЃ СЌР»РµРјРµРЅС‚Р° (РґР»СЏ end(), cend() СЂР°РІРµРЅ vector.size) 
 		size_t _id = 0;
 
 		/**
-		* @brief Конструктор по умолчанию (никуда не указывает)
+		* @brief РџСЂРѕРІРµСЂСЏРµС‚ Рё РїСЂРё РЅРµРѕР±С…РѕРґРёРјРѕСЃС‚Рё РєРѕСЂСЂРµРєС‚РёСЂСѓРµС‚ РёРЅРґРµРєСЃ
+		*/
+		void _correct_id()
+		{
+			if (_id < 0) _id = 0;
+			if (_owner != nullptr && _id > _owner->_size) _id = _owner->_size;
+		}
+
+		/**
+		* @brief РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ (РЅРёРєСѓРґР° РЅРµ СѓРєР°Р·С‹РІР°РµС‚)
 		*/
 		vector_iterator() {}
 
 		/**
-		* @brief Конструктор по значениям полей
-		* @param owner Указатель на объект - хозяин
-		* @param id Индекс элемента
+		* @brief РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ Р·РЅР°С‡РµРЅРёСЏРј РїРѕР»РµР№
+		* @param owner РЈРєР°Р·Р°С‚РµР»СЊ РЅР° РѕР±СЉРµРєС‚ - С…РѕР·СЏРёРЅ
+		* @param id РРЅРґРµРєСЃ СЌР»РµРјРµРЅС‚Р°
 		*/
 		vector_iterator(const vector<T>* owner, size_t id = 0) :
-			_owner(const_cast<vector<T>*>(owner)), _id(id) {}
+			_owner(const_cast<vector<T>*>(owner)), _id(id)
+		{
+			_correct_id();
+		}
 
 		/**
-		* @brief Копирующий конструктор
-		* @param src Ссылка на копируемый итератор
+		* @brief РљРѕРїРёСЂСѓСЋС‰РёР№ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+		* @param src РЎСЃС‹Р»РєР° РЅР° РєРѕРїРёСЂСѓРµРјС‹Р№ РёС‚РµСЂР°С‚РѕСЂ
 		*/
-		vector_iterator(const vector_iterator& src) : _owner(src._owner), _id(src._id) {}
+		vector_iterator(const vector_iterator& src) : _owner(src._owner), _id(src._id)
+		{
+			_correct_id();
+		}
 
 		/**
-		* @brief Перемещающий конструктор
-		* @param src Ссылка на перемещаемый итератор
+		* @brief РџРµСЂРµРјРµС‰Р°СЋС‰РёР№ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+		* @param src РЎСЃС‹Р»РєР° РЅР° РїРµСЂРµРјРµС‰Р°РµРјС‹Р№ РёС‚РµСЂР°С‚РѕСЂ
 		*/
 		vector_iterator(vector_iterator&& src) : _owner(src._owner), _id(src._id)
 		{
@@ -53,26 +68,28 @@ namespace my_template {
 				src._owner = nullptr;
 				src._id = 0;
 			}
+			_correct_id();
 		}
 
 	public:
 
 		/**
-		* @brief Копирующий оператор присваивания
-		* @param src Ссылка на копируемый итератор
-		* @return Ссылка на скопированный итератор
+		* @brief РљРѕРїРёСЂСѓСЋС‰РёР№ РѕРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ
+		* @param src РЎСЃС‹Р»РєР° РЅР° РєРѕРїРёСЂСѓРµРјС‹Р№ РёС‚РµСЂР°С‚РѕСЂ
+		* @return РЎСЃС‹Р»РєР° РЅР° СЃРєРѕРїРёСЂРѕРІР°РЅРЅС‹Р№ РёС‚РµСЂР°С‚РѕСЂ
 		*/
 		vector_iterator& operator= (const vector_iterator& src)
 		{
 			_owner = src._owner;
 			_id = src._id;
+			_correct_id();
 			return *this;
 		}
 
 		/**
-		* @brief Перемещающий оператор присваивания
-		* @param src Ссылка на перемещаемый итератор
-		* @return Ссылка на перемещенный итератор
+		* @brief РџРµСЂРµРјРµС‰Р°СЋС‰РёР№ РѕРїРµСЂР°С‚РѕСЂ РїСЂРёСЃРІР°РёРІР°РЅРёСЏ
+		* @param src РЎСЃС‹Р»РєР° РЅР° РїРµСЂРµРјРµС‰Р°РµРјС‹Р№ РёС‚РµСЂР°С‚РѕСЂ
+		* @return РЎСЃС‹Р»РєР° РЅР° РїРµСЂРµРјРµС‰РµРЅРЅС‹Р№ РёС‚РµСЂР°С‚РѕСЂ
 		*/
 		vector_iterator& operator= (vector_iterator&& src)
 		{
@@ -84,288 +101,365 @@ namespace my_template {
 				src._owner = nullptr;
 				src._id = 0;
 			}
+			_correct_id();
 			return *this;
 		}
 
 		/**
-		* @brief Оператор разыменования
-		* @return Cсылка на элемент (неконстантная, если returnedT == const T)
+		* @brief РћРїРµСЂР°С‚РѕСЂ СЂР°Р·С‹РјРµРЅРѕРІР°РЅРёСЏ
+		* @return CСЃС‹Р»РєР° РЅР° СЌР»РµРјРµРЅС‚ (РЅРµРєРѕРЅСЃС‚Р°РЅС‚РЅР°СЏ, РµСЃР»Рё returnedT == const T)
 		*/
 		returnedT& operator* () const
 		{
+			if (_owner == nullptr)
+				throw std::exception("Iterator has not owner");
 			if (_id >= _owner->_size)
 				throw std::out_of_range("Iterator points outside the vector");
 			return _owner->_items[_id];
 		}
 
 		/**
-		* @brief Геттер индекса элемента
-		* @return Индекс элемента
+		* @brief Р“РµС‚С‚РµСЂ РёРЅРґРµРєСЃР° СЌР»РµРјРµРЅС‚Р°
+		* @return РРЅРґРµРєСЃ СЌР»РµРјРµРЅС‚Р°
 		*/
 		size_t id() const
 		{
+			if (_owner == nullptr)
+				throw std::exception("Iterator has not owner");
 			return _id;
 		}
 
 		/**
-		* @brief Оператор сравнения двух итераторов одного хозяина
-		* @param other Ссылка на итератор, с которым необходимо сравнение
-		* @return true в случае равенства индексов, false в случае их различия
-		* (выбрасывает исключение, если разные хозяева)
+		* @brief РћРїРµСЂР°С‚РѕСЂ СЃСЂР°РІРЅРµРЅРёСЏ РґРІСѓС… РёС‚РµСЂР°С‚РѕСЂРѕРІ РѕРґРЅРѕРіРѕ С…РѕР·СЏРёРЅР°
+		* @param other РЎСЃС‹Р»РєР° РЅР° РёС‚РµСЂР°С‚РѕСЂ, СЃ РєРѕС‚РѕСЂС‹Рј РЅРµРѕР±С…РѕРґРёРјРѕ СЃСЂР°РІРЅРµРЅРёРµ
+		* @return true РІ СЃР»СѓС‡Р°Рµ СЂР°РІРµРЅСЃС‚РІР° РёРЅРґРµРєСЃРѕРІ, false РІ СЃР»СѓС‡Р°Рµ РёС… СЂР°Р·Р»РёС‡РёСЏ
+		* (РІС‹Р±СЂР°СЃС‹РІР°РµС‚ РёСЃРєР»СЋС‡РµРЅРёРµ, РµСЃР»Рё СЂР°Р·РЅС‹Рµ С…РѕР·СЏРµРІР°)
 		*/
 		bool operator== (const vector_iterator& other) const
 		{
+			if (_owner == nullptr || other._owner == nullptr)
+				throw std::exception("Iterator has not owner");
 			if (_owner != other._owner)
 				throw std::exception("Cannot compare iterators of different vectors");
 			return _id == other._id;
 		}
 
 		/**
-		* @brief Оператор сравнения двух итераторов одного хозяина
-		* @param other Ссылка на итератор, с которым необходимо сравнение
-		* @return true в случае различия индексов, false в случае их равенства
-		* (выбрасывает исключение, если разные хозяева)
+		* @brief РћРїРµСЂР°С‚РѕСЂ СЃСЂР°РІРЅРµРЅРёСЏ РґРІСѓС… РёС‚РµСЂР°С‚РѕСЂРѕРІ РѕРґРЅРѕРіРѕ С…РѕР·СЏРёРЅР°
+		* @param other РЎСЃС‹Р»РєР° РЅР° РёС‚РµСЂР°С‚РѕСЂ, СЃ РєРѕС‚РѕСЂС‹Рј РЅРµРѕР±С…РѕРґРёРјРѕ СЃСЂР°РІРЅРµРЅРёРµ
+		* @return true РІ СЃР»СѓС‡Р°Рµ СЂР°Р·Р»РёС‡РёСЏ РёРЅРґРµРєСЃРѕРІ, false РІ СЃР»СѓС‡Р°Рµ РёС… СЂР°РІРµРЅСЃС‚РІР°
+		* (РІС‹Р±СЂР°СЃС‹РІР°РµС‚ РёСЃРєР»СЋС‡РµРЅРёРµ, РµСЃР»Рё СЂР°Р·РЅС‹Рµ С…РѕР·СЏРµРІР°)
 		*/
 		bool operator!= (const vector_iterator& other) const
 		{
+			if (_owner == nullptr || other._owner == nullptr)
+				throw std::exception("Iterator has not owner");
 			if (_owner != other._owner)
 				throw std::exception("Cannot compare iterators of different vectors");
 			return _id != other._id;
 		}
 
 		/**
-		* @brief Оператор сравнения двух итераторов одного хозяина
-		* @param other Ссылка на итератор, с которым необходимо сравнение
-		* @return true если индекс левого операнда меньше индекса правого,
-		* false в противном случае
-		* (выбрасывает исключение, если разные хозяева)
+		* @brief РћРїРµСЂР°С‚РѕСЂ СЃСЂР°РІРЅРµРЅРёСЏ РґРІСѓС… РёС‚РµСЂР°С‚РѕСЂРѕРІ РѕРґРЅРѕРіРѕ С…РѕР·СЏРёРЅР°
+		* @param other РЎСЃС‹Р»РєР° РЅР° РёС‚РµСЂР°С‚РѕСЂ, СЃ РєРѕС‚РѕСЂС‹Рј РЅРµРѕР±С…РѕРґРёРјРѕ СЃСЂР°РІРЅРµРЅРёРµ
+		* @return true РµСЃР»Рё РёРЅРґРµРєСЃ Р»РµРІРѕРіРѕ РѕРїРµСЂР°РЅРґР° РјРµРЅСЊС€Рµ РёРЅРґРµРєСЃР° РїСЂР°РІРѕРіРѕ,
+		* false РІ РїСЂРѕС‚РёРІРЅРѕРј СЃР»СѓС‡Р°Рµ
+		* (РІС‹Р±СЂР°СЃС‹РІР°РµС‚ РёСЃРєР»СЋС‡РµРЅРёРµ, РµСЃР»Рё СЂР°Р·РЅС‹Рµ С…РѕР·СЏРµРІР°)
 		*/
 		bool operator< (const vector_iterator& other) const
 		{
+			if (_owner == nullptr || other._owner == nullptr)
+				throw std::exception("Iterator has not owner");
 			if (_owner != other._owner)
 				throw std::exception("Cannot compare iterators of different vectors");
 			return _id < other._id;
 		}
 
 		/**
-		* @brief Оператор сравнения двух итераторов одного хозяина
-		* @param other Ссылка на итератор, с которым необходимо сравнение
-		* @return true если индекс левого операнда больше индекса правого,
-		* false в противном случае
-		* (выбрасывает исключение, если разные хозяева)
+		* @brief РћРїРµСЂР°С‚РѕСЂ СЃСЂР°РІРЅРµРЅРёСЏ РґРІСѓС… РёС‚РµСЂР°С‚РѕСЂРѕРІ РѕРґРЅРѕРіРѕ С…РѕР·СЏРёРЅР°
+		* @param other РЎСЃС‹Р»РєР° РЅР° РёС‚РµСЂР°С‚РѕСЂ, СЃ РєРѕС‚РѕСЂС‹Рј РЅРµРѕР±С…РѕРґРёРјРѕ СЃСЂР°РІРЅРµРЅРёРµ
+		* @return true РµСЃР»Рё РёРЅРґРµРєСЃ Р»РµРІРѕРіРѕ РѕРїРµСЂР°РЅРґР° Р±РѕР»СЊС€Рµ РёРЅРґРµРєСЃР° РїСЂР°РІРѕРіРѕ,
+		* false РІ РїСЂРѕС‚РёРІРЅРѕРј СЃР»СѓС‡Р°Рµ
+		* (РІС‹Р±СЂР°СЃС‹РІР°РµС‚ РёСЃРєР»СЋС‡РµРЅРёРµ, РµСЃР»Рё СЂР°Р·РЅС‹Рµ С…РѕР·СЏРµРІР°)
 		*/
 		bool operator> (const vector_iterator& other) const
 		{
+			if (_owner == nullptr || other._owner == nullptr)
+				throw std::exception("Iterator has not owner");
 			if (_owner != other._owner)
 				throw std::exception("Cannot compare iterators of different vectors");
 			return _id > other._id;
 		}
 
 		/**
-		* @brief Оператор сравнения двух итераторов одного хозяина
-		* @param other Ссылка на итератор, с которым необходимо сравнение
-		* @return true если индекс левого операнда меньше или равен индексу правого,
-		* false в противном случае
-		* (выбрасывает исключение, если разные хозяева)
+		* @brief РћРїРµСЂР°С‚РѕСЂ СЃСЂР°РІРЅРµРЅРёСЏ РґРІСѓС… РёС‚РµСЂР°С‚РѕСЂРѕРІ РѕРґРЅРѕРіРѕ С…РѕР·СЏРёРЅР°
+		* @param other РЎСЃС‹Р»РєР° РЅР° РёС‚РµСЂР°С‚РѕСЂ, СЃ РєРѕС‚РѕСЂС‹Рј РЅРµРѕР±С…РѕРґРёРјРѕ СЃСЂР°РІРЅРµРЅРёРµ
+		* @return true РµСЃР»Рё РёРЅРґРµРєСЃ Р»РµРІРѕРіРѕ РѕРїРµСЂР°РЅРґР° РјРµРЅСЊС€Рµ РёР»Рё СЂР°РІРµРЅ РёРЅРґРµРєСЃСѓ РїСЂР°РІРѕРіРѕ,
+		* false РІ РїСЂРѕС‚РёРІРЅРѕРј СЃР»СѓС‡Р°Рµ
+		* (РІС‹Р±СЂР°СЃС‹РІР°РµС‚ РёСЃРєР»СЋС‡РµРЅРёРµ, РµСЃР»Рё СЂР°Р·РЅС‹Рµ С…РѕР·СЏРµРІР°)
 		*/
 		bool operator<= (const vector_iterator& other) const
 		{
+			if (_owner == nullptr || other._owner == nullptr)
+				throw std::exception("Iterator has not owner");
 			if (_owner != other._owner)
 				throw std::exception("Cannot compare iterators of different vectors");
 			return _id <= other._id;
 		}
 
 		/**
-		* @brief Оператор сравнения двух итераторов одного хозяина
-		* @param other Ссылка на итератор, с которым необходимо сравнение
-		* @return true если индекс левого операнда больше или равен индексу правого,
-		* false в противном случае
-		* (выбрасывает исключение, если разные хозяева)
+		* @brief РћРїРµСЂР°С‚РѕСЂ СЃСЂР°РІРЅРµРЅРёСЏ РґРІСѓС… РёС‚РµСЂР°С‚РѕСЂРѕРІ РѕРґРЅРѕРіРѕ С…РѕР·СЏРёРЅР°
+		* @param other РЎСЃС‹Р»РєР° РЅР° РёС‚РµСЂР°С‚РѕСЂ, СЃ РєРѕС‚РѕСЂС‹Рј РЅРµРѕР±С…РѕРґРёРјРѕ СЃСЂР°РІРЅРµРЅРёРµ
+		* @return true РµСЃР»Рё РёРЅРґРµРєСЃ Р»РµРІРѕРіРѕ РѕРїРµСЂР°РЅРґР° Р±РѕР»СЊС€Рµ РёР»Рё СЂР°РІРµРЅ РёРЅРґРµРєСЃСѓ РїСЂР°РІРѕРіРѕ,
+		* false РІ РїСЂРѕС‚РёРІРЅРѕРј СЃР»СѓС‡Р°Рµ
+		* (РІС‹Р±СЂР°СЃС‹РІР°РµС‚ РёСЃРєР»СЋС‡РµРЅРёРµ, РµСЃР»Рё СЂР°Р·РЅС‹Рµ С…РѕР·СЏРµРІР°)
 		*/
 		bool operator>= (const vector_iterator& other) const
 		{
+			if (_owner == nullptr || other._owner == nullptr)
+				throw std::exception("Iterator has not owner");
 			if (_owner != other._owner)
 				throw std::exception("Cannot compare iterators of different vectors");
 			return _id >= other._id;
 		}
 
 		/**
-		* @brief Постфиксный инкремент
-		* @return Итератор
+		* @brief РџРѕСЃС‚С„РёРєСЃРЅС‹Р№ РёРЅРєСЂРµРјРµРЅС‚
+		* @return РС‚РµСЂР°С‚РѕСЂ
 		*/
 		vector_iterator operator++ (int value)
 		{
+			if (_owner == nullptr)
+				throw std::exception("Iterator has not owner");
+			_correct_id();
 			vector_iterator copy(*this);
 			if (_id < _owner->_size) _id++;
 			return copy;
 		}
 
 		/**
-		* @brief Постфиксный декремент
-		* @return Итератор
+		* @brief РџРѕСЃС‚С„РёРєСЃРЅС‹Р№ РґРµРєСЂРµРјРµРЅС‚
+		* @return РС‚РµСЂР°С‚РѕСЂ
 		*/
 		vector_iterator operator-- (int value)
 		{
+			if (_owner == nullptr)
+				throw std::exception("Iterator has not owner");
+			_correct_id();
 			vector_iterator copy(*this);
 			if (_id > 0) _id--;
 			return copy;
 		}
 
 		/**
-		* @brief Префиксный инкремент
-		* @return Итератор
+		* @brief РџСЂРµС„РёРєСЃРЅС‹Р№ РёРЅРєСЂРµРјРµРЅС‚
+		* @return РС‚РµСЂР°С‚РѕСЂ
 		*/
 		vector_iterator& operator++ ()
 		{
+			if (_owner == nullptr)
+				throw std::exception("Iterator has not owner");
+			_correct_id();
 			if (_id < _owner->_size) _id++;
 			return *this;
 		}
 
 		/**
-		* @brief Префиксный декремент
-		* @return Итератор
+		* @brief РџСЂРµС„РёРєСЃРЅС‹Р№ РґРµРєСЂРµРјРµРЅС‚
+		* @return РС‚РµСЂР°С‚РѕСЂ
 		*/
 		vector_iterator& operator-- ()
 		{
+			if (_owner == nullptr)
+				throw std::exception("Iterator has not owner");
+			_correct_id();
 			if (_id > 0) _id--;
 			return *this;
 		}
 
 		/**
-		* @brief Оператор увеличения итератора на число позиций
-		* @param value Желаемое смещение
-		* @return Смещенный итератор
+		* @brief РћРїРµСЂР°С‚РѕСЂ СѓРІРµР»РёС‡РµРЅРёСЏ РёС‚РµСЂР°С‚РѕСЂР° РЅР° С‡РёСЃР»Рѕ РїРѕР·РёС†РёР№
+		* @param value Р–РµР»Р°РµРјРѕРµ СЃРјРµС‰РµРЅРёРµ
+		* @return РЎРјРµС‰РµРЅРЅС‹Р№ РёС‚РµСЂР°С‚РѕСЂ
 		*/
 		vector_iterator& operator+= (int value)
 		{
+			if (_owner == nullptr)
+				throw std::exception("Iterator has not owner");
+			_correct_id();
 			for (int i = 0; i < value; ++i) ++(*this);
 			return *this;
 		}
 
 		/**
-		* @brief Оператор уменьшения итератора на число позиций
-		* @param value Желаемое смещение
-		* @return Смещенный итератор
+		* @brief РћРїРµСЂР°С‚РѕСЂ СѓРјРµРЅСЊС€РµРЅРёСЏ РёС‚РµСЂР°С‚РѕСЂР° РЅР° С‡РёСЃР»Рѕ РїРѕР·РёС†РёР№
+		* @param value Р–РµР»Р°РµРјРѕРµ СЃРјРµС‰РµРЅРёРµ
+		* @return РЎРјРµС‰РµРЅРЅС‹Р№ РёС‚РµСЂР°С‚РѕСЂ
 		*/
 		vector_iterator& operator-= (int value)
 		{
+			if (_owner == nullptr)
+				throw std::exception("Iterator has not owner");
+			_correct_id();
 			for (int i = 0; i < value; ++i) --(*this);
 			return *this;
 		}
 
 		/**
-		* @brief Оператор увеличения итератора на другой итератор
-		* @param other Другой итератор
-		* @return Смещенный итератор
+		* @brief РћРїРµСЂР°С‚РѕСЂ СѓРІРµР»РёС‡РµРЅРёСЏ РёС‚РµСЂР°С‚РѕСЂР° РЅР° РґСЂСѓРіРѕР№ РёС‚РµСЂР°С‚РѕСЂ
+		* @param other Р”СЂСѓРіРѕР№ РёС‚РµСЂР°С‚РѕСЂ
+		* @return РЎРјРµС‰РµРЅРЅС‹Р№ РёС‚РµСЂР°С‚РѕСЂ
 		*/
 		vector_iterator& operator+= (const vector_iterator& other)
 		{
+			if (_owner == nullptr || other._owner == nullptr)
+				throw std::exception("Iterator has not owner");
 			if (_owner != other._owner) 
 				throw std::exception("Cannot aperate with diferent vectors iterators");
+
 			for (int i = 0; i < other._id; ++i) ++(*this);
+			_correct_id();
 			return *this;
 		}
 
 		/**
-		* @brief Оператор уменьшения итератора на другой итератор
-		* @param other Другой итератор
-		* @return Смещенный итератор
+		* @brief РћРїРµСЂР°С‚РѕСЂ СѓРјРµРЅСЊС€РµРЅРёСЏ РёС‚РµСЂР°С‚РѕСЂР° РЅР° РґСЂСѓРіРѕР№ РёС‚РµСЂР°С‚РѕСЂ
+		* @param other Р”СЂСѓРіРѕР№ РёС‚РµСЂР°С‚РѕСЂ
+		* @return РЎРјРµС‰РµРЅРЅС‹Р№ РёС‚РµСЂР°С‚РѕСЂ
 		*/
 		vector_iterator& operator-= (const vector_iterator& other)
 		{
+			if (_owner == nullptr || other._owner == nullptr)
+				throw std::exception("Iterator has not owner");
 			if (_owner != other._owner)
 				throw std::exception("Cannot aperate with diferent vectors iterators");
+
 			for (int i = 0; i < other._id; ++i) --(*this);
+			_correct_id();
 			return *this;
 		}
 
 		/**
-		* @brief Оператор сложения итератора и целого числа
-		* @param it Ссылка на итератор
-		* @param value Число
-		* @return Новый итератор, указывающий на элемент, смещенный на value позиций относительно it
+		* @brief РћРїРµСЂР°С‚РѕСЂ СЃР»РѕР¶РµРЅРёСЏ РёС‚РµСЂР°С‚РѕСЂР° Рё С†РµР»РѕРіРѕ С‡РёСЃР»Р°
+		* @param it РЎСЃС‹Р»РєР° РЅР° РёС‚РµСЂР°С‚РѕСЂ
+		* @param value Р§РёСЃР»Рѕ
+		* @return РќРѕРІС‹Р№ РёС‚РµСЂР°С‚РѕСЂ, СѓРєР°Р·С‹РІР°СЋС‰РёР№ РЅР° СЌР»РµРјРµРЅС‚, СЃРјРµС‰РµРЅРЅС‹Р№ РЅР° value РїРѕР·РёС†РёР№ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ it
 		*/
 		friend vector_iterator operator+ (const vector_iterator& it, int value)
 		{
+			if (it._owner == nullptr)
+				throw std::exception("Iterator has not owner");
+
 			vector_iterator result(it);
 			result += value;
+
+			result._correct_id();
 			return result;
 		}
 
 		/**
-		* @brief Оператор сложения итератора и целого числа
-		* @param value Число
-		* @param it Ссылка на итератор
-		* @return Новый итератор, указывающий на элемент, смещенный на value позиций относительно it
+		* @brief РћРїРµСЂР°С‚РѕСЂ СЃР»РѕР¶РµРЅРёСЏ РёС‚РµСЂР°С‚РѕСЂР° Рё С†РµР»РѕРіРѕ С‡РёСЃР»Р°
+		* @param value Р§РёСЃР»Рѕ
+		* @param it РЎСЃС‹Р»РєР° РЅР° РёС‚РµСЂР°С‚РѕСЂ
+		* @return РќРѕРІС‹Р№ РёС‚РµСЂР°С‚РѕСЂ, СѓРєР°Р·С‹РІР°СЋС‰РёР№ РЅР° СЌР»РµРјРµРЅС‚, СЃРјРµС‰РµРЅРЅС‹Р№ РЅР° value РїРѕР·РёС†РёР№ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ it
 		*/
 		friend vector_iterator operator+ (int value, const vector_iterator& it)
 		{
+			if (it._owner == nullptr)
+				throw std::exception("Iterator has not owner");
+
 			vector_iterator result(it);
 			result += value;
+
+			result._correct_id();
 			return result;
 		}
 
 		/**
-		* @brief Оператор вычитания из итератора целого числа
-		* @param it Ссылка на итератор
-		* @param value Число
-		* @param it Ссылка на итератор
-		* @return Новый итератор, указывающий на элемент, смещенный на value позиций относительно it
+		* @brief РћРїРµСЂР°С‚РѕСЂ РІС‹С‡РёС‚Р°РЅРёСЏ РёР· РёС‚РµСЂР°С‚РѕСЂР° С†РµР»РѕРіРѕ С‡РёСЃР»Р°
+		* @param it РЎСЃС‹Р»РєР° РЅР° РёС‚РµСЂР°С‚РѕСЂ
+		* @param value Р§РёСЃР»Рѕ
+		* @param it РЎСЃС‹Р»РєР° РЅР° РёС‚РµСЂР°С‚РѕСЂ
+		* @return РќРѕРІС‹Р№ РёС‚РµСЂР°С‚РѕСЂ, СѓРєР°Р·С‹РІР°СЋС‰РёР№ РЅР° СЌР»РµРјРµРЅС‚, СЃРјРµС‰РµРЅРЅС‹Р№ РЅР° value РїРѕР·РёС†РёР№ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ it
 		*/
 		friend vector_iterator operator- (const vector_iterator& it, int value)
 		{
+			if (it._owner == nullptr)
+				throw std::exception("Iterator has not owner");
+
 			vector_iterator result(it);
 			result -= value;
+
+			result._correct_id();
 			return result;
 		}
 
 		/**
-		* @brief Оператор вычитания из итератора целого числа
-		* @param value Число
-		* @param it Ссылка на итератор
-		* @return Новый итератор, указывающий на элемент, смещенный на value позиций относительно it
+		* @brief РћРїРµСЂР°С‚РѕСЂ РІС‹С‡РёС‚Р°РЅРёСЏ РёР· РёС‚РµСЂР°С‚РѕСЂР° С†РµР»РѕРіРѕ С‡РёСЃР»Р°
+		* @param value Р§РёСЃР»Рѕ
+		* @param it РЎСЃС‹Р»РєР° РЅР° РёС‚РµСЂР°С‚РѕСЂ
+		* @return РќРѕРІС‹Р№ РёС‚РµСЂР°С‚РѕСЂ, СѓРєР°Р·С‹РІР°СЋС‰РёР№ РЅР° СЌР»РµРјРµРЅС‚, СЃРјРµС‰РµРЅРЅС‹Р№ РЅР° value РїРѕР·РёС†РёР№ РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ it
 		*/
 		friend vector_iterator operator- (int value, const vector_iterator& it)
 		{
+			if (it._owner == nullptr)
+				throw std::exception("Iterator has not owner");
+
 			vector_iterator result(it);
 			result -= value;
+
+			result._correct_id();
 			return result;
 		}
 
 		/**
-		* @brief Оператор сложения двух итераторов
-		* @param left Ссыдка на левый итератор
-		* @param right Ссылка на правый итератор
-		* @return Новый итератор, указывающий на элемент под индексом = сумме индексов операндов
+		* @brief РћРїРµСЂР°С‚РѕСЂ СЃР»РѕР¶РµРЅРёСЏ РґРІСѓС… РёС‚РµСЂР°С‚РѕСЂРѕРІ
+		* @param left РЎСЃС‹РґРєР° РЅР° Р»РµРІС‹Р№ РёС‚РµСЂР°С‚РѕСЂ
+		* @param right РЎСЃС‹Р»РєР° РЅР° РїСЂР°РІС‹Р№ РёС‚РµСЂР°С‚РѕСЂ
+		* @return РќРѕРІС‹Р№ РёС‚РµСЂР°С‚РѕСЂ, СѓРєР°Р·С‹РІР°СЋС‰РёР№ РЅР° СЌР»РµРјРµРЅС‚ РїРѕРґ РёРЅРґРµРєСЃРѕРј = СЃСѓРјРјРµ РёРЅРґРµРєСЃРѕРІ РѕРїРµСЂР°РЅРґРѕРІ
 		*/
 		friend vector_iterator operator+ (
 			const vector_iterator& left,
 			const vector_iterator& right)
 		{
+			if (left._owner == nullptr || right._owner == nullptr)
+				throw std::exception("Iterator has not owner");
+			if (left._owner != right._owner)
+				throw std::exception("Cannot aperate with diferent vectors iterators");
+
 			vector_iterator result(left);
 			result += right;
+
+			result._correct_id();
 			return result;
 		}
 
 		/**
-		* @brief Оператор вычитания одного итератора из другого
-		* @param left Ссыдка на левый итератор
-		* @param right Ссылка на правый итератор
-		* @return Новый итератор, указывающий на элемент под индексом = разности индексов операндов
+		* @brief РћРїРµСЂР°С‚РѕСЂ РІС‹С‡РёС‚Р°РЅРёСЏ РѕРґРЅРѕРіРѕ РёС‚РµСЂР°С‚РѕСЂР° РёР· РґСЂСѓРіРѕРіРѕ
+		* @param left РЎСЃС‹РґРєР° РЅР° Р»РµРІС‹Р№ РёС‚РµСЂР°С‚РѕСЂ
+		* @param right РЎСЃС‹Р»РєР° РЅР° РїСЂР°РІС‹Р№ РёС‚РµСЂР°С‚РѕСЂ
+		* @return РќРѕРІС‹Р№ РёС‚РµСЂР°С‚РѕСЂ, СѓРєР°Р·С‹РІР°СЋС‰РёР№ РЅР° СЌР»РµРјРµРЅС‚ РїРѕРґ РёРЅРґРµРєСЃРѕРј = СЂР°Р·РЅРѕСЃС‚Рё РёРЅРґРµРєСЃРѕРІ РѕРїРµСЂР°РЅРґРѕРІ
 		*/
 		friend vector_iterator operator- (
 			const vector_iterator& left,
 			const vector_iterator& right)
 		{
+			if (left._owner == nullptr || right._owner == nullptr)
+				throw std::exception("Iterator has not owner");
+			if (left._owner != right._owner)
+				throw std::exception("Cannot aperate with diferent vectors iterators");
+
 			vector_iterator result(left);
 			result -= right;
+
+			result._correct_id();
 			return result;
 		}
 
 	};
 
 	/**
-	* @brief Шаблон неконстантного итератора
+	* @brief РЁР°Р±Р»РѕРЅ РЅРµРєРѕРЅСЃС‚Р°РЅС‚РЅРѕРіРѕ РёС‚РµСЂР°С‚РѕСЂР°
 	*/
 	template<class T>
 	class vector_it : public vector_iterator<T, T> {
@@ -376,14 +470,14 @@ namespace my_template {
 	private:
 
 		/**
-		* @brief Конструктор по умолчанию (никуда не указывает)
+		* @brief РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ (РЅРёРєСѓРґР° РЅРµ СѓРєР°Р·С‹РІР°РµС‚)
 		*/
 		vector_it() : vector_iterator<T, T>() {}
 
 		/**
-		* @brief Конструктор по значениям полей
-		* @param owner Указатель на объект - хозяин
-		* @param id Индекс элемента
+		* @brief РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ Р·РЅР°С‡РµРЅРёСЏРј РїРѕР»РµР№
+		* @param owner РЈРєР°Р·Р°С‚РµР»СЊ РЅР° РѕР±СЉРµРєС‚ - С…РѕР·СЏРёРЅ
+		* @param id РРЅРґРµРєСЃ СЌР»РµРјРµРЅС‚Р°
 		*/
 		vector_it(const vector<T>* owner, size_t id) :
 			vector_iterator<T, T>(owner, id) {}
@@ -391,19 +485,19 @@ namespace my_template {
 	public:
 
 		/**
-		* @brief Копирующий конструктор
-		* @param src Ссылка на копируемый итератор
+		* @brief РљРѕРїРёСЂСѓСЋС‰РёР№ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+		* @param src РЎСЃС‹Р»РєР° РЅР° РєРѕРїРёСЂСѓРµРјС‹Р№ РёС‚РµСЂР°С‚РѕСЂ
 		*/
 		vector_it(const vector_iterator<T, T>& src) : vector_iterator<T, T>(src) {}
 
 		/**
-		* @brief Перемещающий конструктор
-		* @param src Ссылка на перемещаемый итератор
+		* @brief РџРµСЂРµРјРµС‰Р°СЋС‰РёР№ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+		* @param src РЎСЃС‹Р»РєР° РЅР° РїРµСЂРµРјРµС‰Р°РµРјС‹Р№ РёС‚РµСЂР°С‚РѕСЂ
 		*/
 		vector_it(vector_iterator<T, T>&& src) : vector_iterator<T, T>(src) {}
 
 		/**
-		* @brief Деструктор устанавливает nullptr для указателя на хозяина и 0 для _id
+		* @brief Р”РµСЃС‚СЂСѓРєС‚РѕСЂ СѓСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ nullptr РґР»СЏ СѓРєР°Р·Р°С‚РµР»СЏ РЅР° С…РѕР·СЏРёРЅР° Рё 0 РґР»СЏ _id
 		*/
 		~vector_it()
 		{
@@ -414,7 +508,7 @@ namespace my_template {
 	};
 
 	/**
-	* @brief Шаблон константного итератора
+	* @brief РЁР°Р±Р»РѕРЅ РєРѕРЅСЃС‚Р°РЅС‚РЅРѕРіРѕ РёС‚РµСЂР°С‚РѕСЂР°
 	*/
 	template<class T>
 	class vector_const_it : public vector_iterator<T, const T> {
@@ -424,14 +518,14 @@ namespace my_template {
 	private:
 
 		/**
-		* @brief Конструктор по умолчанию (никуда не указывает)
+		* @brief РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ (РЅРёРєСѓРґР° РЅРµ СѓРєР°Р·С‹РІР°РµС‚)
 		*/
 		vector_const_it() : vector_iterator<T, const T>() {}
 
 		/**
-		* @brief Конструктор по значениям полей
-		* @param owner Указатель на объект - хозяин
-		* @param id Индекс элемента
+		* @brief РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїРѕ Р·РЅР°С‡РµРЅРёСЏРј РїРѕР»РµР№
+		* @param owner РЈРєР°Р·Р°С‚РµР»СЊ РЅР° РѕР±СЉРµРєС‚ - С…РѕР·СЏРёРЅ
+		* @param id РРЅРґРµРєСЃ СЌР»РµРјРµРЅС‚Р°
 		*/
 		vector_const_it(const vector<T>* owner, size_t id) :
 			vector_iterator<T, const T>(owner, id) {}
@@ -439,19 +533,21 @@ namespace my_template {
 	public:
 
 		/**
-		* @brief Копирующий конструктор
-		* @param src Ссылка на копируемый итератор
+		* @brief РљРѕРїРёСЂСѓСЋС‰РёР№ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+		* @param src РЎСЃС‹Р»РєР° РЅР° РєРѕРїРёСЂСѓРµРјС‹Р№ РёС‚РµСЂР°С‚РѕСЂ
 		*/
-		vector_const_it(const vector_iterator<T, const T>& src) : vector_iterator<T, const T>(src) {}
+		vector_const_it(const vector_iterator<T, const T>& src) :
+			vector_iterator<T, const T>(src) {}
 
 		/**
-		* @brief Перемещающий конструктор
-		* @param src Ссылка на перемещаемый итератор
+		* @brief РџРµСЂРµРјРµС‰Р°СЋС‰РёР№ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ
+		* @param src РЎСЃС‹Р»РєР° РЅР° РїРµСЂРµРјРµС‰Р°РµРјС‹Р№ РёС‚РµСЂР°С‚РѕСЂ
 		*/
-		vector_const_it(vector_iterator<T, const T>&& src) : vector_iterator<T, const T>(src) {}
+		vector_const_it(vector_iterator<T, const T>&& src) :
+			vector_iterator<T, const T>(src) {}
 
 		/**
-		* @brief Деструктор устанавливает nullptr для указателя на хозяина и 0 для _id
+		* @brief Р”РµСЃС‚СЂСѓРєС‚РѕСЂ СѓСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ nullptr РґР»СЏ СѓРєР°Р·Р°С‚РµР»СЏ РЅР° С…РѕР·СЏРёРЅР° Рё 0 РґР»СЏ _id
 		*/
 		~vector_const_it()
 		{
@@ -460,18 +556,19 @@ namespace my_template {
 		}
 
 		/**
-		* @brief Копирующий конструктор на основе неконстантного итератора
-		* @param src Ссылка на неконстантный итератор
+		* @brief РљРѕРїРёСЂСѓСЋС‰РёР№ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РЅР° РѕСЃРЅРѕРІРµ РЅРµРєРѕРЅСЃС‚Р°РЅС‚РЅРѕРіРѕ РёС‚РµСЂР°С‚РѕСЂР°
+		* @param src РЎСЃС‹Р»РєР° РЅР° РЅРµРєРѕРЅСЃС‚Р°РЅС‚РЅС‹Р№ РёС‚РµСЂР°С‚РѕСЂ
 		*/
 		vector_const_it(const vector_it<T>& src) 
 		{
 			this->_owner = src._owner;
 			this->_id = src._id;
+			this->_correct_id();
 		}
 
 		/**
-		* @brief Перемещающий конструктор на основе неконстантного итератора
-		* @param src Ссылка на неконстантный итератор
+		* @brief РџРµСЂРµРјРµС‰Р°СЋС‰РёР№ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РЅР° РѕСЃРЅРѕРІРµ РЅРµРєРѕРЅСЃС‚Р°РЅС‚РЅРѕРіРѕ РёС‚РµСЂР°С‚РѕСЂР°
+		* @param src РЎСЃС‹Р»РєР° РЅР° РЅРµРєРѕРЅСЃС‚Р°РЅС‚РЅС‹Р№ РёС‚РµСЂР°С‚РѕСЂ
 		*/
 		vector_const_it(vector_it<T>&& src)
 		{
@@ -483,6 +580,7 @@ namespace my_template {
 				src._owner = nullptr;
 				src._id = 0;
 			}
+			this->_correct_id();
 		}
 
 		/**
@@ -494,6 +592,7 @@ namespace my_template {
 		{
 			this->_owner = src._owner;
 			this->_id = src._id;
+			this->_correct_id();
 			return *this;
 		}
 
@@ -512,6 +611,7 @@ namespace my_template {
 				src._owner = nullptr;
 				src._id = 0;
 			}
+			this->_correct_id();
 			return *this;
 		}
 
