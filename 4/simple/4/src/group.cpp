@@ -6,15 +6,23 @@ namespace group {
 	
 	// class Group
 
+	Group::Group(const Group& src) {
+		copy_from(src);
+	}
+
+	Group::Group(Group&& src) {
+		move_from(std::move(src));
+	}
+
 	int Group::id() const {
 		return _id;
 	}
 
-	int Group::size() const {
+	size_t Group::size() const {
 		return _size;
 	}
 
-	int Group::size(int size) {
+	size_t Group::size(size_t size) {
 		_size = size;
 		return _size;
 	}
@@ -38,27 +46,52 @@ namespace group {
 		_study_duration = src._study_duration;
 	}
 
+	void Group::move_from(Group&& src) {
+		if (this == &src) return;
+		copy_from(src);
+		src._id = 0;
+		src._size = 0;
+		src._department_id = 0;
+		src._study_duration = 0;
+	}
+
 	// class DayGroup
 
-	DayGroup& DayGroup::operator= (const DayGroup& src) {
-		copy_from(src);
+	DayGroup::DayGroup(const DayGroup& src) {
+		this->copy_from(src);
+	}
 
-		_specialization = src._specialization;
-		_stipend = src._stipend;
-		_fellows_amount = src._fellows_amount;
+	DayGroup::DayGroup(DayGroup&& src) {
+		this->move_from(std::move(src));
+	}
+
+	DayGroup& DayGroup::operator= (const DayGroup& src) {
+		this->copy_from(src);
 		return *this;
 	}
 
 	DayGroup& DayGroup::operator= (DayGroup&& src) {
-		if (this == &src) return *this;
-		copy_from(src);
-
-		_specialization = src._specialization;
-		_stipend = src._stipend;
-		_fellows_amount = src._fellows_amount;
-
-		src._specialization.clear();
+		this->move_from(std::move(src));
 		return *this;
+	}
+
+	void DayGroup::copy_from(const DayGroup& src) {
+		Group::copy_from(src);
+		this->_specialization = src._specialization;
+		this->_stipend = src._stipend;
+		this->_fellows_amount = src._fellows_amount;
+	}
+
+	void DayGroup::move_from(DayGroup&& src) {
+		if (this == &src) return;
+		Group::copy_from(src);
+
+		this->_specialization = std::move(src._specialization);
+		this->_stipend = src._stipend;
+		this->_fellows_amount = src._fellows_amount;
+
+		src._stipend = 0;
+		src._fellows_amount = 0;
 	}
 
 	std::string DayGroup::specialization() const {
@@ -95,26 +128,36 @@ namespace group {
 
 	// class EveningGroup
 
+	EveningGroup::EveningGroup(const EveningGroup& src) {
+		this->copy_from(src);
+	}
+
+	EveningGroup::EveningGroup(EveningGroup&& src) {
+		this->move_from(std::move(src));
+	}
+
 	EveningGroup& EveningGroup::operator= (const EveningGroup& src) {
-		copy_from(src);
-
-		_contingent = src._contingent;
-		_qualification = src._qualification;
-
+		this->copy_from(src);
 		return *this;
 	}
 
 	EveningGroup& EveningGroup::operator= (EveningGroup&& src) {
-		if (this == &src) return *this;
-		copy_from(src);
-
-		_contingent = src._contingent;
-		_qualification = src._qualification;
-
-		src._contingent.clear();
-		src._qualification.clear();
-
+		this->move_from(std::move(src));
 		return *this;
+	}
+
+	void EveningGroup::copy_from(const EveningGroup& src) {
+		Group::copy_from(src);
+		this->_contingent = src._contingent;
+		this->_qualification = src._qualification;
+	}
+
+	void EveningGroup::move_from(EveningGroup&& src) {
+		if (this == &src) return;
+		Group::copy_from(src);
+
+		this->_contingent = std::move(src._contingent);
+		this->_qualification = std::move(src._qualification);
 	}
 
 	std::string EveningGroup::contingent() const {
@@ -136,21 +179,39 @@ namespace group {
 
 	// class PaidGroup
 
-	PaidGroup& PaidGroup::operator= (const PaidGroup& src) {
-		copy_from(src);
+	PaidGroup::PaidGroup(const PaidGroup& src) {
+		this->copy_from(src);
+	}
 
-		_contract_id = src._contract_id;
-		_payment_size = src._payment_size;
+	PaidGroup::PaidGroup(PaidGroup&& src) {
+		this->move_from(std::move(src));
+	}
+
+	PaidGroup& PaidGroup::operator= (const PaidGroup& src) {
+		this->copy_from(src);
 		return *this;
 	}
 
 	PaidGroup& PaidGroup::operator= (PaidGroup&& src) {
-		if (this == &src) return *this;
-		copy_from(src);
-
-		_contract_id = src._contract_id;
-		_payment_size = src._payment_size;
+		this->move_from(std::move(src));
 		return *this;
+	}
+
+	void PaidGroup::copy_from(const PaidGroup& src) {
+		Group::copy_from(src);
+		this->_contract_id = src._contract_id;
+		this->_payment_size = src._payment_size;
+	}
+
+	void PaidGroup::move_from(PaidGroup&& src) {
+		if (this == &src) return;
+		Group::copy_from(src);
+
+		this->_contract_id = src._contract_id;
+		this->_payment_size = src._payment_size;
+
+		src._contract_id = 0;
+		src._payment_size = 0;
 	}
 
 	int PaidGroup::contract_id() const {

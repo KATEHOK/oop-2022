@@ -22,7 +22,7 @@ namespace group {
 		int _id = 0;
 
 		//! @brief Количество студентов группы
-		int _size = 0;
+		size_t _size = 0;
 
 		//! @brief Номер профилирующей кафедры
 		int _department_id = 0;
@@ -41,6 +41,12 @@ namespace group {
 		* @param src Ссылка на объект с которого копируются параметры
 		*/
 		void copy_from(const Group& src);
+
+		/**
+		* @brief Перемещает параметры абстрактной группы
+		* @param src Ссылка на объект с которого перемещаются параметры
+		*/
+		void move_from(Group&& src);
 
 	public:
 
@@ -66,11 +72,13 @@ namespace group {
 		* @brief Копирующий конструктор
 		* @param src Ссылка на копируемый объект абстрактной группы
 		*/
-		Group(const Group& src) :
-			_id(src._id),
-			_size(src._size),
-			_department_id(src._department_id),
-			_study_duration(src._study_duration) {}
+		Group(const Group& src);
+
+		/**
+		* @brief Перемещающий конструктор
+		* @param src Ссылка на перемещаемый объект абстрактной группы
+		*/
+		Group(Group&& src);
 
 		/**
 		* @brief Геттер номера группы
@@ -82,14 +90,14 @@ namespace group {
 		* @brief Геттер количества студентов группы
 		* @return Количество студентов группы
 		*/
-		int size() const;
+		size_t size() const;
 
 		/**
 		* @brief Сеттер количества студентов группы
 		* @param size Новое количество студентов группы
 		* @return Количество студентов группы
 		*/
-		int size(int size);
+		size_t size(size_t size);
 
 		/**
 		* @brief Геттер номера профилирующей кафедры
@@ -119,6 +127,18 @@ namespace group {
 		//! @brief Количество стипендиатов в группе
 		int _fellows_amount = 0;
 
+		/**
+		* @brief Копирует параметры группы
+		* @param src Ссылка на объект с которого копируются параметры
+		*/
+		void copy_from(const DayGroup& src);
+
+		/**
+		* @brief Перемещает параметры группы
+		* @param src Ссылка на объект с которого перемещаются параметры
+		*/
+		void move_from(DayGroup&& src);
+
 	public:
 
 		/**
@@ -147,23 +167,13 @@ namespace group {
 		* @brief Копирующий конструктор
 		* @param src Ссылка на копируемый объект группы
 		*/
-		DayGroup(const DayGroup& src) :
-			Group(src),
-			_specialization(src._specialization),
-			_stipend(src._stipend),
-			_fellows_amount(src._fellows_amount) {}
+		DayGroup(const DayGroup& src);
 
 		/**
 		* @brief Перемещающий конструктор
 		* @param src Ссылка на перемещаемый объект группы
 		*/
-		DayGroup(DayGroup&& src) :
-			Group(src),
-			_specialization(src._specialization),
-			_stipend(src._stipend),
-			_fellows_amount(src._fellows_amount) {
-			if (this != &src) src._specialization.clear();
-		}
+		DayGroup(DayGroup&& src);
 
 		/**
 		* @brief Копирующий оператор присваивания
@@ -232,6 +242,18 @@ namespace group {
 		//! @brief Квалификация
 		std::string _qualification = "";
 
+		/**
+		* @brief Копирует параметры группы
+		* @param src Ссылка на объект с которого копируются параметры
+		*/
+		void copy_from(const EveningGroup& src);
+
+		/**
+		* @brief Перемещает параметры группы
+		* @param src Ссылка на объект с которого перемещаются параметры
+		*/
+		void move_from(EveningGroup&& src);
+
 	public:
 
 		/**
@@ -258,24 +280,13 @@ namespace group {
 		* @brief Копирующий конструктор
 		* @param src Ссылка на копируемый объект группы
 		*/
-		EveningGroup(const EveningGroup& src) :
-			Group(src),
-			_contingent(src._contingent),
-			_qualification(src._qualification) {}
+		EveningGroup(const EveningGroup& src);
 
 		/**
 		* @brief Перемещающий конструктор
 		* @param src Ссылка на перемещаемый объект группы
 		*/
-		EveningGroup(EveningGroup&& src) :
-			Group(src),
-			_contingent(src._contingent),
-			_qualification(src._qualification) {
-			if (this != &src) {
-				src._contingent.clear();
-				src._qualification.clear();
-			}
-		}
+		EveningGroup(EveningGroup&& src);
 
 		/**
 		* @brief Копирующий оператор присваивания
@@ -324,6 +335,18 @@ namespace group {
 		//! @brief Размер оплаты
 		float _payment_size = 0;
 
+		/**
+		* @brief Копирует параметры группы
+		* @param src Ссылка на объект с которого копируются параметры
+		*/
+		void copy_from(const PaidGroup& src);
+
+		/**
+		* @brief Перемещает параметры группы
+		* @param src Ссылка на объект с которого перемещаются параметры
+		*/
+		void move_from(PaidGroup&& src);
+
 	public:
 
 		/**
@@ -350,19 +373,13 @@ namespace group {
 		* @brief Копирующий конструктор
 		* @param src Ссылка на копируемый объект группы
 		*/
-		PaidGroup(const PaidGroup& src) :
-			Group(src),
-			_contract_id(src._contract_id),
-			_payment_size(src._payment_size) {}
+		PaidGroup(const PaidGroup& src);
 
 		/**
 		* @brief Перемещающий конструктор
 		* @param src Ссылка на перемещаемый объект группы
 		*/
-		PaidGroup(PaidGroup&& src) :
-			Group(src),
-			_contract_id(src._contract_id),
-			_payment_size(src._payment_size) {}
+		PaidGroup(PaidGroup&& src);
 
 		/**
 		* @brief Копирующий оператор присваивания
