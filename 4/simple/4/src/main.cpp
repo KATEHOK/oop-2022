@@ -1,4 +1,8 @@
-﻿#include "../../my_vector/src/vector.h"
+﻿#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
+#include "../../my_vector/src/vector.h"
 #include <iostream>
 
 using namespace my_template;
@@ -10,6 +14,8 @@ size_t array_size(T(&arr)[N])
 }
 
 int main() {
+
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	int a[] = {0, 1, 2, 3, 4};
 
