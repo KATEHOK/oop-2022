@@ -48,6 +48,8 @@ namespace my_template {
 			_correct_id();
 		}
 
+	public:
+
 		/**
 		* @brief Копирующий конструктор
 		* @param src Ссылка на копируемый итератор
@@ -70,8 +72,6 @@ namespace my_template {
 			}
 			_correct_id();
 		}
-
-	public:
 
 		/**
 		* @brief Копирующий оператор присваивания
@@ -494,7 +494,7 @@ namespace my_template {
 		* @brief Перемещающий конструктор
 		* @param src Ссылка на перемещаемый итератор
 		*/
-		vector_it(vector_iterator<T, T>&& src) : vector_iterator<T, T>(src) {}
+		vector_it(vector_iterator<T, T>&& src) : vector_iterator<T, T>(std::move(src)) {}
 
 		/**
 		* @brief Деструктор устанавливает nullptr для указателя на хозяина и 0 для _id
@@ -544,7 +544,7 @@ namespace my_template {
 		* @param src Ссылка на перемещаемый итератор
 		*/
 		vector_const_it(vector_iterator<T, const T>&& src) :
-			vector_iterator<T, const T>(src) {}
+			vector_iterator<T, const T>(std::move(src)) {}
 
 		/**
 		* @brief Деструктор устанавливает nullptr для указателя на хозяина и 0 для _id
@@ -559,7 +559,7 @@ namespace my_template {
 		* @brief Копирующий конструктор на основе неконстантного итератора
 		* @param src Ссылка на неконстантный итератор
 		*/
-		vector_const_it(const vector_it<T>& src) 
+		vector_const_it(const vector_iterator<T, T>& src)
 		{
 			this->_owner = src._owner;
 			this->_id = src._id;
@@ -570,7 +570,7 @@ namespace my_template {
 		* @brief Перемещающий конструктор на основе неконстантного итератора
 		* @param src Ссылка на неконстантный итератор
 		*/
-		vector_const_it(vector_it<T>&& src)
+		vector_const_it(vector_iterator<T, T>&& src)
 		{
 			if (this != &src)
 			{
@@ -588,7 +588,7 @@ namespace my_template {
 		* @param
 		* @return
 		*/
-		vector_const_it& operator= (const vector_it<T>& src)
+		vector_const_it& operator= (const vector_iterator<T, T>& src)
 		{
 			this->_owner = src._owner;
 			this->_id = src._id;
@@ -601,7 +601,7 @@ namespace my_template {
 		* @param
 		* @return
 		*/
-		vector_const_it& operator= (vector_it<T>&& src)
+		vector_const_it& operator= (vector_iterator<T, T>&& src)
 		{
 			if (this != &src)
 			{

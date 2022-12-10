@@ -200,8 +200,7 @@ namespace group {
 		int id = find(group_ptr);
 		if (id < 0) return;
 
-		auto it = _items.cbegin();
-		it += id;
+		auto it = _items.cbegin() + id;
 		_items.erase(it);
 	}
 

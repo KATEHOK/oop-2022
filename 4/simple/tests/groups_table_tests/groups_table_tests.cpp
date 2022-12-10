@@ -143,63 +143,78 @@ namespace groupstabletests
 			GroupsTable gt1(gti1), gt2(gti2);
 
 			// =
-			GroupsTable gt3 = gt1, gt4 = gt2;
+			GroupsTable gt3 = std::move(gt1), gt4 = std::move(gt2);
 			Assert::IsTrue(gt3.size() == 1 && gt4.size() == 1, L"=");
 
 			// insert by group
-			gt3.insert(*(new DayGroup));
-			gt4.insert(*(new DayGroup(
+			DayGroup* p1 = new DayGroup;
+			DayGroup* p2 = new DayGroup(
 				id, size, department_id,
 				study_duration, specialization,
-				stipend, fellows_amount)));
+				stipend, fellows_amount);
+			DayGroup* p3 = new DayGroup(
+				id, size, department_id,
+				study_duration, specialization,
+				stipend, fellows_amount);
+			DayGroup* p4 = new DayGroup;
+			gt3.insert(*p1);
+			gt4.insert(*p2);
 			Assert::IsTrue(gt3.size() == 1 && gt4.size() == 1, L"insert by group - already exist");
-			gt3.insert(*(new DayGroup(
-				id, size, department_id,
-				study_duration, specialization,
-				stipend, fellows_amount)));
-			gt4.insert(*(new DayGroup));
+			gt3.insert(*p3);
+			gt4.insert(*p4);
 			Assert::IsTrue(gt3.size() == 2 && gt4.size() == 2, L"insert by group - unique");
 
+			GroupsTableItem gti3(*(new DayGroup));
+			GroupsTableItem gti4(*(new DayGroup));
+			GroupsTableItem gti5(*(new DayGroup(
+				id, size, department_id,
+				study_duration, specialization,
+				stipend, fellows_amount
+			)));
+			GroupsTableItem gti6(*(new DayGroup(
+				id, size, department_id,
+				study_duration, specialization,
+				stipend, fellows_amount
+			)));
+			GroupsTable gt5(gti3);
+			GroupsTable gt6(gti5);
+
 			// insert by item
-			gt1.insert(gti1);
-			gt2.insert(gti2);
-			Assert::IsTrue(gt1.size() == 1 && gt2.size() == 1, L"insert by item - already exist");
-			gt1.insert(gti2);
-			gt2.insert(gti1);
-			Assert::IsTrue(gt1.size() == 2 && gt2.size() == 2, L"insert by item - unique");
+			gt5.insert(gti4);
+			gt6.insert(gti6);
+			Assert::IsTrue(gt5.size() == 1 && gt6.size() == 1, L"insert by item - already exist");
+			gt5.insert(gti6);
+			gt6.insert(gti4);
+			Assert::IsTrue(gt5.size() == 2 && gt6.size() == 2, L"insert by item - unique");
 
 			// insert by groups fields values
-			gt1.insert(0, spG1);
-			gt2.insert(id, spG2);
-			Assert::IsTrue(gt1.size() == 2 && gt2.size() == 2, L"insert by groups fields values - already exist");
-			gt1.insert(7, std::shared_ptr<DayGroup>(
+			gt5.insert(0, spG1);
+			gt6.insert(id, spG2);
+			Assert::IsTrue(gt5.size() == 2 && gt6.size() == 2, L"insert by groups fields values - already exist");
+			gt5.insert(7, std::shared_ptr<DayGroup>(
 				new DayGroup(7, size, department_id, study_duration, specialization, stipend, fellows_amount)));
 			DayGroup* pg = new DayGroup(7, size, department_id, study_duration, specialization, stipend, fellows_amount);
-			gt2.insert(7, std::shared_ptr<DayGroup>(pg));
-			Assert::IsTrue(gt1.size() == 3 && gt2.size() == 3, L"insert by groups fields values - unique");
+			gt6.insert(7, std::shared_ptr<DayGroup>(pg));
+			Assert::IsTrue(gt5.size() == 3 && gt6.size() == 3, L"insert by groups fields values - unique");
 
 			// find - was tested with insert
 
-			// erase
-			DayGroup g;
-			gt1.erase(9);
-			gt2.erase(&g);
-			Assert::IsTrue(gt1.size() == 3 && gt2.size() == 3, L"erase - fake arguments");
-			gt1.erase(7);
-			gt2.erase(pg);
-			Assert::IsTrue(gt1.size() == 2 && gt2.size() == 2, L"erase - real arguments");
-
 			// []
 			Assert::IsTrue(
-				gt1[0].group_id() == 0 &&
-				gt1[0].group_ptr() == spG1 &&
-				gt1[spG1].group_id() == 0 &&
-				gt1[spG1].group_ptr() == spG1 &&
-				gt1[id].group_id() == id &&
-				gt1[id].group_ptr() == spG2 &&
-				gt1[spG2].group_id() == id &&
-				gt1[spG2].group_ptr() == spG2, L"[]"
+				gt6[0].group_id() == 0 &&
+				gt6[7].group_ptr().get() == pg &&
+				gt6[pg].group_id() == 7 &&
+				gt6[pg].group_ptr().get() == pg, L"[]"
 			);
+
+			// erase
+			DayGroup g;
+			gt5.erase(9);
+			gt6.erase(&g);
+			Assert::IsTrue(gt5.size() == 3 && gt6.size() == 3, L"erase - fake arguments");
+			gt5.erase(7);
+			gt6.erase(pg);
+			Assert::IsTrue(gt5.size() == 2 && gt6.size() == 2, L"erase - real arguments");
 		}
 	};
 }
