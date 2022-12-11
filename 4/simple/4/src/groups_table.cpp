@@ -22,6 +22,20 @@ namespace group {
 		}
 	}
 
+	GroupsTableItem::GroupsTableItem(const std::shared_ptr<Group>& group_ptr) {
+		if (group_ptr.get() != nullptr) {
+			_group_id = group_ptr->_id;
+			_group_ptr = group_ptr;
+		}
+	}
+
+	GroupsTableItem::GroupsTableItem(std::shared_ptr<Group>&& group_ptr) {
+		if (_group_ptr.get() != group_ptr.get() && group_ptr.get() != nullptr) {
+			_group_id = group_ptr->_id;
+			_group_ptr = std::move(group_ptr);
+		}
+	}
+
 	GroupsTableItem::GroupsTableItem(const GroupsTableItem& src) {
 		copy_from(src);
 	}

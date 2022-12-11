@@ -67,6 +67,18 @@ namespace group {
 		GroupsTableItem(int group_id, std::shared_ptr<Group>&& group_ptr);
 
 		/**
+		* @brief Копирующий конструктор по указателю
+		* @param group_ptr Ссылка на умный указатель на группу
+		*/
+		GroupsTableItem(const std::shared_ptr<Group>& group_ptr);
+
+		/**
+		* @brief Перемещающий конструктор по указателю
+		* @param group_ptr Ссылка на умный указатель на группу
+		*/
+		GroupsTableItem(std::shared_ptr<Group>&& group_ptr);
+
+		/**
 		* @brief Конструктор по группе
 		* @brief Запрещается создание,
 		* если уже существует shared_ptr этой же группы (влечет ошибки с памятью)

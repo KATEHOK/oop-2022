@@ -1,64 +1,62 @@
-﻿#define _CRTDBG_MAP_ALLOC
+﻿#define DEBUG
+
+#ifdef DEBUG
+#define _CRTDBG_MAP_ALLOC
 #include <stdlib.h>
 #include <crtdbg.h>
+#endif
 
-#include "../../my_vector/src/vector.h"
-#include <iostream>
+#ifndef DIALOG
+#include "dialog.h"	// диалоговые функции
+#endif // !DIALOG
 
 using namespace my_template;
+using namespace department;
+using namespace group;
+using namespace dialog;
 
-template<typename T, size_t N>
-size_t array_size(T(&arr)[N])
+int main()
 {
-	return N;
-}
 
-int main() {
-
+#ifdef DEBUG
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+#endif
 
-	int a[] = {0, 1, 2, 3, 4};
+	int choice = 0;
+	GroupsTable groups_table;
+	DepartmentsTable department_table;
 
-	vector<int> b = a;
+	// Вектор наименований доступных действий
+	const vector<std::string> options = {
+		"Quit",
+	};
 
-	std::cout << b.begin().id() << ' ' << b.end().id() << std::endl;
-	std::cout << b.cbegin().id() << ' ' << b.cend().id() << std::endl << std::endl;
+	// Вектор указателей на доступные действия
+	const vector<func> actions = {
+		[](GroupsTable&, DepartmentsTable&) { return false; }
+	};
 
-	for (int i = 0; i < b.size(); ++i) std::cout << b[i] << ' ';
-	std::cout << std::endl << std::endl;
+	print_greeting();
+	std::cout << "Do you want to start? ";
+	bool status = confirm();
 
-	for (auto it = b.cbegin(); it < b.cend(); ++it) std::cout << *it << ", ";
-	std::cout << std::endl;
+	while (status)
+	{
+		print_options(options);
+		ask_choice(choice, options.size());
 
-	for (auto it = b.begin(); it < b.end(); ++it) std::cout << *it << ", ";
-	std::cout << std::endl << std::endl;
+		try { status = actions[choice](groups_table, department_table); }
+		catch (std::exception& err)
+		{
+#ifdef DEBUG
+			std::cout << "Exception: " << err.what() << std::endl;
+#else
+			std::cout << "Sorry, something went wrong:(" << std::endl;
+#endif
+			status = false;
+		}
+	}
 
-	for (auto it = b.cbegin(); it < b.cend(); it++) std::cout << *it << ", ";
-	std::cout << std::endl;
-
-	for (auto it = b.begin(); it < b.end(); it++) std::cout << *it << ", ";
-	std::cout << std::endl << std::endl;
-
-	for (auto it = b.cbegin(); it < b.cend(); it += 1) std::cout << *it << ", ";
-	std::cout << std::endl;
-
-	for (auto it = b.begin(); it < b.end(); it += 1) std::cout << *it << ", ";
-	std::cout << std::endl << std::endl;
-
-	for (auto it = b.cbegin(); it < b.cend(); it = it + 1) std::cout << *it << ' ';
-	std::cout << std::endl;
-
-	for (auto it = b.begin(); it < b.end(); it = it + 1) std::cout << *it << ' ';
-	std::cout << std::endl << std::endl;
-
-	auto it1 = b.cbegin();
-	auto it2 = b.cend();
-	it2 = it2 - 2;
-	std::cout << it2.id() << ' ' << (++it2).id() << ' ' << (it2).id() << std::endl;
-	std::cout << (it2).id() << ' ' << (it2++).id() << ' ' << (it2).id() << std::endl << std::endl;
-
-	for (auto i : b) std::cout << i << ' ';
-	std::cout << std::endl;
-
+	print_farewell();
 	return 0;
 }

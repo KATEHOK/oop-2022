@@ -158,7 +158,15 @@ namespace my_template
 			_set_items(static_arr, N);
 		}
 
-		// initializer_list<T> для статического массива
+		/**
+		* @brief Конструктор по списку инициализации
+		* @param init_list Ссылка на список инициализации
+		*/
+		vector(const std::initializer_list<T>& init_list)
+		{
+			_resize(init_list.size());
+			for (auto it = init_list.begin(); it != init_list.end(); ++it) push_back(*it);
+		}
 
 		/**
 		* @brief Конструктор по динамическому массиву (перемещает элементы из массива)
@@ -221,12 +229,25 @@ namespace my_template
 		}
 
 		/**
+		* @brief Оператор присваивания по списку инициализации
+		* @param init_list Ссылка на список инициализации
+		* @return Ссылка на вектор
+		*/
+		vector& operator= (const std::initializer_list<T>& init_list)
+		{
+			_resize(init_list.size());
+			for (auto it = init_list.begin(); it != init_list.end(); ++it) push_back(*it);
+		}
+
+		/**
 		* @brief Копирующий оператор присваивания
 		* @param src Ссылка на копируемый вектор
 		* @return Ссылка на скопированный вектор
 		*/
 		vector& operator= (const vector& src)
 		{
+			delete[] _items;
+
 			_size = src._size;
 			_capacity = src._capacity;
 			_items = src._get_items(_size);
@@ -242,6 +263,8 @@ namespace my_template
 		{
 			if (this != &src)
 			{
+				delete[] _items;
+
 				_size = src._size;
 				_capacity = src._capacity;
 				_items = src._items;
