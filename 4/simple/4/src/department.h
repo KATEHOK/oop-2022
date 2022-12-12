@@ -155,14 +155,16 @@ namespace department {
 		/**
 		* @brief Функция копирования, добавляющая уникальный объект кафедры в конец таблицы
 		* @param department Ссылка на добавляемый объект кафедры
+		* @return true - в случае успеха, иначе - false
 		*/
-		void push_back(const Department& department);
+		bool push_back(const Department& department);
 
 		/**
 		* @brief Функция перемещения, добавляющая уникальный объект кафедры в конец таблицы
 		* @param department Ссылка на добавляемый объект кафедры
+		* @return true - в случае успеха, иначе - false
 		*/
-		void push_back(Department&& department);
+		bool push_back(Department&& department);
 
 		/**
 		* @brief Функция поиска объекта кафедры в таблице по номеру кафедры
@@ -184,6 +186,11 @@ namespace department {
 		* @return Индекс внутри вектора (или -1 при отсутствии)
 		*/
 		int find(const Department& d) const;
+
+		/**
+		* @brief Функция удаляет все кафедры
+		*/
+		void clear();
 
 		/**
 		* @brief Геттер размера таблицы
@@ -211,7 +218,7 @@ namespace department {
 		* @param Ссылка на найденный объект кафедры
 		*/
 		template<typename T>
-		Department operator[] (T id_or_name) const {
+		const Department& operator[] (T id_or_name) const {
 			int id = find(id_or_name);
 			if (id < 0) throw std::out_of_range("Table has not this item");
 			return _departments[id];
@@ -224,5 +231,11 @@ namespace department {
 		* @return Ссылка на стандартный поток вывода
 		*/
 		friend std::ostream& operator<< (std::ostream& out, const DepartmentsTable& dt);
+
+		/**
+		* @brief Выводит таблицу в виде таблицы
+		*/
+		void output() const;
+
 	};
 }

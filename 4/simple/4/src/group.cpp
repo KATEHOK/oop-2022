@@ -35,7 +35,7 @@ namespace group {
 		return _study_duration;
 	}
 
-	void Group::output(std::ostream& out) const {
+	void Group::out(std::ostream& out) const {
 		out << _id << ", " << _size << ", " << _department_id << ", " << _study_duration;
 	}
 
@@ -53,6 +53,12 @@ namespace group {
 		src._size = 0;
 		src._department_id = 0;
 		src._study_duration = 0;
+	}
+
+	std::ostream& operator<< (std::ostream& out, const Group& group)
+	{
+		group.output();
+		return out;
 	}
 
 	// class DayGroup
@@ -118,7 +124,7 @@ namespace group {
 
 	std::ostream& operator<< (std::ostream& out, const DayGroup& dg) {
 		out << '[';
-		dg.output(out); 
+		dg.out(out);
 		out << ", " << dg._specialization
 			<< ", "	<< dg._stipend
 			<< ", "	<< dg._fellows_amount
@@ -170,7 +176,7 @@ namespace group {
 
 	std::ostream& operator<< (std::ostream& out, const EveningGroup& eg) {
 		out << '[';
-		eg.output(out);
+		eg.out(out);
 		out << ", " << eg._contingent
 			<< ", " << eg._qualification
 			<< ']';
@@ -229,7 +235,7 @@ namespace group {
 
 	std::ostream& operator<< (std::ostream& out, const PaidGroup& pg) {
 		out << '[';
-		pg.output(out);
+		pg.out(out);
 		out << ", " << pg._contract_id
 			<< ", " << pg._payment_size
 			<< ']';

@@ -321,7 +321,7 @@ namespace group {
 
 		/**
 		* @brief Шаблон функции исключения элемента из таблицы
-		* @param group_id_or_ptr Номер или указатель (умный или обычный) на искомую группу
+		* @param group_id_or_ptr Номер или указатель (обычный) на искомую группу
 		*/
 		template<typename T>
 		void erase(T group_id_or_ptr) {
@@ -332,6 +332,19 @@ namespace group {
 			it += id;
 			_items.erase(it);
 		}
+
+		/**
+		* @brief Функция поиска элементов по номеру профилирующей кафедры
+		* @param department_id Номер профилирующей кафедры
+		* @param dest Ссылка на вектор из указателей на элементы, куда записать результат
+		*/
+		void find_by_department_id(int department_id, vector<const GroupsTableItem*>& dest) const;
+
+		/**
+		* @brief Функция удаления элемента по номеру профилирующей кафедры
+		* @param department_id Номер профилирующей кафедры
+		*/
+		void erase_by_department_id(int department_id);
 
 		/**
 		* @brief Шаблон оператора индексирования
@@ -346,9 +359,14 @@ namespace group {
 		}
 
 		/**
-		* @brief Функция построчного вывода значений полей элементов таблицы
+		* @brief Функция вывода таблицы в виде таблицы
 		*/
 		void output() const;
+
+		/**
+		* @brief Функция удаляет все элементы таблицы
+		*/
+		void clear();
 
 		/**
 		* @brief Дружественный оператор вывода таблицы групп в стандартный поток вывода

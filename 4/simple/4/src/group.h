@@ -34,7 +34,7 @@ namespace group {
 		* @brief Функция вывода абстрактной группы в стандартный поток вывода
 		* @param out Ссылка на стандартный поток вывода
 		*/
-		void output(std::ostream& out) const;
+		void out(std::ostream& out) const;
 
 		/**
 		* @brief Копирует параметры абстрактной группы
@@ -47,6 +47,11 @@ namespace group {
 		* @param src Ссылка на объект с которого перемещаются параметры
 		*/
 		void move_from(Group&& src);
+
+		/**
+		* @brief Для перегрузки вывода в выходной поток по указателю базового класса
+		*/
+		virtual void output() const {}
 
 	public:
 
@@ -110,6 +115,9 @@ namespace group {
 		* @return Срок обучения
 		*/
 		int study_duration() const;
+
+		friend std::ostream& operator<< (std::ostream& out, const Group& group);
+
 	};
 
 	/**
@@ -138,6 +146,10 @@ namespace group {
 		* @param src Ссылка на объект с которого перемещаются параметры
 		*/
 		void move_from(DayGroup&& src);
+
+		virtual void output() const {
+			std::cout << *this;
+		}
 
 	public:
 
@@ -254,6 +266,10 @@ namespace group {
 		*/
 		void move_from(EveningGroup&& src);
 
+		virtual void output() const {
+			std::cout << *this;
+		}
+
 	public:
 
 		/**
@@ -346,6 +362,10 @@ namespace group {
 		* @param src Ссылка на объект с которого перемещаются параметры
 		*/
 		void move_from(PaidGroup&& src);
+
+		virtual void output() const {
+			std::cout << *this;
+		}
 
 	public:
 

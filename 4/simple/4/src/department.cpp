@@ -76,14 +76,16 @@ namespace department {
 		return *this;
 	}
 
-	void DepartmentsTable::push_back(const Department& department) {
-		if (find(department._id) >= 0 || find(department._name) >= 0) return;
+	bool DepartmentsTable::push_back(const Department& department) {
+		if (find(department._id) >= 0 || find(department._name) >= 0) return false;
 		_departments.push_back(department);
+		return true;
 	}
 
-	void DepartmentsTable::push_back(Department&& department) {
-		if (find(department._id) >= 0 || find(department._name) >= 0) return;
+	bool DepartmentsTable::push_back(Department&& department) {
+		if (find(department._id) >= 0 || find(department._name) >= 0) return false;
 		_departments.push_back(std::move(department));
+		return true;
 	}
 
 	int DepartmentsTable::find(int department_id) const {
@@ -104,6 +106,10 @@ namespace department {
 		return -1;
 	}
 
+	void DepartmentsTable::clear() {
+		_departments.clear();
+	}
+
 	size_t DepartmentsTable::size() const {
 		return _departments.size();
 	}
@@ -116,6 +122,31 @@ namespace department {
 		}
 		out << '}';
 		return out;
+	}
+
+	void DepartmentsTable::output() const {
+		int len_name = 0, len_id = 0, len_num, copy_id;
+		for (auto i : _departments) {
+
+			len_num = 0, copy_id = i._id;
+			while (copy_id > 0) {
+				copy_id /= 10;
+				++len_num;
+			}
+
+			if (len_num > len_id) len_id = len_num;
+			if (i._name.size() > len_name) len_name = i._name.size();
+		}
+		if (len_id + len_name == 0) len_id = 16;
+		else len_id += 8 - len_id % 8;
+		    		
+		for (int i = 0; i < len_id + len_name; ++i) std::cout << '=';
+		std::cout << std::endl;
+
+		for (auto i : _departments) std::cout << i._id << '\t' << i._name << std::endl;
+
+		for (int i = 0; i < len_id + len_name; ++i) std::cout << '=';
+		std::cout << std::endl;
 	}
 
 }

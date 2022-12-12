@@ -147,61 +147,85 @@ namespace group {
 
 	void GroupsTable::insert(Group& group) {
 		if (find(group._id) >= 0 || find(&group) >= 0) return;
+		size_t size = _items.size();
 
-		for (auto it = _items.cbegin(); it != _items.cend(); ++it) {
+		if (_items.size() > 0)
+		{
+			for (auto it = _items.cbegin(); it != _items.cend(); ++it)
 
-			if ((*it)._group_id > group._id || (it + 1) == _items.cend()) {
-				_items.insert(it, GroupsTableItem(group));
-				break;
-			}
-
+				if ((*it)._group_id > group._id || (it + 1) == _items.cend()) {
+					_items.insert(it, GroupsTableItem(group));
+					break;
+				}
 		}
+		if (size == _items.size()) _items.push_back(GroupsTableItem(group));
 	}
 
 	void GroupsTable::insert(const GroupsTableItem& item) {
 		if (find(item._group_id) >= 0 || find(item._group_ptr) >= 0) return;
+		size_t size = _items.size();
 
-		for (auto it = _items.cbegin(); it != _items.cend(); ++it)
+		if (_items.size() > 0)
+		{
+			for (auto it = _items.cbegin(); it != _items.cend(); ++it)
 
-			if ((*it)._group_id > item._group_id || (it + 1) == _items.cend()) {
-				_items.insert(it, item);
-				break;
-			}
+				if ((*it)._group_id > item._group_id || (it + 1) == _items.cend()) {
+					_items.insert(it, item);
+					break;
+				}
+		}
+		if (size == _items.size()) _items.push_back(item);
 	}
 
 	void GroupsTable::insert(GroupsTableItem&& item) {
 		if (find(item._group_id) >= 0 || find(item._group_ptr) >= 0) return;
+		size_t size = _items.size();
 
-		for (auto it = _items.cbegin(); it != _items.cend(); ++it)
+		if (_items.size() > 0)
+		{
+			for (auto it = _items.cbegin(); it != _items.cend(); ++it)
 
-			if ((*it)._group_id > item._group_id || (it + 1) == _items.cend()) {
-				_items.insert(it, std::move(item));
-				break;
-			}
+				if ((*it)._group_id > item._group_id) {
+					_items.insert(it, std::move(item));
+					break;
+				}
+		}
+		if (size == _items.size()) _items.push_back(std::move(item));
 	}
 
 	void GroupsTable::insert(int group_id, const std::shared_ptr<Group>& group_ptr) {
 		if (group_ptr.get() == nullptr || find(group_id) >= 0 || find(group_ptr) >= 0 ||
 			group_ptr->_id != group_id) return;
+		size_t size = _items.size();
 
-		for (auto it = _items.cbegin(); it != _items.cend(); ++it)
+		if (_items.size() > 0)
+		{
+			for (auto it = _items.cbegin(); it != _items.cend(); ++it)
 
-			if ((*it)._group_id > group_id || (it + 1) == _items.cend()) {
-				_items.insert(it, GroupsTableItem(group_id, group_ptr));
-				break;
-			}
+				if ((*it)._group_id > group_id || (it + 1) == _items.cend()) {
+					_items.insert(it, GroupsTableItem(group_id, group_ptr));
+					break;
+				}
+		}
+		if (size == _items.size()) _items.push_back(GroupsTableItem(group_id, group_ptr));
 	}
 
 	void GroupsTable::insert(int group_id, std::shared_ptr<Group>&& group_ptr) {
 		if (group_ptr.get() == nullptr || find(group_id) >= 0 || find(group_ptr) >= 0 ||
 			group_ptr->_id != group_id) return;
+		size_t size = _items.size();
 
-		for (auto it = _items.cbegin(); it != _items.cend(); ++it)
+		if (_items.size() > 0)
+		{
+			for (auto it = _items.cbegin(); it != _items.cend(); ++it)
 
-			if ((*it)._group_id > group_id || (it + 1) == _items.cend()) {
-				_items.insert(it, GroupsTableItem(group_id, std::move(group_ptr)));
-				break;
-			}
+				if ((*it)._group_id > group_id || (it + 1) == _items.cend()) {
+					_items.insert(it, GroupsTableItem(group_id, std::move(group_ptr)));
+					break;
+				}
+		}
+		if (size == _items.size())
+			_items.push_back(GroupsTableItem(group_id, std::move(group_ptr)));
 	}
 
 	int GroupsTable::find(const std::shared_ptr<Group>& group_ptr) const {
@@ -218,10 +242,50 @@ namespace group {
 		_items.erase(it);
 	}
 
+	void GroupsTable::find_by_department_id(
+		int department_id,
+		vector<const GroupsTableItem*>& dest) const
+	{
+		for (int i = 0; i < _items.size(); ++i)
+			if (_items[i]._group_ptr->_department_id == department_id)
+				dest.push_back(&(_items[i]));
+	}
+
+	void GroupsTable::erase_by_department_id(int department_id)
+	{
+		vector<const GroupsTableItem*> targets;
+		find_by_department_id(department_id, targets);
+		for (auto gti : targets) erase(gti->_group_id);
+
+	}
+
 	void GroupsTable::output() const {
+		int len_id = 0, len_num, copy_id, len_ptr = 16;
+		for (auto i : _items) {
+
+			len_num = 0, copy_id = i._group_id;
+			while (copy_id > 0) {
+				copy_id /= 10;
+				++len_num;
+			}
+
+			if (len_num > len_id) len_id = len_num;
+		}
+		len_id += 8 - len_id % 8;
+
+		for (int i = 0; i < len_id + len_ptr; ++i) std::cout << '=';
 		std::cout << std::endl;
-		for (auto i : _items) std::cout << i._group_id << " : " << i._group_ptr << std::endl;
+
+		for (auto i : _items) std::cout << i._group_id << '\t' << i._group_ptr << std::endl;
+
+		for (int i = 0; i < len_id + len_ptr; ++i) std::cout << '=';
 		std::cout << std::endl;
+		
+	}
+
+	void GroupsTable::clear()
+	{
+		_items.clear();
 	}
 
 	std::ostream& operator<< (std::ostream& out, const GroupsTable& gt) {
