@@ -363,7 +363,7 @@ namespace group {
 		std::string _qualification = "";
 
 		//! @brief Тип группы (форма обучения)
-		std::string _group_type = "Day";
+		std::string _group_type = "Evening";
 
 		/**
 		* @brief Копирует параметры группы
@@ -469,7 +469,7 @@ namespace group {
 		float _payment_size = 0;
 
 		//! @brief Тип группы (форма обучения)
-		std::string _group_type = "Day";
+		std::string _group_type = "Paid";
 
 		/**
 		* @brief Копирует параметры группы

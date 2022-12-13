@@ -6,6 +6,7 @@
 #include "groups_table.h"	// классы групп и таблицы групп
 
 #include <limits>			// для нормализации стандартного потока ввода
+#include <functional>
 
 using namespace my_template;
 using namespace department;
@@ -45,17 +46,49 @@ namespace dialog {
 	}
 
 	/**
-	* @brief Шаблон функции запрашивает (настойчиво) ввод положительного числа через стандартный поток ввода
-	* @param result Ссылка, куда в случае успеха запишется введенное число
+	* @brief Шаблон функции запрашивает (настойчиво и с условием)
+	* ввод любого типа через стандартный поток ввода
+	* @param result Ссылка, куда запишется введенное число
+	* @param message Строка - сообщение, выводящаяся перед запросом ввода
+	* @param condition Лямбда функция, принимающая константную ссылку на T ивозвращаюзая bool
 	* @param param_name Строка - название поля группы
-	* @return true - в случае успеха, иначе - false
+	*/
+	template<typename T>
+	void ask_input_persistently_and_conditionally(
+		T& result,
+		const std::string message,
+		std::function<bool()> condition
+	)
+	{
+		std::cout << message << ": ";
+		while (!ask_input(result) || condition())
+			std::cout << "Something went wrong! " << message << ": ";
+	}
+
+	/**
+	* @brief Шаблон функции запрашивает (настойчиво) ввод любого типа через стандартный поток ввода
+	* @param result Ссылка, куда запишется введенное число
+	* @param message Строка - сообщение, выводящаяся перед запросом ввода
+	* @param param_name Строка - название поля группы
+	*/
+	template<typename T>
+	void ask_input_persistently(T& result, const std::string message)
+	{
+		ask_input_persistently_and_conditionally(result, message, [&]() { return false; });
+	}
+
+	/**
+	* @brief Шаблон функции запрашивает (настойчиво) ввод положительного числа через стандартный поток ввода
+	* @param result Ссылка, куда запишется введенное число
+	* @param param_name Строка - название поля группы
 	*/
 	template<typename T>
 	void ask_positive_groups_param(T& result, const std::string param_name)
 	{
-		std::cout << "Enter " << param_name << " of new group: ";
-		while (!ask_input(result) || result < 0 || result > MAX_INT)
-			std::cout << "Something went wrong! Enter " << param_name << " of new group: ";
+		ask_input_persistently_and_conditionally(
+			result, 
+			"Enter " + param_name + " of group",
+			[&]() { return result < 0 || result > MAX_INT; });
 	}
 
 	/**
@@ -140,6 +173,18 @@ namespace dialog {
 	// groups_table
 
 	/**
+	* @brief Клонирует группу, изменяя некоторые параметры (происходит динамическое выделение памяти)
+	* @param group Группа, которую нужно скопировать
+	* @return Указатель на клона
+	*/
+	Group* make_pseudo_clone(
+		const Group& group,
+		int department_id, 
+		int study_duration, 
+		std::string specialization, 
+		std::string contingent);
+
+	/**
 	* @brief Функция запрашивает необходимые данные и находит элемент таблицы
 	* @param result Ссылка, куда надо записать результат
 	* @param groups_table Ссылка на таблицу групп
@@ -171,9 +216,21 @@ namespace dialog {
 	*/
 	bool output_group(GroupsTable& groups_table, DepartmentsTable&);
 
+	/**
+	* @brief Запрашивает информацию и выводит данные о группе
+	* @param groups_table Ссылка на таблицу групп
+	* @param departments_table Ссылка на таблицу кафедр
+	* @return true - если можно продолжить, false - если необходимо завершить выполнение программы
+	*/
 	bool output_group_info(GroupsTable& groups_table, DepartmentsTable&);
 
-	bool change_group(GroupsTable& groups_table, DepartmentsTable&);
+	/**
+	* @brief Запрашивает информацию и изменяет данные группы
+	* @param groups_table Ссылка на таблицу групп
+	* @param departments_table Ссылка на таблицу кафедр
+	* @return true - если можно продолжить, false - если необходимо завершить выполнение программы
+	*/
+	bool change_group(GroupsTable& groups_table, DepartmentsTable& departments_table);
 
 	/**
 	* @brief Функция запрашивает необходимые данные и удаляет группу
@@ -198,9 +255,5 @@ namespace dialog {
 	* @return true - если можно продолжить, false - если необходимо завершить выполнение программы
 	*/
 	bool clear_groups_table(GroupsTable& groups_table, DepartmentsTable&);
-
-	//
-
-
 
 }

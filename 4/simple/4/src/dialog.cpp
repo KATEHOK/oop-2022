@@ -11,12 +11,12 @@ namespace dialog {
 	bool confirm()
 	{
 		char choice = '\0';
-		std::cout << "Enter Y or N: ";
 
-		while (!ask_input(choice) || choice != 'Y' && choice != 'N');
+		ask_input_persistently_and_conditionally(
+			choice,	"Enter Y or N",
+			[&]() { return choice != 'Y' && choice != 'N'; });
 
-		if (choice == 'N') return false;
-		return true;
+		return choice == 'Y';
 	}
 
 	void print_greeting()
@@ -51,10 +51,10 @@ namespace dialog {
 
 	void ask_choice(int& choice, size_t count)
 	{
-		std::cout << "Make choice (0 - " << count - 1 << "): ";
-		while (!ask_input(choice) || choice < 0 || choice >= count)
-			std::cout	<< "Something went wrong:(" << std::endl
-						<< "Make choice (0 - " << count - 1 << "): ";
+		ask_input_persistently_and_conditionally(
+			choice, "Make choice (0 - " + std::to_string(count - 1) + ')',
+			[&]() { return choice < 0 || choice >= count; }
+		);
 	}
 
 	// departments_table
@@ -78,22 +78,15 @@ namespace dialog {
 			std::cout << "Canceling..." << std::endl;
 			return false;
 		}
-
 		if (choice == 1)
 		{
-			std::cout << "Enter id of target department: ";
-			while (!ask_input(department_id) || department_id < 0 || department_id > MAX_INT)
-				std::cout << "Something went wrong:(" << std::endl
-				<< "Enter id of target department: ";
+			ask_input_persistently_and_conditionally(
+				department_id,
+				"Enter id of target department",
+				[&]() {return department_id < 0 || department_id > MAX_INT; }
+			);
 		}
-
-		else
-		{
-			std::cout << "Enter name of target department: ";
-			while (!ask_input(department_name))
-				std::cout << "Something went wrong:(" << std::endl
-				<< "Enter name of target department: ";
-		}
+		else ask_input_persistently(department_name, "Enter name of target department");
 
 		return true;
 	}
@@ -101,16 +94,12 @@ namespace dialog {
 	bool add_department(GroupsTable&, DepartmentsTable& departments_table)
 	{
 		int department_id = 0;
-		std::cout << "Enter unique id of new department: ";
-		while (!ask_input(department_id) || department_id < 0 || department_id > 9999999)
-			std::cout	<< "Something went wrong:(" << std::endl
-						<< "Enter unique id of new department: ";
+		ask_input_persistently_and_conditionally(
+			department_id, "Enter unique id of new department",
+			[&]() { return department_id < 0 || department_id > MAX_INT; });
 
 		std::string department_name;
-		std::cout << "Enter unique name of new department: ";
-		while (!ask_input(department_name))
-			std::cout	<< "Something went wrong:(" << std::endl
-						<< "Enter unique name of new department: ";
+		ask_input_persistently(department_name, "Enter unique name of new department");
 
 		Department department(department_id, department_name);
 
@@ -172,6 +161,7 @@ namespace dialog {
 
 		std::cout << std::endl << "Groups of department: [" <<
 			department_id << ", " << department_name << ']' << std::endl;
+
 		for (int i = 0; i < 57; ++i) std::cout << '=';
 		std::cout << std::endl;
 
@@ -220,11 +210,55 @@ namespace dialog {
 
 	// groups_table
 
+	Group* make_pseudo_clone(
+		const Group& group,
+		int department_id,
+		int study_duration,
+		std::string specialization,
+		std::string contingent)
+	{
+		Group* clone = nullptr;
+		if (group.type() == "Day")
+		{
+			clone = new DayGroup(
+				group.id(),
+				group.size(),
+				department_id,
+				study_duration,
+				specialization,
+				group.stipend(),
+				group.fellows_amount()
+			);
+		}
+		else if (group.type() == "Evening")
+		{
+			clone = new EveningGroup(
+				group.id(),
+				group.size(),
+				department_id,
+				study_duration,
+				contingent,
+				group.qualification()
+			);
+		}
+		else
+		{
+			clone = new PaidGroup(
+				group.id(),
+				group.size(),
+				department_id,
+				study_duration,
+				group.contract_id(),
+				group.payment_size()
+			);
+		}
+		return clone;
+	}
+
 	bool find_item(GroupsTableItem& result, const GroupsTable& groups_table)
 	{
 		int group_id = 0;
-		std::cout << "Enter group id: ";
-		while (!ask_input(group_id)) std::cout << "Something went wrong! Enter group id: ";
+		ask_input_persistently(group_id, "Enter group id");
 
 		try { result = groups_table[group_id]; }
 		catch (std::out_of_range)
@@ -273,10 +307,7 @@ namespace dialog {
 			float stipend = 0;
 			int fellows_emount = 0;
 
-			std::cout << "Enter specialization of new group: ";
-			while (!ask_input(specialization))
-				std::cout << "Something went wrong! Enter specialization of new group: ";
-
+			ask_input_persistently(specialization, "Enter specialization of new group");
 			ask_positive_groups_param(stipend, "stipend");
 			ask_positive_groups_param(fellows_emount, "fellows emount");
 
@@ -290,13 +321,8 @@ namespace dialog {
 		{
 			std::string contingent, qualification;
 
-			std::cout << "Enter contingent of new group: ";
-			while (!ask_input(contingent))
-				std::cout << "Something went wrong! Enter contingent of new group: ";
-
-			std::cout << "Enter qualification of new group: ";
-			while (!ask_input(qualification))
-				std::cout << "Something went wrong! Enter qualification of new group: ";
+			ask_input_persistently(contingent, "Enter contingent of new group");
+			ask_input_persistently(qualification, "Enter qualification of new group");
 
 			std::shared_ptr<EveningGroup> evening_group(new EveningGroup(
 				id, size, department_id, study_duration, contingent, qualification));
@@ -351,7 +377,7 @@ namespace dialog {
 			"Study duration",	// 5
 			"Specialization",	// 6
 			"Stipend",			// 7
-			"Fellows emount",	// 8
+			"Fellows amount",	// 8
 			"Contingent",		// 9
 			"Qualification",	// 10
 			"Contract id",		// 11
@@ -427,8 +453,185 @@ namespace dialog {
 		return true;
 	}
 
-	bool change_group(GroupsTable& groups_table, DepartmentsTable&)
+	bool change_group(GroupsTable& groups_table, DepartmentsTable& departments_table)
 	{
+		GroupsTableItem item;
+		if (!find_item(item, groups_table)) return true;
+
+		const vector<std::string> options = {
+			"Cancel",			// 0
+			"Size",				// 1
+			"Stipend",			// 2
+			"Fellows amount",	// 3
+			"Payment size",		// 4
+			"Department id",	// 5 - new group
+			"Study duration",	// 6 - new group
+			"Specialization",	// 7 - new group
+			"Contingent",		// 8 - new group
+		};
+
+		int choice = 1;
+		while (choice > 0)
+		{
+			std::cout << std::endl << "What information of " << item.group_id() <<
+				" group do you want to change?" << std::endl;
+
+			print_options(options);
+			ask_choice(choice, options.size());
+
+			Group* new_group = nullptr;
+			size_t size;
+			float stipend;
+			int fellows_amount;
+			float payment_size;
+			int department_id;
+			int study_duration;
+			std::string specialization;
+			std::string contingent;
+
+			switch (choice)
+			{
+			case 0:
+				std::cout << "Canceling..." << std::endl;
+				break;
+
+			case 1:
+				ask_positive_groups_param(size, "size");
+				std::cout << "New group size: " << item.group_ptr()->size(size) << std::endl;
+				break;
+
+			case 2:
+				if (item.group_ptr()->type() != "Day")
+				{
+					std::cout << "You can not change stipend if type of group is not \"Day\"!" << std::endl;
+					break;
+				}
+				ask_positive_groups_param(stipend, "stipend");
+				std::cout << "New groups stipend: " << item.group_ptr()->stipend(stipend) << std::endl;
+				break;
+
+			case 3:
+				if (item.group_ptr()->type() != "Day")
+				{
+					std::cout << "You can not change fellows amount if type of group is not \"Day\"!" <<
+						std::endl;
+					break;
+				}
+				ask_positive_groups_param(fellows_amount, "fellows amount");
+				std::cout << "New groups fellows amount: " <<
+					item.group_ptr()->fellows_amount(fellows_amount) << std::endl;
+				break;
+
+			case 4:
+				if (item.group_ptr()->type() != "Paid")
+				{
+					std::cout << "You can not change payment size if type of group is not \"Paid\"!" <<
+						std::endl;
+					break;
+				}
+				ask_positive_groups_param(payment_size, "payment size");
+				std::cout << "New groups payment size: " <<
+					item.group_ptr()->payment_size(payment_size) << std::endl;
+				break;
+
+			case 5:
+				ask_positive_groups_param(department_id, "department id");
+
+				try { departments_table[department_id]; }
+				catch (std::out_of_range)
+				{
+					std::cout << "This department is not exist!" << std::endl;
+					break;
+				}
+
+				new_group = make_pseudo_clone(
+					*item.group_ptr(),
+					department_id,
+					item.group_ptr()->study_duration(),
+					item.group_ptr()->specialization(),
+					item.group_ptr()->contingent()
+				);
+
+				groups_table.erase(item.group_id());
+				groups_table.insert(GroupsTableItem(std::shared_ptr<Group>(new_group)));
+
+				std::cout << "New groups department id: " <<
+					new_group->department_id() << std::endl;
+				choice = 0;
+				break;
+
+			case 6:
+				ask_positive_groups_param(study_duration, "study duration");
+
+				new_group = make_pseudo_clone(
+					*item.group_ptr(),
+					item.group_ptr()->department_id(),
+					study_duration,
+					item.group_ptr()->specialization(),
+					item.group_ptr()->contingent()
+				);
+
+				groups_table.erase(item.group_id());
+				groups_table.insert(GroupsTableItem(std::shared_ptr<Group>(new_group)));
+
+				std::cout << "New groups study duration: " <<
+					new_group->study_duration() << std::endl;
+				choice = 0;
+				break;
+
+			case 7:
+				if (item.group_ptr()->type() != "Day")
+				{
+					std::cout << "You can not change specialization if type of group is not \"Day\"!" <<
+						std::endl;
+					break;
+				}
+
+				ask_input_persistently(specialization, "Enter specialization of group");
+
+				new_group = make_pseudo_clone(
+					*item.group_ptr(),
+					item.group_ptr()->department_id(),
+					item.group_ptr()->study_duration(),
+					specialization,
+					item.group_ptr()->contingent()
+				);
+
+				groups_table.erase(item.group_id());
+				groups_table.insert(GroupsTableItem(std::shared_ptr<Group>(new_group)));
+
+				std::cout << "New groups specialization: " <<
+					new_group->specialization() << std::endl;
+				choice = 0;
+				break;
+
+			case 8:
+				if (item.group_ptr()->type() != "Evening")
+				{
+					std::cout << "You can not change contingent if type of group is not \"Evening\"!" <<
+						std::endl;
+					break;
+				}
+
+				ask_input_persistently(contingent, "Enter contingent of group");
+
+				new_group = make_pseudo_clone(
+					*item.group_ptr(),
+					item.group_ptr()->department_id(),
+					item.group_ptr()->study_duration(),
+					item.group_ptr()->specialization(),
+					contingent
+				);
+
+				groups_table.erase(item.group_id());
+				groups_table.insert(GroupsTableItem(std::shared_ptr<Group>(new_group)));
+
+				std::cout << "New groups contingent: " <<
+					new_group->contingent() << std::endl;
+				choice = 0;
+				break;
+			}
+		}
 		return true;
 	}
 
