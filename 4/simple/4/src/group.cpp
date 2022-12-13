@@ -36,7 +36,8 @@ namespace group {
 	}
 
 	void Group::out(std::ostream& out) const {
-		out << _id << ", " << _size << ", " << _department_id << ", " << _study_duration;
+		out << type() << ", " << _id << ", " <<
+			_size << ", " << _department_id << ", " << _study_duration;
 	}
 
 	void Group::copy_from(const Group& src) {
@@ -79,6 +80,11 @@ namespace group {
 	DayGroup& DayGroup::operator= (DayGroup&& src) {
 		this->move_from(std::move(src));
 		return *this;
+	}
+
+	std::string DayGroup::type() const
+	{
+		return _group_type;
 	}
 
 	void DayGroup::copy_from(const DayGroup& src) {
@@ -152,6 +158,11 @@ namespace group {
 		return *this;
 	}
 
+	std::string EveningGroup::type() const
+	{
+		return _group_type;
+	}
+
 	void EveningGroup::copy_from(const EveningGroup& src) {
 		Group::copy_from(src);
 		this->_contingent = src._contingent;
@@ -201,6 +212,11 @@ namespace group {
 	PaidGroup& PaidGroup::operator= (PaidGroup&& src) {
 		this->move_from(std::move(src));
 		return *this;
+	}
+
+	std::string PaidGroup::type() const
+	{
+		return _group_type;
 	}
 
 	void PaidGroup::copy_from(const PaidGroup& src) {

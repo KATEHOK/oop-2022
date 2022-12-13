@@ -171,6 +171,8 @@ namespace dialog {
 	*/
 	bool output_group(GroupsTable& groups_table, DepartmentsTable&);
 
+	bool output_group_info(GroupsTable& groups_table, DepartmentsTable&);
+
 	bool change_group(GroupsTable& groups_table, DepartmentsTable&);
 
 	/**

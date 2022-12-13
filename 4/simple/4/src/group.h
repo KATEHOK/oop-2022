@@ -51,7 +51,7 @@ namespace group {
 		/**
 		* @brief Для перегрузки вывода в выходной поток по указателю базового класса
 		*/
-		virtual void output() const {}
+		virtual void output() const = 0;
 
 	public:
 
@@ -86,6 +86,12 @@ namespace group {
 		Group(Group&& src);
 
 		/**
+		* @brief Для геттера типа производной группы
+		* @return Строка - тип группы
+		*/
+		virtual std::string type() const = 0;
+
+		/**
 		* @brief Геттер номера группы
 		* @return Номер группы
 		*/
@@ -116,6 +122,99 @@ namespace group {
 		*/
 		int study_duration() const;
 
+		/**
+		* @brief Геттер специализации
+		* @return Специализация
+		*/
+		virtual std::string specialization() const
+		{
+			return "NULL";
+		}
+
+		/**
+		* @brief Геттер размера стипендии
+		* @return Размер стипендии
+		*/
+		virtual float stipend() const
+		{
+			return 0;
+		}
+
+		/**
+		* @brief Сеттер размера стипендии (только для дневной группы)
+		* @param stipend размер стипендии
+		* @return Размер стипендии
+		*/
+		virtual float stipend(float stipend)
+		{
+			return 0;
+		}
+
+		/**
+		* @brief Геттер количества стипендиатов
+		* @return Количество стипендиатов
+		*/
+		virtual int fellows_amount() const
+		{
+			return 0;
+		}
+
+		/**
+		* @brief Сеттер количества стипендиатов (только для дневной группы)
+		* @param Количество стипендиатов
+		* @return Количество стипендиатов
+		*/
+		virtual int fellows_amount(int amount)
+		{
+			return 0;
+		}
+
+		/**
+		* @brief Геттер контингента
+		* @return Контингент
+		*/
+		virtual std::string contingent() const
+		{
+			return "NULL";
+		}
+
+		/**
+		* @brief Геттер квалификации
+		* @return Квалификация
+		*/
+		virtual std::string qualification() const
+		{
+			return "NULL";
+		}
+
+		/**
+		* @brief Геттер номера контракта
+		* @return Номер контракта
+		*/
+		virtual int contract_id() const
+		{
+			return 0;
+		}
+
+		/**
+		* @brief Геттер размера оплаты
+		* @return Размер оплаты
+		*/
+		virtual float payment_size() const
+		{
+			return 0;
+		}
+
+		/**
+		* @brief Сеттер размера оплаты (только для платной группы)
+		* @param payment_size Новое значение размера оплаты
+		* @return Размер оплаты
+		*/
+		virtual float payment_size(float payment_size)
+		{
+			return 0;
+		}
+
 		friend std::ostream& operator<< (std::ostream& out, const Group& group);
 
 	};
@@ -135,6 +234,9 @@ namespace group {
 		//! @brief Количество стипендиатов в группе
 		int _fellows_amount = 0;
 
+		//! @brief Тип группы (форма обучения)
+		std::string _group_type = "Day";
+
 		/**
 		* @brief Копирует параметры группы
 		* @param src Ссылка на объект с которого копируются параметры
@@ -147,7 +249,7 @@ namespace group {
 		*/
 		void move_from(DayGroup&& src);
 
-		virtual void output() const {
+		virtual void output() const override {
 			std::cout << *this;
 		}
 
@@ -202,36 +304,42 @@ namespace group {
 		DayGroup& operator= (DayGroup&& src);
 
 		/**
+		* @brief Геттер типа группы
+		* @return Строка - тип группы
+		*/
+		virtual std::string type() const override;
+
+		/**
 		* @brief Геттер специализации
 		* @return Специализация
 		*/
-		std::string specialization() const;
+		std::string specialization() const override;
 
 		/**
 		* @brief Геттер размера стипендии
 		* @return Размер стипендии
 		*/
-		float stipend() const;
+		float stipend() const override;
 
 		/**
 		* @brief Сеттер размера стипендии
 		* @param stipend размер стипендии
 		* @return Размер стипендии
 		*/
-		float stipend(float stipend);
+		float stipend(float stipend) override;
 
 		/**
 		* @brief Геттер количества стипендиатов
 		* @return Количество стипендиатов
 		*/
-		int fellows_amount() const;
+		int fellows_amount() const override;
 
 		/**
 		* @brief Сеттер количества стипендиатов
 		* @param Количество стипендиатов
 		* @return Количество стипендиатов
 		*/
-		int fellows_amount(int amount);
+		int fellows_amount(int amount) override;
 
 		/**
 		* @brief Дружественный оператор вывода дневной группы в стандартный поток вывода
@@ -254,6 +362,9 @@ namespace group {
 		//! @brief Квалификация
 		std::string _qualification = "";
 
+		//! @brief Тип группы (форма обучения)
+		std::string _group_type = "Day";
+
 		/**
 		* @brief Копирует параметры группы
 		* @param src Ссылка на объект с которого копируются параметры
@@ -266,7 +377,7 @@ namespace group {
 		*/
 		void move_from(EveningGroup&& src);
 
-		virtual void output() const {
+		virtual void output() const override {
 			std::cout << *this;
 		}
 
@@ -319,16 +430,22 @@ namespace group {
 		EveningGroup& operator= (EveningGroup&& src);
 
 		/**
+		* @brief Геттер типа группы
+		* @return Строка - тип группы
+		*/
+		virtual std::string type() const override;
+
+		/**
 		* @brief Геттер контингента
 		* @return Контингент
 		*/
-		std::string contingent() const;
+		std::string contingent() const override;
 
 		/**
 		* @brief Геттер квалификации
 		* @return Квалификация
 		*/
-		std::string qualification() const;
+		std::string qualification() const override;
 
 		/**
 		* @brief Дружественный оператор вывода вечерней группы в стандартный поток вывода
@@ -351,6 +468,9 @@ namespace group {
 		//! @brief Размер оплаты
 		float _payment_size = 0;
 
+		//! @brief Тип группы (форма обучения)
+		std::string _group_type = "Day";
+
 		/**
 		* @brief Копирует параметры группы
 		* @param src Ссылка на объект с которого копируются параметры
@@ -363,7 +483,7 @@ namespace group {
 		*/
 		void move_from(PaidGroup&& src);
 
-		virtual void output() const {
+		virtual void output() const override {
 			std::cout << *this;
 		}
 
@@ -416,23 +536,29 @@ namespace group {
 		PaidGroup& operator= (PaidGroup&& src);
 
 		/**
+		* @brief Геттер типа группы
+		* @return Строка - тип группы
+		*/
+		virtual std::string type() const override;
+
+		/**
 		* @brief Геттер номера контракта
 		* @return Номер контракта
 		*/
-		int contract_id() const;
+		int contract_id() const override;
 
 		/**
 		* @brief Геттер размера оплаты
 		* @return Размер оплаты
 		*/
-		float payment_size() const;
+		float payment_size() const override;
 
 		/**
 		* @brief Сеттер размера оплаты
 		* @param payment_size Новое значение размера оплаты
 		* @return Размер оплаты
 		*/
-		float payment_size(float payment_size);
+		float payment_size(float payment_size) override;
 
 		/**
 		* @brief Дружественный оператор вывода платной группы в стандартный поток вывода

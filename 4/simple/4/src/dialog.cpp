@@ -172,25 +172,26 @@ namespace dialog {
 
 		std::cout << std::endl << "Groups of department: [" <<
 			department_id << ", " << department_name << ']' << std::endl;
-		for (int i = 0; i < 49; ++i) std::cout << '=';
+		for (int i = 0; i < 57; ++i) std::cout << '=';
 		std::cout << std::endl;
 
 		vector<const GroupsTableItem*> targets;
 		groups_table.find_by_department_id(department_id, targets);
 
 		if (targets.size() > 0) {
-			std::cout << "|Id\t|Size\t|Department id\t|Study duration\t|" << std::endl;
-			for (int i = 0; i < 49; ++i) std::cout << '-';
+			std::cout << "|Type\t|Id\t|Size\t|Department id\t|Study duration\t|" << std::endl;
+			for (int i = 0; i < 57; ++i) std::cout << '-';
 			std::cout << std::endl;
 		}
 
 		for (auto target_ptr : targets) std::cout << '|' <<
+			target_ptr->group_ptr()->type() << "\t|" <<
 			target_ptr->group_ptr()->id() << "\t|" <<
 			target_ptr->group_ptr()->size() << "\t|" <<
 			target_ptr->group_ptr()->department_id() << "\t\t|" <<
 			target_ptr->group_ptr()->study_duration() << "\t\t|" << std::endl;
 
-		for (int i = 0; i < 49; ++i) std::cout << '=';
+		for (int i = 0; i < 57; ++i) std::cout << '=';
 		std::cout << std::endl;
 
 		return true;
@@ -218,9 +219,6 @@ namespace dialog {
 	}
 
 	// groups_table
-
-	// 72 104 32
-	// sizeof(DayGroup) sizeof(EveningGroup) sizeof(PaidGroup)
 
 	bool find_item(GroupsTableItem& result, const GroupsTable& groups_table)
 	{
@@ -336,6 +334,96 @@ namespace dialog {
 		GroupsTableItem item;
 		if (find_item(item, groups_table))
 			std::cout << "Group = " << *(item.group_ptr()) << std::endl;
+		return true;
+	}
+
+	bool output_group_info(GroupsTable& groups_table, DepartmentsTable&)
+	{
+		GroupsTableItem item;
+		if (!find_item(item, groups_table)) return true;
+
+		const vector<std::string> options = {
+			"Cancel",			// 0
+			"Type",				// 1
+			"Id",				// 2
+			"Size",				// 3
+			"Department id",	// 4
+			"Study duration",	// 5
+			"Specialization",	// 6
+			"Stipend",			// 7
+			"Fellows emount",	// 8
+			"Contingent",		// 9
+			"Qualification",	// 10
+			"Contract id",		// 11
+			"Payment size"		// 12
+		};
+
+		int choice = 1;
+		while (choice > 0)
+		{
+			std::cout << std::endl << "What information of " << item.group_id() <<
+						" group do you want to see?" << std::endl;
+
+			print_options(options);
+			ask_choice(choice, options.size());
+
+			switch (choice)
+			{
+			case 0:
+				std::cout << "Canceling..." << std::endl;
+				break;
+
+			case 1:
+				std::cout << "Group type: " << item.group_ptr()->type() << " group" << std::endl;
+				break;
+
+			case 2:
+				std::cout << "Group id: " << item.group_ptr()->id() << std::endl;
+				break;
+
+			case 3:
+				std::cout << "Group size: " << item.group_ptr()->size() << std::endl;
+				break;
+
+			case 4:
+				std::cout << "Groups department id: " << item.group_ptr()->department_id() << std::endl;
+				break;
+
+			case 5:
+				std::cout << "Groups study duration: " << item.group_ptr()->study_duration() << std::endl;
+				break;
+
+			case 6:
+				std::cout << "Groups specialization: " << item.group_ptr()->specialization() << std::endl;
+				break;
+
+			case 7:
+				std::cout << "Groups stipend: " << item.group_ptr()->stipend() << std::endl;
+				break;
+
+			case 8:
+				std::cout << "Groups fellows amount: " << item.group_ptr()->fellows_amount() << std::endl;
+				break;
+
+			case 9:
+				std::cout << "Groups contingent: " << item.group_ptr()->contingent() << std::endl;
+				break;
+
+			case 10:
+				std::cout << "Groups qualification: " << item.group_ptr()->qualification() << std::endl;
+				break;
+
+			case 11:
+				if (item.group_ptr()->type() == "Paid")
+					std::cout << "Groups contract id: " << item.group_ptr()->contract_id() << std::endl;
+				else std::cout << "This group has not contract" << std::endl;
+				break;
+
+			case 12:
+				std::cout << "Groups payment size: " << item.group_ptr()->payment_size() << std::endl;
+				break;
+			}
+		}
 		return true;
 	}
 
